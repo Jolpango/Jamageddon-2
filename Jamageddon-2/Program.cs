@@ -1,3 +1,3 @@
 ﻿
-using var game = new JolpangoSample.Game1();
+using var game = new Jamageddon2.Game1();
 game.Run();

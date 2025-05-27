@@ -10,7 +10,7 @@ using MonoGame.Jolpango.Graphics.Dispersion;
 using MonoGame.Jolpango.Graphics.Effects;
 using MonoGame.Jolpango.Tiled;
 
-namespace JolpangoSample
+namespace Jamageddon2
 {
     public class Game1 : Game
     {
