@@ -1,0 +1,59 @@
+{
+  "radius": {
+    "min": 1,
+    "max": 10
+  },
+  "dispersionMethod": {
+    "type": "DispersionInverseCone",
+    "direction": {
+      "x": 0,
+      "y": -1
+    },
+    "length": 100,
+    "radius": 20
+  },
+  "texture": "particle",
+  "timeToLive": 1,
+  "easing": "EaseInCubic",
+  "transitions": [
+    {
+      "type": "ColorTransition",
+      "colors": [
+        {
+          "colorName": "Orange"
+        },
+        {
+          "colorName": "DarkOrange"
+        },
+        {
+          "colorName": "Orange"
+        },
+        {
+          "colorName": "Gray"
+        }
+      ]
+    },
+    {
+      "type": "AlphaTransition",
+      "alphas": [
+        0.5,
+        1,
+        0.8,
+        0.6,
+        0.4,
+        0.2,
+        0
+      ]
+    },
+    {
+      "type": "ScaleTransition",
+      "scales": [
+        1.5,
+        2.5,
+        2.0,
+        1.75,
+        1.5
+      ]
+    }
+  ]
+}

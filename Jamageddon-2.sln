@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamageddon-2", "Jamageddon-2\Jamageddon-2.csproj", "{5125CC1E-3063-4981-8D85-D47153964AAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monogame.Jolpango", "Monogame.Jolpango\MonoGame.Jolpango.csproj", "{B6578AC1-5BA4-5BC2-33BE-6FF14ADBAD95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5125CC1E-3063-4981-8D85-D47153964AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5125CC1E-3063-4981-8D85-D47153964AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5125CC1E-3063-4981-8D85-D47153964AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5125CC1E-3063-4981-8D85-D47153964AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6578AC1-5BA4-5BC2-33BE-6FF14ADBAD95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6578AC1-5BA4-5BC2-33BE-6FF14ADBAD95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6578AC1-5BA4-5BC2-33BE-6FF14ADBAD95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6578AC1-5BA4-5BC2-33BE-6FF14ADBAD95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA2918C1-5605-4C14-9E62-2D5FB110FA06}
+	EndGlobalSection
+EndGlobal

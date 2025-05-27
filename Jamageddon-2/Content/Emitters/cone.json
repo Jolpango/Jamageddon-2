@@ -1,0 +1,51 @@
+{
+  "radius": {
+    "min": 1,
+    "max": 5
+  },
+  "dispersionMethod": {
+    "type": "DispersionCone",
+    "direction": {
+      "x": 0,
+      "y": -1
+    },
+    "length": {
+      "min": 30,
+      "max": 80
+    },
+    "angle": 30
+  },
+  "easing": "EaseInOutQuad",
+  "transitions": [
+    {
+      "type": "ColorTransition",
+      "colors": [
+        {
+          "r": 255,
+          "g": 0,
+          "b": 0
+        },
+        {
+          "colorName": "Yellow"
+        },
+        {
+          "colorName": "White"
+        }
+      ]
+    },
+    {
+      "type": "AlphaTransition",
+      "alphas": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "ScaleTransition",
+      "scale": {
+        "start": 1,
+        "end": 2
+      }
+    }
+  ]
+}

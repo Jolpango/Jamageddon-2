@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Jolpangos MonoGame Utilities</Title>
+    <Copyright>MIT</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/jolpango/Monogame.Jolpango</RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Input\**" />
+    <EmbeddedResource Remove="Input\**" />
+    <None Remove="Input\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="UI\CustomCursor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303">
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UI\CustomCursor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Version>2.0.0</Version>
+	<PackageReleaseNotes>JsonLoader
+Modular transitions for particles
+More easings</PackageReleaseNotes>
+  </PropertyGroup>
+</Project>

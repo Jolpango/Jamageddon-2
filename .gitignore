@@ -1,0 +1,14 @@
+# Visual Studio folder
+.vs/
+
+# User-specific files
+*.user
+*.suo
+
+# MonoGame intermediate build folders
+**/bin/
+**/obj/
+
+# MonoGame content pipeline build artifacts
+**/Content/bin/
+**/Content/obj/

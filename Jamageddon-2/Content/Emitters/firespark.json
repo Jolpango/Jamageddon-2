@@ -1,0 +1,50 @@
+{
+  "radius": {
+    "min": 1,
+    "max": 3
+  },
+  "dispersionMethod": {
+    "type": "DispersionCone",
+    "direction": {
+      "x": 0,
+      "y": -1
+    },
+    "length": {
+      "min": 50,
+      "max": 100
+    },
+    "angle": 30
+  },
+  "timeToLive": 3,
+  "easing": "EaseInCubic",
+  "transitions": [
+    {
+      "type": "ColorTransition",
+      "colors": [
+        {
+          "r": 255,
+          "g": 100,
+          "b": 100
+        },
+        {
+          "colorName": "Yellow"
+        },
+        {
+          "colorName": "Orange"
+        }
+      ]
+    },
+    {
+      "type": "AlphaTransition",
+      "alphas": [
+        0,
+        1,
+        0.8,
+        0.6,
+        0.4,
+        0.2,
+        0
+      ]
+    }
+  ]
+}

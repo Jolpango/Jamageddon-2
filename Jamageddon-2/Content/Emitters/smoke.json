@@ -1,0 +1,60 @@
+{
+  "radius": {
+    "min": 1,
+    "max": 40
+  },
+  "dispersionMethod": {
+    "type": "DispersionInverseCone",
+    "direction": {
+      "x": 0,
+      "y": -1
+    },
+    "length": 150,
+    "radius": 20
+  },
+  "timeToLive": 2,
+  "texture": "smokeparticle",
+  "easing": "EaseInCubic",
+  "transitions": [
+    {
+      "type": "ColorTransition",
+      "colors": [
+        {
+          "colorName": "Gray"
+        },
+        {
+          "colorName": "Gray"
+        }
+      ]
+    },
+    {
+      "type": "AlphaTransition",
+      "alphas": [
+        0,
+        0.1,
+        0.5,
+        0.6,
+        0.4,
+        0.2,
+        0
+      ]
+    },
+    {
+      "type": "ScaleTransition",
+      "scales": [
+        0,
+        0.5,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "type": "RotationTransition",
+      "rotation": {
+        "start": 0,
+        "end": 2
+      }
+    }
+  ]
+}

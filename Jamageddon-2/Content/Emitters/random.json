@@ -1,0 +1,52 @@
+{
+  "radius": {
+    "min": 1,
+    "max": 2
+  },
+  "dispersionMethod": {
+    "type": "DispersionRandom",
+    "length": {
+      "min": 100,
+      "max": 200
+    }
+  },
+  "timeToLive": 0.3,
+  "easing": "EaseInOutQuad",
+  "transitions": [
+    {
+      "type": "ColorTransition",
+      "colors": [
+        {
+          "colorName": "DeepPink"
+        },
+        {
+          "colorName": "Purple"
+        },
+        {
+          "colorName": "Pink"
+        }
+      ]
+    },
+    {
+      "type": "AlphaTransition",
+      "alphas": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "ScaleTransition",
+      "scales": [
+        2.5,
+        1.5
+      ]
+    },
+    {
+      "type": "RotationTransition",
+      "rotation": {
+        "start": 0,
+        "end": 3
+      }
+    }
+  ]
+}
