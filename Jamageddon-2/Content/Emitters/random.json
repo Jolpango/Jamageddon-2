@@ -6,8 +6,8 @@
   "dispersionMethod": {
     "type": "DispersionRandom",
     "length": {
-      "min": 100,
-      "max": 200
+      "min": 20,
+      "max": 40
     }
   },
   "timeToLive": 0.3,

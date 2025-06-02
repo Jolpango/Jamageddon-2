@@ -9,11 +9,6 @@
     <RepositoryUrl>https://github.com/jolpango/Monogame.Jolpango</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Input\**" />
-    <EmbeddedResource Remove="Input\**" />
-    <None Remove="Input\**" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="UI\CustomCursor.cs" />
   </ItemGroup>
   <ItemGroup>

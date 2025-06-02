@@ -67,6 +67,7 @@ namespace MonoGame.Jolpango.Graphics.Sprites
                 else
                 {
                     IsCompleted = true;
+                    IsActive = false;
                 }
             }
 

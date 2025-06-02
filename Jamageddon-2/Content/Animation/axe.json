@@ -5,7 +5,7 @@
     "RegionHeight": 32
   },
   "Cycles": {
-    "Normal": {
+    "Default": {
       "FrameDuration": 0.1,
       "Frames": [0, 1, 2, 3, 4]
     }
