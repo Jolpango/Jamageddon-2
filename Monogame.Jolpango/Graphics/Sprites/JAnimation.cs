@@ -59,15 +59,16 @@ namespace MonoGame.Jolpango.Graphics.Sprites
 
             if (CurrentTime >= TotalTime)
             {
-                onCompleteAction?.Invoke(); // Optional: fire on every loop completion
+                onCompleteAction?.Invoke();
+                IsCompleted = true;
                 if (IsLooping)
                 {
                     CurrentTime %= TotalTime;
                 }
                 else
                 {
-                    IsCompleted = true;
                     IsActive = false;
+                    onCompleteAction = null;
                 }
             }
 

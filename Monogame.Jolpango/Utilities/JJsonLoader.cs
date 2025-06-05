@@ -49,26 +49,6 @@ namespace MonoGame.Jolpango.Utilities
         }
         public static JAnimationSettings ReadAnimationFromFile(string path)
         {
-            //JObject o = JObject.Parse(File.ReadAllText(path));
-            //JAnimationSettings animationSettings = new JAnimationSettings();
-            //animationSettings.TextureAtlas = new JTextureAtlasSettings()
-            //{
-            //    Texture = (string)o["textureAtlas"]["texture"],
-            //    RegionWidth = (int)o["textureAtlas"]["regionWidth"],
-            //    RegionHeight = (int)o["textureAtlas"]["regionHeight"]
-            //};
-            //animationSettings.Cycles = new Dictionary<string, JAnimationCycleSettings>();
-            //foreach (var cycle in o["cycles"])
-            //{
-            //    string name = (string)cycle["name"];
-            //    JAnimationCycleSettings animationCycle = new JAnimationCycleSettings()
-            //    {
-            //        Frames = cycle["frames"].ToObject<int[]>(),
-            //        FrameDuration = (float)cycle["frameDuration"]
-            //    };
-            //    animationSettings.Cycles.Add(name, animationCycle);
-            //}
-            //return animationSettings;
             var json = File.ReadAllText(path);
             JAnimationSettings animationSettings = JsonConvert.DeserializeObject<JAnimationSettings>(json);
             return animationSettings;

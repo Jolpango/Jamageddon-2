@@ -14,15 +14,11 @@ namespace MonoGame.Jolpango.Utilities
 
         private Action callback;
         private float time;
-        private float iterationTime;
-        private bool isRepeating = false;
         public bool Done { get { return time < 0; } }
-        public JTimer(float time, Action callback, bool isRepeating = false)
+        public JTimer(float time, Action callback)
         {
             this.time = time;
-            this.iterationTime = time;
             this.callback = callback;
-            this.isRepeating = isRepeating;
         }
 
         public void Update(GameTime gameTime)
@@ -30,10 +26,6 @@ namespace MonoGame.Jolpango.Utilities
             time -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (time < 0)
             {
-                if (isRepeating)
-                {
-                    time = iterationTime + time;
-                }
                 callback();
             }
         }
