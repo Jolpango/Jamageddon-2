@@ -7,7 +7,7 @@ using MonoGame.Jolpango.UI;
 using MonoGame.Jolpango.UI.Elements;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 
 namespace MonoGame.Jolpango.ECS
 {
@@ -45,6 +45,11 @@ namespace MonoGame.Jolpango.ECS
         public virtual void SetPhysicsSystem(JPhysicsSystem physicsSystem)
         {
             entityWorld.SetPhysicsSystem(physicsSystem);
+        }
+
+        public List<JEntity> GetEntitiesByTag(string tag)
+        {
+            return entityWorld.Entities.Where(entity => entity.Tags.Contains(tag)).ToList();
         }
         public virtual void AddEntity(JEntity entity)
         {

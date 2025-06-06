@@ -80,8 +80,12 @@ namespace Jamageddon2.Entities.Level
             enemiesSpawned++;
         }
 
-        public bool IsLevelComplete => enemiesSpawned >= currentLevel.EnemyClusters.Sum(cluster => cluster.Amount);
-        
+        public bool IsAllEnemiesSpawned => enemiesSpawned >= currentLevel.EnemyClusters.Sum(cluster => cluster.Amount);
+        public bool IsAllEnemiesDestroyed => parentScene.GetEntitiesByTag("Enemy").Count == 0;
         public int CurrentLevel => currentLevel == null ? 0 : currentLevel.LevelNumber;
+
+        public int NextLevel => CurrentLevel + 1;
+
+        public bool IsLastLevel => CurrentLevel == levelConfigs.Count;
     }
 }

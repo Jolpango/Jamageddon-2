@@ -12,79 +12,70 @@ namespace Jamageddon2.Entities.Enemies
 {
     public abstract class JBaseEnemy : JEntity
     {
-        public float Health { get; protected set; }
-        public float MaxHealth { get; protected set; }
-        public float MoveSpeed { get; protected set; }
-        public string Name { get; protected set; }
+        public float Health { get; set; }
+        public float MaxHealth { get; set; }
+        public float MoveSpeed { get; set; }
+        public new string Name { get; set; }
+        public string SpritePath { get; set; }
+        public Vector2 Scale { get; set; }
         public bool IsAlive => Health > 0;
-        public bool IsMoving => pathInputComponent != null && pathInputComponent.IsMoving;
-
-        protected JSpriteComponent spriteComponent;
-        protected JColliderComponent colliderComponent;
-        protected JTransformComponent transformComponent;
-        private JPathInputComponent pathInputComponent;
-        protected JHealthComponent HealthComponent;
-        protected JMovementComponent movementComponent;
-
-        protected JBaseEnemy(string spritePath, float maxHealth, float moveSpeed, string name)
+        public bool IsMoving => this.GetComponent<JPathInputComponent>() != null && this.GetComponent<JPathInputComponent>().IsMoving;
+        protected JBaseEnemy(string spritePath)
         {
-            MaxHealth = maxHealth;
-            Health = maxHealth;
-            MoveSpeed = moveSpeed;
-            Name = name;
-
             // Add enemy tag
             Tags = new HashSet<string> { "Enemy" };
 
             // Add required components
-            transformComponent = new JTransformComponent();
-            spriteComponent = new JSpriteComponent(spritePath);
-            colliderComponent = new JColliderComponent()
+            AddComponent(new JHealthComponent());
+            AddComponent(new JSpriteComponent(spritePath));
+            AddComponent(new JColliderComponent()
             {
                 Size = new Vector2(32, 32),
-                IsSolid = false
-            };
-            movementComponent = new JMovementComponent() { Speed = moveSpeed };
-            HealthComponent = new JHealthComponent(maxHealth);
-            pathInputComponent = new JPathInputComponent();
+                IsSolid = false,
+            });
+            AddComponent(new JMovementComponent());
+            AddComponent(new JTransformComponent());
+            AddComponent(new JPathInputComponent());
 
-            AddComponent(HealthComponent);
-            AddComponent(spriteComponent);
+            this.GetComponent<JPathInputComponent>().OnPathComplete += OnPathComplete;
+            this.GetComponent<JHealthComponent>().OnDeath += OnDeath;
+        }
 
-            AddComponent(movementComponent);
-            AddComponent(transformComponent);
-            AddComponent(colliderComponent);
-            AddComponent(pathInputComponent);
-
-            pathInputComponent.OnPathComplete += OnPathComplete;
-            HealthComponent.OnDeath += OnDeath;
+        public override void LoadContent()
+        {
+            base.LoadContent();
+            this.GetComponent<JHealthComponent>().MaxHealth = MaxHealth;
+            this.GetComponent<JHealthComponent>().CurrentHealth = MaxHealth;
+            this.GetComponent<JTransformComponent>().Scale = Scale;
+            this.GetComponent<JMovementComponent>().Speed = MoveSpeed;
+            this.GetComponent<JTransformComponent>().Scale = Scale;
         }
 
         public void SetPath(JPathComponent path)
         {
-            pathInputComponent.SetPath(path);
-            transformComponent.Position = path.SpawnPoint;
+            this.GetComponent<JPathInputComponent>().SetPath(path);
+            this.GetComponent<JTransformComponent>().Position = path.SpawnPoint;
         }
 
         public virtual void StartMovement()
         {
-            pathInputComponent.StartMovement();
+            this.GetComponent<JPathInputComponent>().StartMovement();
         }
 
         public virtual void StopMovement()
         {
-            pathInputComponent.StopMovement();
+            this.GetComponent<JPathInputComponent>().StopMovement();
         }
 
         public virtual void TakeDamage(float damage)
         {
-            HealthComponent.TakeDamage(damage);
+            this.GetComponent<JHealthComponent>().TakeDamage(damage);
         }
 
         protected virtual void OnDeath()
         {
             // TODO: Add death animation
-            spriteComponent.PlayAnimation("Default", false, () =>
+            this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false, () =>
             {
                 DestroyEntity();
             });
@@ -93,8 +84,8 @@ namespace Jamageddon2.Entities.Enemies
         protected virtual void OnPathComplete()
         {
             // TODO: Add path complete animation
-            spriteComponent.PlayAnimation("Default", false);
-            //DestroyEntity();
+            this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false);
+            DestroyEntity();
         }
     }
 }
