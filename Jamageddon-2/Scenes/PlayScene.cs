@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
-using Jamageddon2.Entities.Enemies;
 using Jamageddon2.Entities.Components;
 using Jamageddon2.Entities.Level;
 
@@ -17,8 +16,6 @@ namespace Jamageddon2.Scenes
         private UIButton endButton;
         private TowerSelector towerSelector;
         private UIButton startButton;
-        private UIButton damageButton;
-        private JTomatoEnemy tomatoEnemy;
         private string mapPath;
         private JLevelSpawner levelSpawner;
         private JPathComponent path;
@@ -93,11 +90,6 @@ namespace Jamageddon2.Scenes
         private void StartLevel_OnClick(UIButton obj)
         {
             levelSpawner.StartLevel(levelSpawner.NextLevel);
-        }
-
-        private void DamageButton_OnClick(UIButton obj)
-        {
-            tomatoEnemy.TakeDamage(10);
         }
     }
 }

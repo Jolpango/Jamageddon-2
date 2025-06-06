@@ -12,37 +12,43 @@ namespace Jamageddon2.Entities.Enemies
 {
     public abstract class JBaseEnemy : JEntity
     {
-        public float Health { get; protected set; }
-        public float MaxHealth { get; protected set; }
-        public float MoveSpeed { get; protected set; }
-        public new string Name { get; protected set; }
+        public float Health { get; set; }
+        public float MaxHealth { get; set; }
+        public float MoveSpeed { get; set; }
+        public new string Name { get; set; }
+        public string SpritePath { get; set; }
+        public Vector2 Scale { get; set; }
         public bool IsAlive => Health > 0;
         public bool IsMoving => this.GetComponent<JPathInputComponent>() != null && this.GetComponent<JPathInputComponent>().IsMoving;
-
-        protected JBaseEnemy(string spritePath, float maxHealth, float moveSpeed, string name)
+        protected JBaseEnemy(string spritePath)
         {
-            MaxHealth = maxHealth;
-            Health = maxHealth;
-            MoveSpeed = moveSpeed;
-            Name = name;
-
             // Add enemy tag
             Tags = new HashSet<string> { "Enemy" };
 
             // Add required components
-            AddComponent(new JHealthComponent(maxHealth));
+            AddComponent(new JHealthComponent());
             AddComponent(new JSpriteComponent(spritePath));
             AddComponent(new JColliderComponent()
             {
                 Size = new Vector2(32, 32),
-                IsSolid = false
+                IsSolid = false,
             });
-            AddComponent(new JMovementComponent() { Speed = moveSpeed });
+            AddComponent(new JMovementComponent());
             AddComponent(new JTransformComponent());
             AddComponent(new JPathInputComponent());
 
             this.GetComponent<JPathInputComponent>().OnPathComplete += OnPathComplete;
             this.GetComponent<JHealthComponent>().OnDeath += OnDeath;
+        }
+
+        public override void LoadContent()
+        {
+            base.LoadContent();
+            this.GetComponent<JHealthComponent>().MaxHealth = MaxHealth;
+            this.GetComponent<JHealthComponent>().CurrentHealth = MaxHealth;
+            this.GetComponent<JTransformComponent>().Scale = Scale;
+            this.GetComponent<JMovementComponent>().Speed = MoveSpeed;
+            this.GetComponent<JTransformComponent>().Scale = Scale;
         }
 
         public void SetPath(JPathComponent path)

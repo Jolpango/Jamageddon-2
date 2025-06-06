@@ -5,17 +5,18 @@ namespace MonoGame.Jolpango.ECS.Components
 {
     public class JHealthComponent : JComponent
     {
-        public float MaxHealth { get; private set; }
-        public float CurrentHealth { get; private set; }
+        public float MaxHealth { get; set; }
+        public float CurrentHealth { get; set; }
         public bool IsAlive => CurrentHealth > 0;
 
         public event System.Action<float> OnHealthChanged;
         public event System.Action OnDeath;
 
-        public JHealthComponent(float maxHealth)
+        public override void LoadContent()
         {
-            MaxHealth = maxHealth;
-            CurrentHealth = maxHealth;
+            base.LoadContent();
+            MaxHealth = MaxHealth;
+            CurrentHealth = MaxHealth;
         }
 
         public virtual void TakeDamage(float damage)

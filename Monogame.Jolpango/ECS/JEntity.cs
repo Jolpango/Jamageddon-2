@@ -44,12 +44,12 @@ namespace MonoGame.Jolpango.ECS
             return null;
         }
 
-        public void DestroyEntity()
+        public virtual void DestroyEntity()
         {
             OnDestroy?.Invoke(this);
         }
 
-        public void LoadContent()
+        public virtual void LoadContent()
         {
             foreach (var comp in components.Values)
             {
