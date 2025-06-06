@@ -1,0 +1,24 @@
+﻿using Microsoft.Xna.Framework;
+
+namespace Jamageddon2.Entities.Towers
+{
+    internal class JDishWasherTower : JBaseTower
+    {
+        public JDishWasherTower() :
+            base(
+                spritePath: "Content/Animation/axe.json", //TODO change to dishwasher json 
+                attackSpritePath: "Content/Animation/axe.json", //TODO change to dishwasher attack json 
+                damage: 1f,
+                range: 1000f,
+                fireRate: 5.5f)
+        {
+            Name = "DishWasherTower";
+        }
+        
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);  
+        }
+    }
+}
+
