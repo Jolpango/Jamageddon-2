@@ -13,7 +13,7 @@ namespace MonoGame.Jolpango.ECS
     {
         private Dictionary<Type, JComponent> components = new();
         public string Name { get; set; } = "Unnamed Entity";
-        public HashSet<string> Tags { get; set; }
+        public HashSet<string> Tags { get; set; } = new HashSet<string>();
         public event Action<JEntity> OnDestroy;
 
 

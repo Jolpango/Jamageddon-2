@@ -10,7 +10,7 @@ namespace Jamageddon2.Entities.Towers
                 attackSpritePath: "Content/Animation/axe.json", //TODO change to dishwasher attack json 
                 damage: 1f,
                 range: 1000f,
-                fireRate: 5.5f)
+                fireRate: 1f)
         {
             Name = "DishWasherTower";
         }

@@ -30,7 +30,7 @@ namespace Jamageddon2.Entities.Towers
         //TODO fix enemies take damage and remove bullet from list when hit
         private void OnCollisionProjectile(JColliderComponent self, JColliderComponent other)
         {
-            if (other.Parent.Name == "Player")
+            if (other.Parent.Tags.Contains("Enemy"))
             {
                 self.Parent.DestroyEntity();
             }
