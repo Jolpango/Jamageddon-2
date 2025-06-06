@@ -89,7 +89,15 @@ namespace Jamageddon2.Scenes
 
         private void StartLevel_OnClick(UIButton obj)
         {
-            levelSpawner.StartLevel(levelSpawner.NextLevel);
+            if (!levelSpawner.IsLastLevel)
+            {
+                levelSpawner.StartLevel(levelSpawner.NextLevel);
+            }
+            else if (levelSpawner.IsAllEnemiesDestroyed)
+            {
+                EndButton_OnClick(endButton);
+            }
+            
         }
     }
 }
