@@ -1,4 +1,5 @@
 ﻿using Jamageddon2.Entities.Components;
+using Jamageddon2.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
@@ -33,6 +34,8 @@ namespace Jamageddon2.Entities.Towers
             if (other.Parent.Tags.Contains("Enemy"))
             {
                 self.Parent.DestroyEntity();
+                if (other.Parent is JBaseEnemy enemy)
+                    enemy.TakeDamage(1);
             }
         }
     }

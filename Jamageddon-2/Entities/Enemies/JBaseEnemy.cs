@@ -75,6 +75,7 @@ namespace Jamageddon2.Entities.Enemies
         protected virtual void OnDeath()
         {
             // TODO: Add death animation
+            this.StopMovement();
             this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false, () =>
             {
                 DestroyEntity();

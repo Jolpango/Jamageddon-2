@@ -30,10 +30,28 @@ namespace MonoGame.Jolpango.Tiled
             map = JJsonLoader.LoadTiledMap(path);
             TileSet tileset = map.TileSets[0]; // assume a single tileset
             foreach (MapLayer layer in map.Layers)
+            {
+                layer.ResolveProperties();
                 layer.LoadTiles(new Vector2(tileset.TileHeight, tileset.TileHeight));
+            }
 
             string tilesetPath = tileset.Image[..tileset.Image.LastIndexOf('.')];  // strips file extension
             spriteSheet = new JSpriteSheet(content.Load<Texture2D>(tilesetPath), tileset.TileWidth, tileset.TileHeight);
+        }
+
+        public bool TileIsFree(Vector2 position)
+        {
+            foreach (MapLayer layer in map.Layers)
+            {
+                if (layer.IsPlaceable)
+                {
+                    MapTile tile = layer.getTileAt(position);
+                    if (tile != null && tile.TileIndex != MapTile.Empty)
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

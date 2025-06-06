@@ -18,6 +18,10 @@ namespace MonoGame.Jolpango.ECS
                     if (CheckCollision(a, b))
                     {
                         HandleCollision(a, b);
+<<<<<<< Updated upstream
+=======
+                        break;
+>>>>>>> Stashed changes
                     }
                 }
             }

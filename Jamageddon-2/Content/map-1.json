@@ -8,18 +8,30 @@
          "id":1,
          "name":"Ground",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"isPlaceable",
+                 "type":"bool",
+                 "value":false
+                }],
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":8,
          "x":0,
          "y":0
         }, 
         {
-         "data":[5, 5, 5, 5, 25, 25, 25, 25, 13, 13, 13, 13, 25, 6, 25, 9, 25, 25, 25, 25, 25, 14, 25, 9, 16, 2, 3, 3, 3, 4, 25, 9, 24, 10, 11, 11, 11, 12, 25, 9, 25, 18, 19, 19, 19, 20, 25, 9, 25, 25, 25, 25, 25, 25, 25, 9, 25, 25, 17, 17, 17, 17, 21, 25],
+         "data":[5, 5, 5, 5, 8, 8, 8, 8, 13, 13, 13, 13, 8, 6, 8, 9, 8, 8, 8, 8, 8, 14, 8, 9, 16, 2, 3, 3, 3, 4, 8, 9, 24, 10, 11, 11, 11, 12, 8, 9, 8, 18, 19, 19, 19, 20, 8, 9, 8, 8, 8, 8, 8, 8, 8, 9, 8, 8, 17, 17, 17, 17, 21, 8],
          "height":8,
          "id":2,
          "name":"Above ground",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"isPlaceable",
+                 "type":"bool",
+                 "value":true
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":8,

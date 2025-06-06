@@ -1,5 +1,5 @@
-﻿using Jamageddon2.Entities.Enemies;
-using Jamageddon2.Entities.Towers;
+﻿using Jamageddon2.Entities.Towers;
+using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
@@ -34,6 +34,13 @@ namespace Jamageddon2.Entities.Components
             Parent.GetComponent<JLeftMouseClickComponent>().OnClick -= JPlaceTowerComponent_OnClick;
             Parent.DestroyEntity();
             Parent.GetComponent<JParticleEffectComponent>().Emit(mouseInput.Position, 10);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Parent.GetComponent<JSpriteComponent>().sprite.Color = scene.entityWorld.tileManager.TileIsFree(mouseInput.Position)
+                ? Color.White
+                : Color.Red;
         }
     }
 }

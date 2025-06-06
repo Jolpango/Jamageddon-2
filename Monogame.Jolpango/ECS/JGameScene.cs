@@ -17,7 +17,7 @@ namespace MonoGame.Jolpango.ECS
         private Queue<JEntity> entitiesToRemove = new();
         private Queue<JEntity> entitiesToAdd = new();
 
-        protected JEntityWorld entityWorld;
+        public JEntityWorld entityWorld { get; protected set; }
         protected JServiceInjector serviceInjector;
         protected JKeyboardInput keyboardInput;
         protected JMouseInput mouseInput;
