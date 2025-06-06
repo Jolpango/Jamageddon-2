@@ -13,7 +13,7 @@ namespace MonoGame.Jolpango.ECS
     {
         private Dictionary<Type, JComponent> components = new();
         public string Name { get; set; } = "Unnamed Entity";
-        public HashSet<string> Tags {  get; set; }
+        public HashSet<string> Tags { get; set; }
         public event Action<JEntity> OnDestroy;
 
 
@@ -57,7 +57,7 @@ namespace MonoGame.Jolpango.ECS
             }
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             foreach (var c in components.Values) c.Update(gameTime);
         }

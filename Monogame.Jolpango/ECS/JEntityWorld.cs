@@ -10,6 +10,7 @@ namespace MonoGame.Jolpango.ECS
     public class JEntityWorld
     {
         private List<JEntity> entities = new();
+        private Queue<JEntity> entitiesToRemove = new();
         private JPhysicsSystem physicsSystem;
 
         public List<JEntity> Entities
@@ -50,8 +51,17 @@ namespace MonoGame.Jolpango.ECS
         public void RemoveEntity(JEntity e)
         {
             e.OnDestroy -= RemoveEntity;
-            physicsSystem.UnregisterEntity(e);
-            entities.Remove(e);
+            entitiesToRemove.Enqueue(e);
+        }
+
+        private void ProcessRemovals()
+        {
+            while (entitiesToRemove.Count > 0)
+            {
+                var entity = entitiesToRemove.Dequeue();
+                physicsSystem.UnregisterEntity(entity);
+                entities.Remove(entity);
+            }
         }
 
         public void UnloadContent()
@@ -61,10 +71,11 @@ namespace MonoGame.Jolpango.ECS
         public void Update(GameTime gameTime)
         {
             foreach (var e in entities) e.Update(gameTime);
-            if(physicsSystem is not null)
+            if (physicsSystem is not null)
             {
                 physicsSystem.Update(gameTime);
             }
+            ProcessRemovals();
         }
 
         public void Draw(SpriteBatch spriteBatch)
