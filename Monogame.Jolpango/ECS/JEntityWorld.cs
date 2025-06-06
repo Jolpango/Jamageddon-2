@@ -53,13 +53,13 @@ namespace MonoGame.Jolpango.ECS
                 Debug.WriteLine("Unable to add entity to physics system: " + e.ToString());
             }
         }
- 
+
         public void RemoveEntity(JEntity e)
         {
             e.OnDestroy -= RemoveEntity;
             entitiesToRemove.Enqueue(e);
         }
-       
+
         private void ProcessRemovals()
         {
             while (entitiesToRemove.Count > 0)

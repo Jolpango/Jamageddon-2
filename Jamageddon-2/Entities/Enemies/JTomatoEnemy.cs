@@ -12,10 +12,10 @@ namespace Jamageddon2.Entities.Enemies
             : base(
                 spritePath: "Content/Animation/axe.json", // TODO: Replace with tomato sprite
                 maxHealth: 50f,
-                moveSpeed: 75f
+                moveSpeed: 75f,
+                name: "Tomato Enemy"
                 )
         {
-            Name = "Tomato Enemy";
         }
 
         public override void StartMovement()

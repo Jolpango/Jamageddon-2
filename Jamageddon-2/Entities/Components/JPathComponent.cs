@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace Jamageddon2.Entities.Path
+namespace Jamageddon2.Entities.Components
 {
     public class JPathComponent
     {

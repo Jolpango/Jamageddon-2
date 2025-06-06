@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Input;
-using Jamageddon2.Entities.Path;
 using Jamageddon2.Entities.Components;
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ namespace Jamageddon2.Entities.Enemies
         public float Health { get; protected set; }
         public float MaxHealth { get; protected set; }
         public float MoveSpeed { get; protected set; }
+        public string Name { get; protected set; }
         public bool IsAlive => Health > 0;
         public bool IsMoving => pathInputComponent != null && pathInputComponent.IsMoving;
 
@@ -26,11 +26,12 @@ namespace Jamageddon2.Entities.Enemies
         protected JHealthComponent HealthComponent;
         protected JMovementComponent movementComponent;
 
-        protected JBaseEnemy(string spritePath, float maxHealth, float moveSpeed)
+        protected JBaseEnemy(string spritePath, float maxHealth, float moveSpeed, string name)
         {
             MaxHealth = maxHealth;
             Health = maxHealth;
             MoveSpeed = moveSpeed;
+            Name = name;
 
             // Add enemy tag
             Tags = new HashSet<string> { "Enemy" };
@@ -41,7 +42,7 @@ namespace Jamageddon2.Entities.Enemies
             colliderComponent = new JColliderComponent()
             {
                 Size = new Vector2(32, 32),
-                IsSolid = true
+                IsSolid = false
             };
             movementComponent = new JMovementComponent() { Speed = moveSpeed };
             HealthComponent = new JHealthComponent(maxHealth);
