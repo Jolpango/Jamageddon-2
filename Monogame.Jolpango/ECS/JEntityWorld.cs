@@ -65,7 +65,8 @@ namespace MonoGame.Jolpango.ECS
             while (entitiesToRemove.Count > 0)
             {
                 var entity = entitiesToRemove.Dequeue();
-                if (physicsSystem != null)
+                var collider = entity.GetComponent<JColliderComponent>();
+                if (collider is not null && physicsSystem is not null)
                 {
                     physicsSystem.UnregisterEntity(entity);
                 }

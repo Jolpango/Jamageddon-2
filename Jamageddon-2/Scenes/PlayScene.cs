@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Jamageddon2.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Input;
@@ -13,6 +14,7 @@ namespace Jamageddon2.Scenes
         public JSceneManager Parent { get; set; }
         private SpriteFont defaultFont;
         private UIButton endButton;
+        private TowerSelector towerSelector;
         private UIButton startButton;
         private UIButton damageButton;
         private JTomatoEnemy tomatoEnemy;
@@ -20,9 +22,15 @@ namespace Jamageddon2.Scenes
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
             this.mapPath = mapPath;
+            defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
+            RegisterService(defaultFont);
         }
         public override void LoadContent()
         {
+            towerSelector = new TowerSelector();
+            serviceInjector.Inject(towerSelector);
+            towerSelector.LoadContent();
+
             SetPhysicsSystem(new JTopDownPhysicsSystem());
             defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
             TextElement sceneText = new TextElement()
@@ -58,8 +66,15 @@ namespace Jamageddon2.Scenes
             tomatoEnemy.SetPath(path);
             AddEntity(tomatoEnemy);
 
+            AddUIElement(towerSelector.RootElement);
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
+        }
+
+        protected override void InjectAllServices()
+        {
+            serviceInjector.Inject(towerSelector);
+            base.InjectAllServices();
         }
 
         private void EndButton_OnClick(UIButton obj)

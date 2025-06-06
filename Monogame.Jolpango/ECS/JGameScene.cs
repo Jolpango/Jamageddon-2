@@ -12,7 +12,7 @@ namespace MonoGame.Jolpango.ECS
     {
         protected JEntityWorld entityWorld;
         private UIManager uiManager;
-        private JServiceInjector serviceInjector;
+        protected JServiceInjector serviceInjector;
         protected JKeyboardInput keyboardInput;
         protected JMouseInput mouseInput;
         protected Game game;
@@ -29,6 +29,7 @@ namespace MonoGame.Jolpango.ECS
             RegisterService(this.mouseInput);
             RegisterService(this.keyboardInput);
             RegisterService(this.game.Content);
+            RegisterService(this);
         }
         public virtual void RegisterService<T>(T service)
         {
@@ -74,7 +75,7 @@ namespace MonoGame.Jolpango.ECS
             entityWorld.UnloadContent();
         }
 
-        private void InjectAllServices()
+        protected virtual void InjectAllServices()
         {
             IsInjected = true;
             serviceInjector.InjectAll(entityWorld.Entities);
