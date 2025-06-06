@@ -29,6 +29,7 @@ namespace MonoGame.Jolpango.ECS
             RegisterService(this.mouseInput);
             RegisterService(this.keyboardInput);
             RegisterService(this.game.Content);
+            RegisterService(this.game);
             RegisterService(this);
         }
         public virtual void RegisterService<T>(T service)
