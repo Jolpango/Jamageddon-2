@@ -21,13 +21,13 @@ namespace Jamageddon2.Entities.Enemies
         public override void StartMovement()
         {
             base.StartMovement();
-            spriteComponent.PlayAnimation("Default", true);
+            this.GetComponent<JSpriteComponent>().PlayAnimation("Default", true);
         }
 
         public override void StopMovement()
         {
             base.StopMovement();
-            spriteComponent.PlayAnimation("Default", false);
+            this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false);
         }
     }
 }

@@ -17,14 +17,7 @@ namespace Jamageddon2.Entities.Enemies
         public float MoveSpeed { get; protected set; }
         public string Name { get; protected set; }
         public bool IsAlive => Health > 0;
-        public bool IsMoving => pathInputComponent != null && pathInputComponent.IsMoving;
-
-        protected JSpriteComponent spriteComponent;
-        protected JColliderComponent colliderComponent;
-        protected JTransformComponent transformComponent;
-        private JPathInputComponent pathInputComponent;
-        protected JHealthComponent HealthComponent;
-        protected JMovementComponent movementComponent;
+        public bool IsMoving => this.GetComponent<JPathInputComponent>() != null && this.GetComponent<JPathInputComponent>().IsMoving;
 
         protected JBaseEnemy(string spritePath, float maxHealth, float moveSpeed, string name)
         {
@@ -37,16 +30,16 @@ namespace Jamageddon2.Entities.Enemies
             Tags = new HashSet<string> { "Enemy" };
 
             // Add required components
-            transformComponent = new JTransformComponent();
-            spriteComponent = new JSpriteComponent(spritePath);
-            colliderComponent = new JColliderComponent()
+            var transformComponent = new JTransformComponent();
+            var spriteComponent = new JSpriteComponent(spritePath);
+            var colliderComponent = new JColliderComponent()
             {
                 Size = new Vector2(32, 32),
                 IsSolid = false
             };
-            movementComponent = new JMovementComponent() { Speed = moveSpeed };
-            HealthComponent = new JHealthComponent(maxHealth);
-            pathInputComponent = new JPathInputComponent();
+            var movementComponent = new JMovementComponent() { Speed = moveSpeed };
+            var HealthComponent = new JHealthComponent(maxHealth);
+            var pathInputComponent = new JPathInputComponent();
 
             AddComponent(HealthComponent);
             AddComponent(spriteComponent);
@@ -62,29 +55,29 @@ namespace Jamageddon2.Entities.Enemies
 
         public void SetPath(JPathComponent path)
         {
-            pathInputComponent.SetPath(path);
-            transformComponent.Position = path.SpawnPoint;
+            this.GetComponent<JPathInputComponent>().SetPath(path);
+            this.GetComponent<JTransformComponent>().Position = path.SpawnPoint;
         }
 
         public virtual void StartMovement()
         {
-            pathInputComponent.StartMovement();
+            this.GetComponent<JPathInputComponent>().StartMovement();
         }
 
         public virtual void StopMovement()
         {
-            pathInputComponent.StopMovement();
+            this.GetComponent<JPathInputComponent>().StopMovement();
         }
 
         public virtual void TakeDamage(float damage)
         {
-            HealthComponent.TakeDamage(damage);
+            this.GetComponent<JHealthComponent>().TakeDamage(damage);
         }
 
         protected virtual void OnDeath()
         {
             // TODO: Add death animation
-            spriteComponent.PlayAnimation("Default", false, () =>
+            this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false, () =>
             {
                 DestroyEntity();
             });
@@ -93,7 +86,7 @@ namespace Jamageddon2.Entities.Enemies
         protected virtual void OnPathComplete()
         {
             // TODO: Add path complete animation
-            spriteComponent.PlayAnimation("Default", false);
+            this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false);
             //DestroyEntity();
         }
     }

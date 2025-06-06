@@ -83,5 +83,7 @@ namespace Jamageddon2.Entities.Level
         public bool IsLevelComplete => enemiesSpawned >= currentLevel.EnemyClusters.Sum(cluster => cluster.Amount);
         
         public int CurrentLevel => currentLevel == null ? 0 : currentLevel.LevelNumber;
+
+        public int NextLevel => CurrentLevel + 1;
     }
 }

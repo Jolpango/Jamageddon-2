@@ -6,6 +6,7 @@ using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
 using Jamageddon2.Entities.Enemies;
 using Jamageddon2.Entities.Components;
+using Jamageddon2.Entities.Level;
 
 namespace Jamageddon2.Scenes
 {
@@ -19,12 +20,33 @@ namespace Jamageddon2.Scenes
         private UIButton damageButton;
         private JTomatoEnemy tomatoEnemy;
         private string mapPath;
+        private JLevelSpawner levelSpawner;
+        private JPathComponent path;
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
             this.mapPath = mapPath;
             defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
+
+            // Create path
+            path = new JPathComponent();
+            path.SetSpawnPoint(new Vector2(130, 0));
+            path.AddWaypoint(new Vector2(130, 70));
+            path.AddWaypoint(new Vector2(0, 70));
+            path.AddWaypoint(new Vector2(0, 200));
+            path.AddWaypoint(new Vector2(200, 200));
+            path.AddWaypoint(new Vector2(200, 0));
+            path.AddWaypoint(new Vector2(250, 0));
+
+            levelSpawner = new JLevelSpawner(game, this, path);
             RegisterService(defaultFont);
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            levelSpawner.Update(gameTime);
+        }
+
         public override void LoadContent()
         {
             towerSelector = new TowerSelector();
@@ -47,24 +69,8 @@ namespace Jamageddon2.Scenes
 
             // Start button
             startButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(50, 10) };
-            startButton.OnClick += StartTomatoEnemy_OnClick;
+            startButton.OnClick += StartLevel_OnClick;
             AddUIElement(startButton);
-
-            // Damage button
-            damageButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(100, 10) };
-            damageButton.OnClick += DamageButton_OnClick;
-            AddUIElement(damageButton);
-
-            // Create path
-            var path = new JPathComponent();
-            path.SetSpawnPoint(new Vector2(0, 200));
-            path.AddWaypoint(new Vector2(400, 200));
-            path.AddWaypoint(new Vector2(400, 400));
-
-            // Create tomato enemy
-            tomatoEnemy = new JTomatoEnemy();
-            tomatoEnemy.SetPath(path);
-            AddEntity(tomatoEnemy);
 
             AddUIElement(towerSelector.RootElement);
 
@@ -84,9 +90,9 @@ namespace Jamageddon2.Scenes
             Parent.PopScene();
         }
 
-        private void StartTomatoEnemy_OnClick(UIButton obj)
+        private void StartLevel_OnClick(UIButton obj)
         {
-            tomatoEnemy.StartMovement();
+            levelSpawner.StartLevel(levelSpawner.NextLevel);
         }
 
         private void DamageButton_OnClick(UIButton obj)
