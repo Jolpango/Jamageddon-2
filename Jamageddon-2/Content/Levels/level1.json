@@ -1,0 +1,17 @@
+{
+  "levelNumber": 1,
+  "enemyClusters": [
+    {
+      "enemyType": "JTomatoEnemy",
+      "spawnSpeed": 1.0,
+      "amount": 5,
+      "spawnDelay": 0.0
+    },
+    {
+      "enemyType": "JTomatoEnemy",
+      "spawnSpeed": 0.5,
+      "amount": 5,
+      "spawnDelay": 1.5
+    }
+  ]
+}
