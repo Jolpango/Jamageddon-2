@@ -24,6 +24,9 @@ namespace Jamageddon2.Entities.Towers
             AddComponent(new JMovementComponent() { Speed = speed });
             AddComponent(new JColliderComponent() { Size = new Vector2(5, 5), IsSolid = false  });
             GetComponent<JColliderComponent>().OnCollision += OnCollisionProjectile;
+           
+            AddComponent(new JProjectileInputPath());
+            GetComponent<JProjectileInputPath>().MoveIntent = direction;
 
             Speed = speed;
             Damage = damage;
