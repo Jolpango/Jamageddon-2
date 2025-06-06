@@ -26,6 +26,7 @@ namespace MonoGame.Jolpango.ECS.Components
         public override void LoadContent()
         {
             sprite.LoadContent(contentManager, spritePath);
+            UpdateTransform();
         }
 
         public override void UnloadContent()
@@ -38,15 +39,20 @@ namespace MonoGame.Jolpango.ECS.Components
             sprite.StartAnimation(name, onComplete, loop);
         }
 
-        public override void Update(GameTime gameTime)
+        public void UpdateTransform()
         {
             var transform = Parent.GetComponent<JTransformComponent>();
-            if(transform is not null)
+            if (transform is not null)
             {
                 sprite.Position = transform.Position;
                 sprite.Scale = transform.Scale;
                 sprite.Rotation = transform.Rotation;
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            UpdateTransform();
             sprite.Update(gameTime);
         }
 
