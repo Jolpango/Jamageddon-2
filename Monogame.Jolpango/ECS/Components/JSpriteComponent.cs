@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Jolpango.Content;
 using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.Graphics.Sprites;
 using System;
-using System.Runtime.Intrinsics.X86;
 
 namespace MonoGame.Jolpango.ECS.Components
 {
@@ -14,7 +12,6 @@ namespace MonoGame.Jolpango.ECS.Components
         private JSprite sprite = new JSprite();
         private string spritePath;
         private ContentManager contentManager;
-        private SpriteBatch sss;
         public JSpriteComponent(string spritePath)
         {
             this.spritePath = spritePath;
@@ -55,7 +52,7 @@ namespace MonoGame.Jolpango.ECS.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            sprite.Draw(spriteBatch);    
+            sprite.Draw(spriteBatch);
         }
     }
 }

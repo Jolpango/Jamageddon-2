@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS.Components;
-using System;
+using MonoGame.Jolpango.Tiled;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -11,6 +11,7 @@ namespace MonoGame.Jolpango.ECS
     {
         private List<JEntity> entities = new();
         private Queue<JEntity> entitiesToRemove = new();
+        public JTileManager tileManager { get; private set; } = new();
         private JPhysicsSystem physicsSystem;
 
         public List<JEntity> Entities
@@ -21,6 +22,11 @@ namespace MonoGame.Jolpango.ECS
         public void SetPhysicsSystem(JPhysicsSystem physicsSystem)
         {
             this.physicsSystem = physicsSystem;
+        }
+
+        public void LoadMap(string mapPath)
+        {
+            tileManager.LoadMap(mapPath);
         }
 
         public void LoadContent()
@@ -84,6 +90,7 @@ namespace MonoGame.Jolpango.ECS
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            tileManager.Draw(spriteBatch);
             foreach (var e in entities) e.Draw(spriteBatch);
         }
     }

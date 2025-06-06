@@ -18,8 +18,10 @@ namespace Jamageddon2.Scenes
         private UIButton startButton;
         private UIButton damageButton;
         private JTomatoEnemy tomatoEnemy;
-        public PlayScene(Game game, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
+        private string mapPath;
+        public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
+            this.mapPath = mapPath;
             defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
             RegisterService(defaultFont);
         }
@@ -66,6 +68,7 @@ namespace Jamageddon2.Scenes
 
             AddUIElement(towerSelector.RootElement);
             base.LoadContent();
+            entityWorld.LoadMap(mapPath);
         }
 
         protected override void InjectAllServices()
