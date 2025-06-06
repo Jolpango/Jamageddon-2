@@ -13,7 +13,7 @@ namespace MonoGame.Jolpango.Input
         public event Action<MouseState> LeftButtonClicked;
         public event Action<MouseState> RightButtonClicked;
         public event Action<MouseState> MiddleButtonClicked;
-
+        public bool IsUIFocused { get; set; } = false;
         public Vector2 Position => currentState.Position.ToVector2();
         public JMouseInput()
         {

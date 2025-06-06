@@ -67,6 +67,15 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
             }
         }
 
+        public override void LoadContent()
+        {
+            foreach(UIElement child in children)
+            {
+                child.LoadContent();
+            }
+            base.LoadContent();
+        }
+
         public override void Update(GameTime gameTime, JMouseInput mouseInput, JKeyboardInput keyboardInput)
         {
             foreach(UIElement child in children)
