@@ -1,0 +1,53 @@
+{ "compressionlevel":-1,
+ "height":8,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         "height":8,
+         "id":1,
+         "name":"Ground",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":8,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[5, 5, 5, 5, 25, 25, 25, 25, 13, 13, 13, 13, 25, 6, 25, 9, 25, 25, 25, 25, 25, 14, 25, 9, 16, 2, 3, 3, 3, 4, 25, 9, 24, 10, 11, 11, 11, 12, 25, 9, 25, 18, 19, 19, 19, 20, 25, 9, 25, 25, 25, 25, 25, 25, 25, 9, 25, 25, 17, 17, 17, 17, 21, 25],
+         "height":8,
+         "id":2,
+         "name":"Above ground",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":8,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":3,
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.8.0",
+ "tileheight":32,
+ "tilesets":[
+        {
+         "columns":8,
+         "firstgid":1,
+         "image":"Maps/tilemapV1.png",
+         "imageheight":256,
+         "imagewidth":256,
+         "margin":0,
+         "name":"interior",
+         "spacing":0,
+         "tilecount":64,
+         "tileheight":32,
+         "tilewidth":32
+        }],
+ "tilewidth":32,
+ "type":"map",
+ "version":"1.8",
+ "width":8
+}

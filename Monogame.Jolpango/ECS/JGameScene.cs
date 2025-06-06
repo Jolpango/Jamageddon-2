@@ -10,7 +10,7 @@ namespace MonoGame.Jolpango.ECS
 {
     public class JGameScene
     {
-        private JEntityWorld entityWorld;
+        protected JEntityWorld entityWorld;
         private UIManager uiManager;
         private JServiceInjector serviceInjector;
         protected JKeyboardInput keyboardInput;
@@ -78,6 +78,7 @@ namespace MonoGame.Jolpango.ECS
         {
             IsInjected = true;
             serviceInjector.InjectAll(entityWorld.Entities);
+            serviceInjector.Inject(entityWorld.tileManager);
             serviceInjector.Inject(uiManager);
         }
 

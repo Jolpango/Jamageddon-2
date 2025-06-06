@@ -16,8 +16,10 @@ namespace Jamageddon2.Scenes
         private UIButton startButton;
         private UIButton damageButton;
         private JTomatoEnemy tomatoEnemy;
-        public PlayScene(Game game, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
+        private string mapPath;
+        public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
+            this.mapPath = mapPath;
         }
         public override void LoadContent()
         {
@@ -57,6 +59,7 @@ namespace Jamageddon2.Scenes
             AddEntity(tomatoEnemy);
 
             base.LoadContent();
+            entityWorld.LoadMap(mapPath);
         }
 
         private void EndButton_OnClick(UIButton obj)

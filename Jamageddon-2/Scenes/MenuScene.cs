@@ -3,11 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jamageddon2.Scenes
 {
@@ -37,7 +32,7 @@ namespace Jamageddon2.Scenes
 
         private void StartButton_OnClick(UIButton obj)
         {
-            Parent.AddScene(new PlayScene(game) { Parent = Parent});
+            Parent.AddScene(new PlayScene(game, "Content/map-1.json") { Parent = Parent});
         }
     }
 }

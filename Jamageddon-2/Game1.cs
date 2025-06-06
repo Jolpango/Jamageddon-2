@@ -1,7 +1,7 @@
 ﻿using Jamageddon2.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;     
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Utilities;
 
