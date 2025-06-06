@@ -51,7 +51,10 @@ namespace MonoGame.Jolpango.ECS
                 serviceInjector.InjectAll(entity);
             if (IsLoaded)
                 entity.LoadContent();
-            entitiesToAdd.Enqueue(entity);
+            if(IsInjected && IsLoaded)
+                entitiesToAdd.Enqueue(entity);
+            else
+                entityWorld.AddEntity(entity);
             
         }
         public virtual void AddUIElement(UIElement element)
