@@ -18,28 +18,16 @@ namespace Jamageddon2.Entities.Enemies
             Name = "Tomato Enemy";
         }
 
-        public new void StartMovement()
+        public override void StartMovement()
         {
             base.StartMovement();
             spriteComponent.PlayAnimation("Default", true);
         }
 
-        public new void StopMovement()
+        public override void StopMovement()
         {
             base.StopMovement();
             spriteComponent.PlayAnimation("Default", false);
-        }
-
-        protected override void OnDeath()
-        {
-            // Add tomato-specific death effects here
-            DestroyEntity();
-        }
-
-        protected override void OnPathComplete()
-        {
-            // Add tomato-specific end-of-path behavior here
-            // DestroyEntity();
         }
     }
 }

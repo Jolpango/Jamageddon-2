@@ -40,7 +40,7 @@ namespace MonoGame.Jolpango.ECS
                 return;
             try
             {
-                physicsSystem.RegisterEntity(e);
+                physicsSystem?.RegisterEntity(e);
             }
             catch
             {
@@ -59,7 +59,10 @@ namespace MonoGame.Jolpango.ECS
             while (entitiesToRemove.Count > 0)
             {
                 var entity = entitiesToRemove.Dequeue();
-                physicsSystem.UnregisterEntity(entity);
+                if (physicsSystem != null)
+                {
+                    physicsSystem.UnregisterEntity(entity);
+                }
                 entities.Remove(entity);
             }
         }

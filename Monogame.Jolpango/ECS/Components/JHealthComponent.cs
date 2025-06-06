@@ -18,7 +18,7 @@ namespace MonoGame.Jolpango.ECS.Components
             CurrentHealth = maxHealth;
         }
 
-        public void TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
             if (!IsAlive) return;
 

@@ -3,11 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Jamageddon2.Entities.Path;
+using Jamageddon2.Entities.Enemies;
 
 namespace Jamageddon2.Scenes
 {
@@ -16,11 +13,15 @@ namespace Jamageddon2.Scenes
         public JSceneManager Parent { get; set; }
         private SpriteFont defaultFont;
         private UIButton endButton;
+        private UIButton startButton;
+        private UIButton damageButton;
+        private JTomatoEnemy tomatoEnemy;
         public PlayScene(Game game, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
         }
         public override void LoadContent()
         {
+            SetPhysicsSystem(new JTopDownPhysicsSystem());
             defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
             TextElement sceneText = new TextElement()
             {
@@ -33,6 +34,28 @@ namespace Jamageddon2.Scenes
             endButton.OnClick += EndButton_OnClick;
             AddUIElement(endButton);
             AddUIElement(sceneText);
+
+            // Start button
+            startButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(50, 10) };
+            startButton.OnClick += StartTomatoEnemy_OnClick;
+            AddUIElement(startButton);
+
+            // Damage button
+            damageButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(100, 10) };
+            damageButton.OnClick += DamageButton_OnClick;
+            AddUIElement(damageButton);
+
+            // Create path
+            var path = new JPathComponent();
+            path.SetSpawnPoint(new Vector2(0, 200));
+            path.AddWaypoint(new Vector2(400, 200));
+            path.AddWaypoint(new Vector2(400, 400));
+
+            // Create tomato enemy
+            tomatoEnemy = new JTomatoEnemy();
+            tomatoEnemy.SetPath(path);
+            AddEntity(tomatoEnemy);
+
             base.LoadContent();
         }
 
@@ -40,6 +63,16 @@ namespace Jamageddon2.Scenes
         {
             endButton.OnClick -= EndButton_OnClick;
             Parent.PopScene();
+        }
+
+        private void StartTomatoEnemy_OnClick(UIButton obj)
+        {
+            tomatoEnemy.StartMovement();
+        }
+
+        private void DamageButton_OnClick(UIButton obj)
+        {
+            tomatoEnemy.TakeDamage(10);
         }
     }
 }

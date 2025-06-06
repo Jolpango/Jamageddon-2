@@ -56,6 +56,7 @@ namespace Jamageddon2.Entities.Enemies
             AddComponent(pathInputComponent);
 
             pathInputComponent.OnPathComplete += OnPathComplete;
+            HealthComponent.OnDeath += OnDeath;
         }
 
         public void SetPath(JPathComponent path)
@@ -64,17 +65,35 @@ namespace Jamageddon2.Entities.Enemies
             transformComponent.Position = path.SpawnPoint;
         }
 
-        public void StartMovement()
+        public virtual void StartMovement()
         {
             pathInputComponent.StartMovement();
         }
 
-        public void StopMovement()
+        public virtual void StopMovement()
         {
             pathInputComponent.StopMovement();
         }
 
-        protected abstract void OnDeath();
-        protected abstract void OnPathComplete();
+        public virtual void TakeDamage(float damage)
+        {
+            HealthComponent.TakeDamage(damage);
+        }
+
+        protected virtual void OnDeath()
+        {
+            // TODO: Add death animation
+            spriteComponent.PlayAnimation("Default", false, () =>
+            {
+                DestroyEntity();
+            });
+        }
+
+        protected virtual void OnPathComplete()
+        {
+            // TODO: Add path complete animation
+            spriteComponent.PlayAnimation("Default", false);
+            //DestroyEntity();
+        }
     }
 }
