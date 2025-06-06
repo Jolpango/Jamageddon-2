@@ -1,17 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.Core;
+using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI;
 using MonoGame.Jolpango.UI.Elements;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MonoGame.Jolpango.ECS
 {
     public class JGameScene
     {
-        protected JEntityWorld entityWorld;
         private UIManager uiManager;
+        private Queue<JEntity> entitiesToRemove = new();
+        private Queue<JEntity> entitiesToAdd = new();
+
+        protected JEntityWorld entityWorld;
         protected JServiceInjector serviceInjector;
         protected JKeyboardInput keyboardInput;
         protected JMouseInput mouseInput;
@@ -45,7 +51,8 @@ namespace MonoGame.Jolpango.ECS
                 serviceInjector.InjectAll(entity);
             if (IsLoaded)
                 entity.LoadContent();
-            entityWorld.AddEntity(entity);
+            entitiesToAdd.Enqueue(entity);
+            
         }
         public virtual void AddUIElement(UIElement element)
         {
@@ -64,6 +71,8 @@ namespace MonoGame.Jolpango.ECS
             mouseInput.Update();
             uiManager.Update(gameTime);
             entityWorld.Update(gameTime);
+            ProcessAddings();
+            
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
@@ -94,6 +103,15 @@ namespace MonoGame.Jolpango.ECS
             spriteBatch.Begin();
             entityWorld.Draw(spriteBatch);
             spriteBatch.End();
+        }
+
+
+        private void ProcessAddings()
+        {
+            while (entitiesToAdd.Count > 0)
+            {
+                entityWorld.AddEntity(entitiesToAdd.Dequeue());
+            }
         }
     }
 }
