@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Jamageddon2.Entities.Towers
 {
@@ -29,18 +19,6 @@ namespace Jamageddon2.Entities.Towers
         {
             base.Update(gameTime);  
         }
-
-        // Override the FireProjectile method to implement a custom dishwasher-specific projectile behavior
-       /* public override void attack()
-        {
-            // Implement your custom dishwasher-specific projectile behavior here
-            // For example, create a new dishwasher projectile entity and add it to the game world
-        }*/
     }
-
-
-
-
-
 }
 

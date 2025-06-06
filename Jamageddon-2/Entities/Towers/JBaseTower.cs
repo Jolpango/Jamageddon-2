@@ -1,13 +1,7 @@
 ﻿using Jamageddon2.Entities.Components;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Principal;
 
 
 namespace Jamageddon2.Entities.Towers
@@ -36,11 +30,9 @@ namespace Jamageddon2.Entities.Towers
         //TODO fix enemies take damage and remove bullet from list when hit
         private void OnCollisionProjectile(JColliderComponent self, JColliderComponent other)
         {
-            Debug.WriteLine("Hit");
             if (other.Parent.Name == "Player")
             {
                 self.Parent.DestroyEntity();
-                //removeBullet(self.Parent);
             }
         }
     }
@@ -52,37 +44,16 @@ namespace Jamageddon2.Entities.Towers
         public float Range { get; protected set; }
         public float FireRate { get; protected set; }
         public string AttackSpritePath;
-        
-        private float FireTime;
 
- 
-
-        /*
-        private JSpriteComponent JSpriteComponent;
-        private JTransformComponent JTransformComponent;
-        private JTargetEnemyComponent TargetEnemyComponent;
-        private JShootComponent JShootComponent;
-  
-
-        protected JSpriteComponent spriteComponent;
-        protected JColliderComponent colliderComponent;
-        protected JTransformComponent transformComponent;
-        protected JMovementComponent movementComponent;
-        protected JInputComponent inputComponent;*/
-       // protected List<JProjectile> bullets;
         protected int currentWaypointIndex = 0;
         protected float waypointReachedDistance = 5f;
 
         protected JBaseTower(string spritePath,string attackSpritePath, float damage, float range, float fireRate) 
         {
-            Debug.WriteLine("Create tower inside JBaseTower");
             Damage = damage;
             Range = range;
             FireRate = fireRate;
-            //bullets = new List<JProjectile>();
-
             AttackSpritePath = attackSpritePath;
-
 
 
             AddComponent(new JSpriteComponent(spritePath));
@@ -91,14 +62,11 @@ namespace Jamageddon2.Entities.Towers
             AddComponent(new JColliderComponent() { Size = new Vector2(32, 32), IsSolid = false });
             AddComponent(new JTargetEnemyComponent(){ FireRate = fireRate });
             AddComponent(new JShootComponent());
-
         }
 
         public override void Update(GameTime gameTime)
         {
-            // Debug.WriteLine("Update");
             base.Update(gameTime);
-
         }
     }
 }
