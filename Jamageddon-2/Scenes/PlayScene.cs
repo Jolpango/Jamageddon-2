@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
@@ -13,15 +14,25 @@ namespace Jamageddon2.Scenes
     public class PlayScene : JGameScene
     {
         public JSceneManager Parent { get; set; }
+        private SpriteFont defaultFont;
         private UIButton endButton;
         public PlayScene(Game game, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
         }
         public override void LoadContent()
         {
+            defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
+            TextElement sceneText = new TextElement()
+            {
+                Font = defaultFont,
+                Text = "PlayScene",
+                Position = new Vector2(600, 10),
+                Color = Color.White,
+            };
             endButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(10, 10) };
             endButton.OnClick += EndButton_OnClick;
             AddUIElement(endButton);
+            AddUIElement(sceneText);
             base.LoadContent();
         }
 
