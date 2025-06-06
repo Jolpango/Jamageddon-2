@@ -13,9 +13,9 @@ namespace MonoGame.Jolpango.ECS
         private JEntityWorld entityWorld;
         private UIManager uiManager;
         private JServiceInjector serviceInjector;
-        private JKeyboardInput keyboardInput;
-        private JMouseInput mouseInput;
-        private Game game;
+        protected JKeyboardInput keyboardInput;
+        protected JMouseInput mouseInput;
+        protected Game game;
         public bool IsLoaded { get; private set; } = false;
         public bool IsInjected { get; private set; } = false;
         public JGameScene(Game game, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null)

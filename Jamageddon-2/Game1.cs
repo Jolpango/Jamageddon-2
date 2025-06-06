@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Jamageddon2.Scenes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Jolpango.Content;
@@ -17,7 +18,7 @@ namespace Jamageddon2
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private JGameScene scene;
+        private JSceneManager sceneManager = new JSceneManager();
         public JTimerHandler TimerHandler { get; set; }
 
 
@@ -33,6 +34,8 @@ namespace Jamageddon2
             base.Initialize();
             IsMouseVisible = true;
             _graphics.SynchronizeWithVerticalRetrace = false;
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.PreferredBackBufferHeight = 720;
             _graphics.ApplyChanges();
         }
 
@@ -42,26 +45,21 @@ namespace Jamageddon2
             TimerHandler = new JTimerHandler(this);
             Components.Add(TimerHandler);
             JTextureCache.Initialize(GraphicsDevice);
-
-            scene = new JGameScene(this);
-            scene.SetPhysicsSystem(new JTopDownPhysicsSystem());
-
-
-            scene.LoadContent();
+            sceneManager.AddScene(new MenuScene(this) { Parent = sceneManager });
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            scene.Update(gameTime);
+            sceneManager.Update(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(new Color(50, 50, 50));
-            scene.Draw(_spriteBatch);
+            sceneManager.Draw(_spriteBatch);
             base.Draw(gameTime);
         }
     }
