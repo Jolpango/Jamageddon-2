@@ -4,7 +4,6 @@ namespace MonoGame.Jolpango.Tiled
 {
     public class MapLayer
     {
-
         public List<int> Data { get; set; }
         public int Height { get; set; }
         public double Opacity { get; set; }
