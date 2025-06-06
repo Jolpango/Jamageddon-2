@@ -1,5 +1,5 @@
 ﻿using Jamageddon2.Entities.Enemies;
-using Jamageddon2.Towers;
+using Jamageddon2.Entities.Towers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -74,21 +74,7 @@ namespace Jamageddon2.UI
                 selectedTower = towerButton.TowerDefinition;
                 TowerPlacer towerPlacer = new TowerPlacer("Content/Animation/axe.json");
                 towerPlacer.TowerDefinition = selectedTower;
-                towerPlacer.GetComponent<JLeftMouseClickComponent>().OnClick += OnPlaceTower;
                 gameScene.AddEntity(towerPlacer);
-                Debug.WriteLine("Selected tower: " +  selectedTower.Name);
-            }
-        }
-
-        private void OnPlaceTower(JLeftMouseClickComponent obj)
-        {
-            if (obj.Parent is TowerPlacer towerPlacer)
-            {
-                towerPlacer.GetComponent<JLeftMouseClickComponent>().OnClick -= OnPlaceTower;
-                Debug.WriteLine("Placing tower: " + towerPlacer.TowerDefinition.Name);
-                JTomatoEnemy jTomatoEnemy = new JTomatoEnemy();
-                gameScene.AddEntity(jTomatoEnemy);
-                obj.Parent.DestroyEntity();
             }
         }
     }

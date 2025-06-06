@@ -6,6 +6,8 @@ using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
 using Jamageddon2.Entities.Path;
 using Jamageddon2.Entities.Enemies;
+using MonoGame.Jolpango.Utilities;
+using System.Diagnostics;
 
 namespace Jamageddon2.Scenes
 {
@@ -67,6 +69,7 @@ namespace Jamageddon2.Scenes
             AddEntity(tomatoEnemy);
 
             AddUIElement(towerSelector.RootElement);
+
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
         }

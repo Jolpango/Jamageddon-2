@@ -1,9 +1,10 @@
-﻿using Jamageddon2.UI;
+﻿using Jamageddon2.Entities.Components;
+using Jamageddon2.UI;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 
-namespace Jamageddon2.Towers
+namespace Jamageddon2.Entities.Towers
 {
     public class TowerPlacer : JEntity
     {
@@ -11,6 +12,7 @@ namespace Jamageddon2.Towers
         private readonly JTransformComponent transformComponent;
         private readonly JMouseFollowerComponent mouseFollowerComponent;
         private readonly JLeftMouseClickComponent leftMouseClickComponent;
+        private readonly JPlaceTowerComponent placeTowerComponent;
         public TowerDefinition TowerDefinition { get; set; }
 
         public TowerPlacer(string spritePath)
@@ -19,11 +21,13 @@ namespace Jamageddon2.Towers
             transformComponent = new JTransformComponent();
             mouseFollowerComponent = new JMouseFollowerComponent();
             leftMouseClickComponent = new JLeftMouseClickComponent();
+            placeTowerComponent = new JPlaceTowerComponent();
 
             AddComponent(spriteComponent);
             AddComponent(transformComponent);
             AddComponent(mouseFollowerComponent);
             AddComponent(leftMouseClickComponent);
+            AddComponent(placeTowerComponent);
         }
     }
 }
