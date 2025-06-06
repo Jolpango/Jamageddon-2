@@ -4,10 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
-using Jamageddon2.Entities.Path;
 using Jamageddon2.Entities.Enemies;
-using MonoGame.Jolpango.Utilities;
-using System.Diagnostics;
+using Jamageddon2.Entities.Components;
 
 namespace Jamageddon2.Scenes
 {

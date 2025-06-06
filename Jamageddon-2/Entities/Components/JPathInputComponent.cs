@@ -4,7 +4,6 @@ using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Input;
 using System;
 using System.Collections.Generic;
-using Jamageddon2.Entities.Path;
 
 namespace Jamageddon2.Entities.Components
 {
