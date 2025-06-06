@@ -99,9 +99,5 @@ namespace Jamageddon2.Scenes
             }
             
         }
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
     }
 }
