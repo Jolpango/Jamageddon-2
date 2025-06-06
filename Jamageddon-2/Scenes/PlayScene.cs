@@ -93,5 +93,9 @@ namespace Jamageddon2.Scenes
         {
             tomatoEnemy.TakeDamage(10);
         }
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
     }
 }
