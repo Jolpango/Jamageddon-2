@@ -86,7 +86,7 @@ namespace Jamageddon2.Entities.Enemies
         {
             // TODO: Add path complete animation
             this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false);
-            DestroyEntity();
+            //DestroyEntity();
         }
     }
 }

@@ -3,8 +3,8 @@
   "enemyClusters": [
     {
       "enemyType": "JTomatoEnemy",
-      "spawnSpeed": 1.0,
-      "amount": 5,
+      "spawnSpeed": 0.1,
+      "amount": 5000,
       "spawnDelay": 0.0
     },
     {

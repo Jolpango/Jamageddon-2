@@ -3,6 +3,7 @@ using Jamageddon2.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
+using System.Collections.Generic;
 
 
 namespace Jamageddon2.Entities.Towers
@@ -14,6 +15,7 @@ namespace Jamageddon2.Entities.Towers
 
         public JProjectile(string attackSpritePath, Vector2 position, Vector2 direction, float speed, float damage)
         {
+            Tags = new HashSet<string>{ "Projectile" };
             AddComponent(new JSpriteComponent(attackSpritePath));
             AddComponent(new JTransformComponent() { Position = position });
             AddComponent(new JMovementComponent() { Speed = speed });
