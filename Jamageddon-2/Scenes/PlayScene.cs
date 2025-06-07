@@ -22,7 +22,7 @@ namespace Jamageddon2.Scenes
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
             this.mapPath = mapPath;
-            defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
+            defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
 
             // Create path
             path = new JPathComponent();
@@ -51,7 +51,7 @@ namespace Jamageddon2.Scenes
             towerSelector.LoadContent();
 
             SetPhysicsSystem(new JTopDownPhysicsSystem());
-            defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
+            defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
             TextElement sceneText = new TextElement()
             {
                 Font = defaultFont,
