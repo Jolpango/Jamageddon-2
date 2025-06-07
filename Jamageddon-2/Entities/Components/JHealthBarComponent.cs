@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Core;
 
-namespace MonoGame.Jolpango.ECS.Components
+namespace Jamageddon2.Entities.Components
 {
     public class JHealthBarComponent : JComponent, IJInjectable<Game>
     {
