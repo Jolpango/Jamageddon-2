@@ -43,7 +43,7 @@ namespace Jamageddon2.UI
                 MinSize = new Vector2(800, 200),
                 Position = new Vector2(1280 / 2 - 400, 720 - 200 - 10),
                 Padding = new Vector2(10),
-                BackgroundColor = Color.Chartreuse,
+                BackgroundColor = Color.Gray,
                 AlignItems = ItemAlignment.Center,
                 IsEnabled = false,
                 IsVisible = false
@@ -51,7 +51,7 @@ namespace Jamageddon2.UI
             selectedTowerText = new TextElement()
             {
                 Text = "No tower selected",
-                Color = Color.Red,
+                Color = Color.White,
                 Font = defaultFont
             };
             var targetModeContainer = new UIStackPanel()
@@ -65,21 +65,18 @@ namespace Jamageddon2.UI
             {
                 Size = new Vector2(128, 32),
                 Text = "Closest",
-                BackgroundColor = Color.Red,
                 Font = defaultFont
             };
             var furthestButton = new UIButton()
             {
                 Size = new Vector2(128, 32),
                 Text = "Furthest",
-                BackgroundColor = Color.Green,
                 Font = defaultFont
             };
             var toughestButton = new UIButton()
             {
                 Size = new Vector2(128, 32),
                 Text = "Toughest",
-                BackgroundColor = Color.Blue,
                 Font = defaultFont
             };
             closestButton.OnClick += (UIElement e) => SetTargetMode(TargetingMode.Closest);
