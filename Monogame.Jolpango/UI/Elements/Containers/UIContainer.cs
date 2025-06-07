@@ -48,12 +48,12 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
             if (Children.Count > 0)
             {
                 Vector2 min = Children[0].Position;
-                Vector2 max = Children[0].Position + Children[0].Size;
+                Vector2 max = Children[0].Position + Children[0].EffectiveSize;
 
                 foreach (var child in Children)
                 {
                     var topLeft = child.Position;
-                    var bottomRight = child.Position + child.Size;
+                    var bottomRight = child.Position + child.EffectiveSize;
 
                     min = Vector2.Min(min, topLeft);
                     max = Vector2.Max(max, bottomRight);
@@ -66,6 +66,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
                 Size = Padding * 2;
             }
         }
+
 
         public override void LoadContent()
         {

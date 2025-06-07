@@ -59,11 +59,17 @@ namespace Jamageddon2.UI
                 Font = font
             };
             RootElement.AddChild(text);
-            UIStackPanel outerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Horizontal, BackgroundColor = Color.Violet };
+            UIStackPanel outerTowerContainer = new UIStackPanel()
+            {
+                Gap = 10,
+                Orientation = Orientation.Horizontal,
+                BackgroundColor = Color.Violet,
+                Padding = new Vector2(5)
+            };
             for(int i = 0; i < 2; i++)
             {
-                UIStackPanel innerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Vertical };
-                for (int j = 0; j < 10; j++)
+                UIStackPanel innerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Vertical, Padding = new Vector2(0) };
+                for(int j = 0; j < 10; j++)
                 {
                     TowerButton button = new TowerButton()
                     {

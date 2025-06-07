@@ -44,8 +44,6 @@ namespace Jamageddon2
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             sceneManager.Update(gameTime);
             base.Update(gameTime);
         }
@@ -58,3 +56,4 @@ namespace Jamageddon2
         }
     }
 }
+ 

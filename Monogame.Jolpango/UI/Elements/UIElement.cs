@@ -15,7 +15,12 @@ namespace MonoGame.Jolpango.UI.Elements
     {
         public Vector2 Position { get; set; }
         public Vector2 Size { get; set; }
+        public Vector2 MinSize { get; set; } = Vector2.Zero;
         public Color BackgroundColor { get; set; } = Color.Transparent;
+        public Vector2 EffectiveSize => new Vector2(
+            Math.Max(Size.X, MinSize.X),
+            Math.Max(Size.Y, MinSize.Y)
+        );
         public bool IsVisible { get; set; } = true;
         public bool IsEnabled { get; set; } = true;
         public UIElement Parent { get; set; } = null;
@@ -30,7 +35,7 @@ namespace MonoGame.Jolpango.UI.Elements
             }
         }
 
-        public Rectangle BoundingBox => new Rectangle(GlobalPosition.ToPoint(), Size.ToPoint());
+        public Rectangle BoundingBox => new Rectangle(GlobalPosition.ToPoint(), new Vector2(Math.Max(Size.X, MinSize.X), Math.Max(Size.Y, MinSize.Y)).ToPoint());
 
         public virtual bool IsMouseOver(Vector2 mousePosition)
         {

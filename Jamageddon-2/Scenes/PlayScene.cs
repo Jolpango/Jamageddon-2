@@ -10,6 +10,7 @@ using MonoGame.Jolpango.UI.Elements.Containers;
 using Jamageddon2.Entities.Towers;
 using System;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Jamageddon2.Scenes
 {
@@ -28,6 +29,10 @@ namespace Jamageddon2.Scenes
         private TextElement livesLeftText;
         private TextElement goldText;
         private JBaseTower selectedTower;
+
+
+        private UIStackPanel selectedTowerContainer;
+        private TextElement selectedTowerText;
 
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
@@ -54,6 +59,11 @@ namespace Jamageddon2.Scenes
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (mouseInput.IsRightButtonClicked() || keyboardInput.IsKeyPressed(Keys.Escape))
+            {
+                // Deselect tower
+                SelectExistingTower(null);
+            }
             levelSpawner.Update(gameTime);
             towerSelector.Update();
             livesLeftText.Text = "Lives left: " + player.LivesLeft;
@@ -99,12 +109,35 @@ namespace Jamageddon2.Scenes
             playerStatsPanel.AddChild(livesLeftText);
             UIStackPanel rightSideUIPanel = new UIStackPanel()
             {
-                Position = new Vector2(1020, 10),
+                Position = new Vector2(1000, 10),
                 Orientation = Orientation.Horizontal,
             };
             rightSideUIPanel.AddChild(playerStatsPanel);
             rightSideUIPanel.AddChild(towerSelector.RootElement);
             AddUIElement(rightSideUIPanel);
+
+            //Selected tower container
+            
+            selectedTowerContainer = new UIStackPanel()
+            {
+                Size = new Vector2(800, 200),
+                MinSize = new Vector2(800, 200),
+                Position = new Vector2(1280 / 2 - 400, 500),
+                Orientation = Orientation.Vertical,
+                BackgroundColor = Color.ForestGreen,
+                AlignItems = ItemAlignment.Center,
+                IsEnabled = false,
+                IsVisible = false,
+            };
+
+            selectedTowerText = new TextElement()
+            {
+                Color = Color.Red,
+                Text = "No selected tower",
+                Font = defaultFont,
+            };
+            selectedTowerContainer.AddChild(selectedTowerText);
+            AddUIElement(selectedTowerContainer);
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
@@ -139,8 +172,17 @@ namespace Jamageddon2.Scenes
 
         public void SelectExistingTower(JBaseTower jBaseTower)
         {
+            if(jBaseTower is null)
+            {
+                selectedTower = null;
+                selectedTowerContainer.IsEnabled = false;
+                selectedTowerContainer.IsVisible = false;
+                return;
+            }
             selectedTower = jBaseTower;
-            Debug.WriteLine("Selected tower " + selectedTower.ToString());
+            selectedTowerContainer.IsEnabled = true;
+            selectedTowerContainer.IsVisible = true;
+            selectedTowerText.Text = jBaseTower.Name;
         }
     }
 }
