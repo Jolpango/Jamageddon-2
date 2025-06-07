@@ -5,17 +5,20 @@ using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Jamageddon2.Entities.Components
 {
-    internal class JTargetEnemyComponent : JComponent, IJInjectable<JGameScene>
+    public enum TargetingMode
+    {
+        Closest,
+        Farthest, // Closest to the end of the path
+        Toughest, // Highest maxhealth
+    }
+    public class JTargetEnemyComponent : JComponent, IJInjectable<JGameScene>
     {
         public event Action<JBaseEnemy> OnTarget;
         private JGameScene gameScene;
+
+        public TargetingMode TargetingMode { get; set; } = TargetingMode.Closest;
         public float FireRate { get; set; }
 
         public void Inject(JGameScene service)
@@ -30,32 +33,56 @@ namespace Jamageddon2.Entities.Components
             {
                 if (FireRate <= 0)
                 {
-                    JBaseEnemy closestEnemy = null;
-                    float closestDistance = float.MaxValue;
-                    foreach(var entity in gameScene.GetEntitiesByTag("Enemy"))
+                    switch(TargetingMode)
                     {
-                        if(entity is JBaseEnemy enemy)
-                        {
-                            float distance = Vector2.Distance(enemy.GetComponent<JTransformComponent>().Position, tower.GetComponent<JTransformComponent>().Position);
-                            if (distance < closestDistance)
-                            {
-                                closestDistance = distance;
-                                closestEnemy = enemy;
-                            }
-                        }
+                        case TargetingMode.Closest:
+                            TargetClosest(tower);
+                            break;
+                        case TargetingMode.Farthest:
+                            TargetFarthest(tower);
+                            break;
+                        case TargetingMode.Toughest:
+                            TargetToughest(tower);
+                            break;
                     }
-
-                    if(closestDistance <= tower.Range)
-                    {
-                        FireRate = tower.FireRate;
-                        if (closestEnemy is not null)
-                            ShootEnemy(closestEnemy);
-                    }
-
-                    
                 }
             }
             base.Update(gameTime);
+        }
+
+        private void TargetClosest(JBaseTower tower)
+        {
+            JBaseEnemy closestEnemy = null;
+            float closestDistance = float.MaxValue;
+            foreach (var entity in gameScene.GetEntitiesByTag("Enemy"))
+            {
+                if (entity is JBaseEnemy enemy)
+                {
+                    float distance = Vector2.Distance(enemy.GetComponent<JTransformComponent>().Position, tower.GetComponent<JTransformComponent>().Position);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestEnemy = enemy;
+                    }
+                }
+            }
+
+            if (closestDistance <= tower.Range)
+            {
+                FireRate = tower.FireRate;
+                if (closestEnemy is not null)
+                    ShootEnemy(closestEnemy);
+            }
+        }
+
+        private void TargetFarthest(JBaseTower tower)
+        {
+            //throw new NotImplementedException("Farthest targeting mode is not implemented yet.");
+        }
+
+        private void TargetToughest(JBaseTower tower)
+        {
+            //throw new NotImplementedException("Toughest targeting mode is not implemented yet.");
         }
 
         private void ShootEnemy(JBaseEnemy closestEnemy)

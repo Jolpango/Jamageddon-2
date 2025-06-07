@@ -1,6 +1,7 @@
 ﻿using Jamageddon2.Entities.Components;
 using Jamageddon2.Entities.Projectiles;
 using Jamageddon2.Scenes;
+using Jamageddon2.UI;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
@@ -10,7 +11,7 @@ using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.Entities.Towers
 {
-    public abstract class JBaseTower : JEntity, IJInjectable<PlayScene>
+    public abstract class JBaseTower : JEntity, IJInjectable<ExistingTowerSelectedUI>
     {
         public float Damage { get; protected set; }
         public float Range { get; protected set; }
@@ -19,11 +20,11 @@ namespace Jamageddon2.Entities.Towers
         protected int currentWaypointIndex = 0;
         protected float waypointReachedDistance = 5f;
 
-        protected PlayScene scene;
+        protected ExistingTowerSelectedUI existingTowerSelectedUI;
 
-        public void Inject(PlayScene service)
+        public void Inject(ExistingTowerSelectedUI service)
         {
-            scene = service;
+            existingTowerSelectedUI = service;
         }
 
         protected JBaseTower(string spritePath, float damage, float range, float fireRate)
@@ -50,7 +51,7 @@ namespace Jamageddon2.Entities.Towers
         public abstract JBaseProjectile GetProjectile();
         private void JBaseTower_OnClick(JEntity obj)
         {
-            scene.SelectExistingTower(this);
+            existingTowerSelectedUI.SelectExistingTower(this);
         }
 
         public override void Update(GameTime gameTime)

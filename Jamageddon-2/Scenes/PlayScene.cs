@@ -10,6 +10,7 @@ using MonoGame.Jolpango.UI.Elements.Containers;
 using Jamageddon2.Entities.Towers;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
+using MonoGame.Jolpango.UI;
 
 namespace Jamageddon2.Scenes
 {
@@ -27,17 +28,17 @@ namespace Jamageddon2.Scenes
         private TextElement livesLeftText;
         private TextElement goldText;
         private JBaseTower selectedTower;
+        private ExistingTowerSelectedUI selectedTowerContainer;
 
-
-        private UIStackPanel selectedTowerContainer;
-        private TextElement selectedTowerText;
 
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
             this.mapPath = mapPath;
             player = new Player();
             defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
+            selectedTowerContainer = new ExistingTowerSelectedUI();
 
+            RegisterService(selectedTowerContainer);
             RegisterService(player);
             RegisterService(defaultFont);
             RegisterService(this);
@@ -45,85 +46,69 @@ namespace Jamageddon2.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            if (mouseInput.IsRightButtonClicked() || keyboardInput.IsKeyPressed(Keys.Escape))
-            {
-                // Deselect tower
-                SelectExistingTower(null);
-            }
             towerSelector.Update();
+            selectedTowerContainer.Update();
             livesLeftText.Text = "Lives left: " + player.LivesLeft;
             goldText.Text = "Gold: " + player.Gold;
+            base.Update(gameTime);
         }
 
         public override void LoadContent()
         {
+            RegisterService(Parent);
+
             towerSelector = new TowerSelector();
             serviceInjector.Inject(towerSelector);
+            serviceInjector.Inject(selectedTowerContainer);
             towerSelector.LoadContent();
-
+            selectedTowerContainer.LoadContent();
             SetPhysicsSystem(new JTopDownPhysicsSystem());
             defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
-            TextElement sceneText = new TextElement()
+
+
+            // UI Frame
+            UIStackPanel topPanel = new UIStackPanel()
             {
-                Font = defaultFont,
-                Text = "PlayScene",
-                Position = new Vector2(600, 10),
-                Color = Color.White,
+                Position = new Vector2(0, 0),
+                MinSize = new Vector2(1280, 50),
+                BackgroundColor = Color.SaddleBrown,
+                Orientation = Orientation.Horizontal,
+                AlignItems = ItemAlignment.Center,
+                Padding = new Vector2(10, 0),
+                Gap = 30,
             };
-            endButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(10, 10) };
+            
+            AddUIElement(topPanel);
+
+            UIStackPanel rightPanel = new UIStackPanel()
+            {
+                Position = new Vector2(1280 - 200, 0),
+                MinSize = new Vector2(200, 720),
+                Padding = new Vector2(0, 50),
+                Gap = 10,
+                BackgroundColor = Color.SaddleBrown,
+                Orientation = Orientation.Vertical,
+                AlignItems = ItemAlignment.Center,
+            };
+            AddUIElement(rightPanel);
+
+            endButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(10, 10), Text = "X", Font = defaultFont };
             endButton.OnClick += EndButton_OnClick;
-            AddUIElement(endButton);
-            AddUIElement(sceneText);
+            topPanel.AddChild(endButton);
 
             // Start button
-            startButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(50, 10) };
+            startButton = new UIButton() { Size = new Vector2(120, 32), Position = new Vector2(50, 10), Text = "Start >", Font = defaultFont, Color = Color.Green };
             startButton.OnClick += StartLevel_OnClick;
-            AddUIElement(startButton);
 
-            // Player stats
-            playerStatsPanel = new UIStackPanel()
-            {
-                Gap = 20,
-                Orientation = Orientation.Vertical,
-                BackgroundColor = Color.CornflowerBlue,
-                Padding = new Vector2(10),
-            };
             livesLeftText = new TextElement() { Text = "Lives left: " + player.LivesLeft, Color = Color.Red, Font = defaultFont };
             goldText = new TextElement() { Text = "Gold: " + player.Gold, Color = Color.Gold, Font = defaultFont };
-            playerStatsPanel.AddChild(goldText);
-            playerStatsPanel.AddChild(livesLeftText);
-            UIStackPanel rightSideUIPanel = new UIStackPanel()
-            {
-                Position = new Vector2(1000, 10),
-                Orientation = Orientation.Horizontal,
-            };
-            rightSideUIPanel.AddChild(playerStatsPanel);
-            rightSideUIPanel.AddChild(towerSelector.RootElement);
-            AddUIElement(rightSideUIPanel);
+            topPanel.AddChild(goldText);
+            topPanel.AddChild(livesLeftText);
 
+            rightPanel.AddChild(towerSelector.RootElement);
+            rightPanel.AddChild(startButton);
             //Selected tower container
-            
-            selectedTowerContainer = new UIStackPanel()
-            {
-                Size = new Vector2(800, 200),
-                MinSize = new Vector2(800, 200),
-                Position = new Vector2(1280 / 2 - 400, 500),
-                Orientation = Orientation.Vertical,
-                BackgroundColor = Color.ForestGreen,
-                AlignItems = ItemAlignment.Center,
-                IsEnabled = false,
-                IsVisible = false,
-            };
-
-            selectedTowerText = new TextElement()
-            {
-                Color = Color.Red,
-                Text = "No selected tower",
-                Font = defaultFont,
-            };
-            selectedTowerContainer.AddChild(selectedTowerText);
-            AddUIElement(selectedTowerContainer);
+            AddUIElement(selectedTowerContainer.RootElement);
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
@@ -135,7 +120,6 @@ namespace Jamageddon2.Scenes
             };
             levelSpawner = new JLevelSpawner(game, this, path);
 
-            RegisterService(Parent);
 
         }
 
@@ -162,21 +146,6 @@ namespace Jamageddon2.Scenes
                 EndButton_OnClick(endButton);
             }
             
-        }
-
-        public void SelectExistingTower(JBaseTower jBaseTower)
-        {
-            if(jBaseTower is null)
-            {
-                selectedTower = null;
-                selectedTowerContainer.IsEnabled = false;
-                selectedTowerContainer.IsVisible = false;
-                return;
-            }
-            selectedTower = jBaseTower;
-            selectedTowerContainer.IsEnabled = true;
-            selectedTowerContainer.IsVisible = true;
-            selectedTowerText.Text = jBaseTower.Name;
         }
     }
 }

@@ -91,6 +91,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/busboy32.png
 
+#begin Sprites/butcherchef64.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/butcherchef64.png
+
 #begin Sprites/busboy64.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -126,6 +138,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/plate.png
+
+#begin Sprites/butcherknife64.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/butcherknife64.png
 
 #begin stick.png
 /importer:TextureImporter
@@ -163,3 +187,14 @@
 /processorParam:TextureFormat=Color
 /build:Maps/tilemapV2.png
 
+#begin Sprites/Circular.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Circular.png

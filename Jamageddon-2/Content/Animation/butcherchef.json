@@ -1,0 +1,17 @@
+{
+  "TextureAtlas": {
+    "Texture": "Sprites/butcherchef64",
+    "RegionWidth": 64,
+    "RegionHeight": 64
+  },
+  "Cycles": {
+    "AttackWindUp": {
+      "FrameDuration": 0.2,
+      "Frames": [0, 1, 2, 3]
+    },
+    "AttackWindDown": {
+      "FrameDuration": 0.2,
+      "Frames": [3, 2, 1, 0]
+    }
+  }
+}
