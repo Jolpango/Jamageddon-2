@@ -80,6 +80,7 @@ namespace Jamageddon2.Entities.Enemies
         {
             // TODO: Add death animation
             this.StopMovement();
+            this.Tags = new HashSet<string> { "DeadEnemy" };
             this.GetComponent<JHealthBarComponent>().Enabled = false;
             this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false, () =>
             {
