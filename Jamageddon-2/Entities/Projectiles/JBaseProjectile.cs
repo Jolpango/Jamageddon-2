@@ -3,8 +3,8 @@ using Jamageddon2.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
+using System;
 using System.Collections.Generic;
-using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.Entities.Projectiles
 {
@@ -18,7 +18,10 @@ namespace Jamageddon2.Entities.Projectiles
         public Vector2 Direction { get; set; }
         public float Speed { get; set; } = DEFAULT_PROJECTILE_SPEED;
         public float Damage { get; set; } = DEFAULT_PROJECTILE_DAMAGE;
+        public int Pierces { get; set; } = 1;
         public Vector2 Size { get; set; } = new Vector2(DEFAULT_PROJECTILE_SIZE, DEFAULT_PROJECTILE_SIZE);
+
+        private List<JEntity> entitiesHit = new();
 
         protected JBaseProjectile(string spritePath)
         {
@@ -43,12 +46,16 @@ namespace Jamageddon2.Entities.Projectiles
 
         protected virtual void OnCollisionProjectile(JColliderComponent self, JColliderComponent other)
         {
-            if (other.Parent.Tags.Contains("Enemy"))
-            {
+            if (!other.Parent.Tags.Contains("Enemy") || entitiesHit.Contains(other.Parent) || Pierces <= 0)
+                return;
+
+            Pierces--;
+            if (Pierces == 0)
                 self.Parent.DestroyEntity();
-                if (other.Parent is JBaseEnemy enemy)
-                    enemy.TakeDamage(Damage);
-            }
+
+            entitiesHit.Add(other.Parent);
+            if (other.Parent is JBaseEnemy enemy)
+                enemy.TakeDamage(Damage);
         }
     }
 }

@@ -13,16 +13,9 @@ namespace MonoGame.Jolpango.ECS
             List<JColliderComponent> enemies = colliders.Where(collider => collider.Parent.Tags.Contains("Enemy")).ToList();
             List<JColliderComponent> projectiles = colliders.Where(collider => collider.Parent.Tags.Contains("Projectile")).ToList();
             foreach (var projectile in projectiles)
-            {
                 foreach (var enemy in enemies)
-                {
                     if (CheckCollision(enemy, projectile))
-                    {
                         HandleCollision(enemy, projectile);
-                        break;
-                    }
-                }
-            }
         }
 
         protected override bool CheckCollision(JColliderComponent a,  JColliderComponent b)
