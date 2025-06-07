@@ -1,4 +1,5 @@
-﻿using Jamageddon2.Entities.Enemies;
+﻿using Jamageddon2.Entities.Components;
+using Jamageddon2.Entities.Enemies;
 using Jamageddon2.Entities.Towers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -62,9 +63,10 @@ namespace Jamageddon2.UI
             for(int i = 0; i < 2; i++)
             {
                 UIStackPanel innerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Vertical };
-                for(int j = 0; j < 10; j++)
+                for (int j = 0; j < 10; j++)
                 {
-                    TowerButton button = new TowerButton() {
+                    TowerButton button = new TowerButton()
+                    {
                         Size = new Vector2(32, 32),
                         TowerDefinition = new TowerDefinition() { Name = "JDishWasherTower", Description = "Freaking interns man", Cost = 30 }
                     };
@@ -102,6 +104,8 @@ namespace Jamageddon2.UI
                     return;
                 selectedTower = towerButton.TowerDefinition;
                 TowerPlacer towerPlacer = new TowerPlacer("Content/Animation/busboy.json");
+                towerPlacer.TowerDefinition = selectedTower;
+                towerPlacer.AddComponent(new JRangeIndicatorComponent() { Color = new Color(0, 50, 0,80), Range = 100.0f });
                 towerPlacer.Name = towerButton.TowerDefinition.Name;
                 towerPlacer.TowerDefinition = towerButton.TowerDefinition;
                 towerPlacer.OnDestroy += TowerPlacer_OnDestroy;

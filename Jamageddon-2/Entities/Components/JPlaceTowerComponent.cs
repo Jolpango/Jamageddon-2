@@ -1,4 +1,5 @@
 ﻿using Jamageddon2.Entities.Towers;
+using Jamageddon2.UI;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
@@ -29,7 +30,7 @@ namespace Jamageddon2.Entities.Components
         public override void LoadContent()
         {
             Parent.GetComponent<JLeftMouseClickComponent>().OnClick += JPlaceTowerComponent_OnClick;
-            base.LoadContent();
+            base.LoadContent();          
         }
 
         private void JPlaceTowerComponent_OnClick(JLeftMouseClickComponent obj)
@@ -72,6 +73,12 @@ namespace Jamageddon2.Entities.Components
             Parent.GetComponent<JSpriteComponent>().sprite.Color = scene.entityWorld.tileManager.TileIsFree(mouseInput.Position)
                 ? Color.White
                 : Color.Red;
-        }
+
+
+            Color green = new Color(0, 50, 0, 80);
+            Color red = new Color(50, 0, 0, 80);
+            Parent.GetComponent<JRangeIndicatorComponent>().Color= scene.entityWorld.tileManager.TileIsFree(mouseInput.Position)
+                ? green
+                : red;}
     }
 }

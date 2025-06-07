@@ -38,6 +38,9 @@
     <None Update="Content\Animation\busboy.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Content\Animation\cheese.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Content\Animation\tomato.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
