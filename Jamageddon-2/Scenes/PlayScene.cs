@@ -27,17 +27,17 @@ namespace Jamageddon2.Scenes
         private TextElement livesLeftText;
         private TextElement goldText;
         private JBaseTower selectedTower;
+        private ExistingTowerSelectedUI selectedTowerContainer;
 
-
-        private UIStackPanel selectedTowerContainer;
-        private TextElement selectedTowerText;
 
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
             this.mapPath = mapPath;
             player = new Player();
             defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
+            selectedTowerContainer = new ExistingTowerSelectedUI();
 
+            RegisterService(selectedTowerContainer);
             RegisterService(player);
             RegisterService(defaultFont);
             RegisterService(this);
@@ -45,23 +45,22 @@ namespace Jamageddon2.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            if (mouseInput.IsRightButtonClicked() || keyboardInput.IsKeyPressed(Keys.Escape))
-            {
-                // Deselect tower
-                SelectExistingTower(null);
-            }
             towerSelector.Update();
+            selectedTowerContainer.Update();
             livesLeftText.Text = "Lives left: " + player.LivesLeft;
             goldText.Text = "Gold: " + player.Gold;
+            base.Update(gameTime);
         }
 
         public override void LoadContent()
         {
+            RegisterService(Parent);
+
             towerSelector = new TowerSelector();
             serviceInjector.Inject(towerSelector);
+            serviceInjector.Inject(selectedTowerContainer);
             towerSelector.LoadContent();
-
+            selectedTowerContainer.LoadContent();
             SetPhysicsSystem(new JTopDownPhysicsSystem());
             defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
             TextElement sceneText = new TextElement()
@@ -103,27 +102,7 @@ namespace Jamageddon2.Scenes
             AddUIElement(rightSideUIPanel);
 
             //Selected tower container
-            
-            selectedTowerContainer = new UIStackPanel()
-            {
-                Size = new Vector2(800, 200),
-                MinSize = new Vector2(800, 200),
-                Position = new Vector2(1280 / 2 - 400, 500),
-                Orientation = Orientation.Vertical,
-                BackgroundColor = Color.ForestGreen,
-                AlignItems = ItemAlignment.Center,
-                IsEnabled = false,
-                IsVisible = false,
-            };
-
-            selectedTowerText = new TextElement()
-            {
-                Color = Color.Red,
-                Text = "No selected tower",
-                Font = defaultFont,
-            };
-            selectedTowerContainer.AddChild(selectedTowerText);
-            AddUIElement(selectedTowerContainer);
+            AddUIElement(selectedTowerContainer.RootElement);
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
@@ -135,7 +114,6 @@ namespace Jamageddon2.Scenes
             };
             levelSpawner = new JLevelSpawner(game, this, path);
 
-            RegisterService(Parent);
 
         }
 
@@ -162,21 +140,6 @@ namespace Jamageddon2.Scenes
                 EndButton_OnClick(endButton);
             }
             
-        }
-
-        public void SelectExistingTower(JBaseTower jBaseTower)
-        {
-            if(jBaseTower is null)
-            {
-                selectedTower = null;
-                selectedTowerContainer.IsEnabled = false;
-                selectedTowerContainer.IsVisible = false;
-                return;
-            }
-            selectedTower = jBaseTower;
-            selectedTowerContainer.IsEnabled = true;
-            selectedTowerContainer.IsVisible = true;
-            selectedTowerText.Text = jBaseTower.Name;
         }
     }
 }

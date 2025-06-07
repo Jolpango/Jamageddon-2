@@ -17,6 +17,7 @@ namespace MonoGame.Jolpango.UI.Elements
         public Vector2 Size { get; set; }
         public Vector2 MinSize { get; set; } = Vector2.Zero;
         public Color BackgroundColor { get; set; } = Color.Transparent;
+        public Texture2D BackgroundTexture { get; set; } = JTextureCache.White;
         public Vector2 EffectiveSize => new Vector2(
             Math.Max(Size.X, MinSize.X),
             Math.Max(Size.Y, MinSize.Y)
@@ -51,7 +52,7 @@ namespace MonoGame.Jolpango.UI.Elements
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(JTextureCache.White, BoundingBox, BackgroundColor);
+            spriteBatch.Draw(BackgroundTexture, BoundingBox, BackgroundColor);
         }
     }
 }
