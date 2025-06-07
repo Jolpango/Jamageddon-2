@@ -1,13 +1,17 @@
 {
   "TextureAtlas": {
-    "Texture": "Sprites/busboy",
-    "RegionWidth": 32,
-    "RegionHeight": 32
+    "Texture": "Sprites/busboy64",
+    "RegionWidth": 64,
+    "RegionHeight": 64
   },
   "Cycles": {
-    "Default": {
+    "AttackWindUp": {
       "FrameDuration": 0.1,
-      "Frames": [0, 1, 2, 3, 2, 1, 0]
+      "Frames": [0, 1, 2, 3]
+    },
+    "AttackWindDown": {
+      "FrameDuration": 0.1,
+      "Frames": [3, 2, 1, 0]
     }
   }
 }

@@ -3,10 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Input;
+using MonoGame.Jolpango.Core;
 using Jamageddon2.Entities.Components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.Entities.Enemies
 {
@@ -30,7 +32,7 @@ namespace Jamageddon2.Entities.Enemies
             AddComponent(new JSpriteComponent(spritePath));
             AddComponent(new JColliderComponent()
             {
-                Size = new Vector2(32, 32),
+                Size = new Vector2(DEFAULT_ENTITY_SIZE, DEFAULT_ENTITY_SIZE),
                 IsSolid = false,
             });
             AddComponent(new JMovementComponent());
@@ -50,6 +52,7 @@ namespace Jamageddon2.Entities.Enemies
             this.GetComponent<JTransformComponent>().Scale = Scale;
             this.GetComponent<JMovementComponent>().Speed = MoveSpeed;
             this.GetComponent<JTransformComponent>().Scale = Scale;
+            this.GetComponent<JHealthBarComponent>().Size = new Vector2(DEFAULT_ENTITY_SIZE, 4);
         }
 
         public void SetPath(JPathComponent path)

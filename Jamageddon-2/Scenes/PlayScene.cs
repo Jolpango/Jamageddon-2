@@ -30,13 +30,13 @@ namespace Jamageddon2.Scenes
 
             // Create path
             path = new JPathComponent();
-            path.SetSpawnPoint(new Vector2(130, 0));
-            path.AddWaypoint(new Vector2(130, 70));
-            path.AddWaypoint(new Vector2(0, 70));
-            path.AddWaypoint(new Vector2(0, 200));
-            path.AddWaypoint(new Vector2(200, 200));
-            path.AddWaypoint(new Vector2(200, 0));
-            path.AddWaypoint(new Vector2(250, 0));
+            path.SetSpawnPoint(new Vector2(260, 0));
+            path.AddWaypoint(new Vector2(260, 140));
+            path.AddWaypoint(new Vector2(0, 140));
+            path.AddWaypoint(new Vector2(0, 400));
+            path.AddWaypoint(new Vector2(400, 400));
+            path.AddWaypoint(new Vector2(400, 0));
+            path.AddWaypoint(new Vector2(500, 0));
 
             levelSpawner = new JLevelSpawner(game, this, path);
             RegisterService(player);

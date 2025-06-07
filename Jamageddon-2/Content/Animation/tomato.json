@@ -1,12 +1,12 @@
 {
   "TextureAtlas": {
-    "Texture": "Sprites/tomato",
-    "RegionWidth": 32,
-    "RegionHeight": 32
+    "Texture": "Sprites/tomato64",
+    "RegionWidth": 64,
+    "RegionHeight": 64
   },
   "Cycles": {
     "Default": {
-      "FrameDuration": 0.05,
+      "FrameDuration": 0.1,
       "Frames": [0, 1, 2, 3, 2, 1, 0]
     }
   }
