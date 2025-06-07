@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Jolpango.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,21 @@ namespace MonoGame.Jolpango.UI.Elements
 
         public override void LoadContent()
         {
-            Size = Font.MeasureString(Text);
+            RecalculateSize();
             base.LoadContent();
+        }
+        public override void Update(GameTime gameTime, JMouseInput mouseInput, JKeyboardInput keyboardInput)
+        {
+            RecalculateSize();
+            base.Update(gameTime, mouseInput, keyboardInput);
+        }
+        private void RecalculateSize()
+        {
+            Size = Font.MeasureString(Text);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
             spriteBatch.DrawString(Font, Text, GlobalPosition, Color);
         }
     }
