@@ -1,0 +1,13 @@
+{
+  "TextureAtlas": {
+    "Texture": "Sprites/plate",
+    "RegionWidth": 64,
+    "RegionHeight": 64
+  },
+  "Cycles": {
+    "Default": {
+      "FrameDuration": 0.1,
+      "Frames": [0, 1, 2, 3]
+    }
+  }
+}

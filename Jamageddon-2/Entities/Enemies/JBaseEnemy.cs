@@ -14,15 +14,16 @@ namespace Jamageddon2.Entities.Enemies
 {
     public abstract class JBaseEnemy : JEntity
     {
+
+        private float DEFAULT_ENEMY_COLLIDER_SIZE = DEFAULT_ENTITY_SIZE / 2;
         public float Health { get; set; }
         public float MaxHealth { get; set; }
         public float MoveSpeed { get; set; }
         public new string Name { get; set; }
-        public string SpritePath { get; set; }
         public Vector2 Scale { get; set; }
         public bool IsAlive => Health > 0;
         public bool IsMoving => this.GetComponent<JPathInputComponent>() != null && this.GetComponent<JPathInputComponent>().IsMoving;
-        protected JBaseEnemy(string spritePath)
+        protected JBaseEnemy(string spritePath, string particleEffectPath = "Content/Emitters/random.json")
         {
             // Add enemy tag
             Tags = new HashSet<string> { "Enemy" };
@@ -32,13 +33,15 @@ namespace Jamageddon2.Entities.Enemies
             AddComponent(new JSpriteComponent(spritePath));
             AddComponent(new JColliderComponent()
             {
-                Size = new Vector2(DEFAULT_ENTITY_SIZE, DEFAULT_ENTITY_SIZE),
+                Size = new Vector2(DEFAULT_ENEMY_COLLIDER_SIZE, DEFAULT_ENEMY_COLLIDER_SIZE),
                 IsSolid = false,
+                Centered = true
             });
             AddComponent(new JMovementComponent());
             AddComponent(new JTransformComponent());
             AddComponent(new JPathInputComponent());
             AddComponent(new JHealthBarComponent());
+            AddComponent(new JParticleEffectComponent(particleEffectPath));
 
             this.GetComponent<JPathInputComponent>().OnPathComplete += OnPathComplete;
             this.GetComponent<JHealthComponent>().OnDeath += OnDeath;
@@ -82,6 +85,8 @@ namespace Jamageddon2.Entities.Enemies
             this.StopMovement();
             this.Tags = new HashSet<string> { "DeadEnemy" };
             this.GetComponent<JHealthBarComponent>().Enabled = false;
+            var sprite = this.GetComponent<JSpriteComponent>();
+            this.GetComponent<JParticleEffectComponent>().Emit(sprite.sprite.Center, 10);
             this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false, () =>
             {
                 DestroyEntity();
