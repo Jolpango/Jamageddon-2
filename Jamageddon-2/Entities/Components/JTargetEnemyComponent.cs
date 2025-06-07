@@ -29,14 +29,27 @@ namespace Jamageddon2.Entities.Components
             if (Parent is JBaseTower tower)
             {
                 if (FireRate <= 0)
-                {             
-                    var enemy = new JTomatoEnemy(); //TODO change to real enemy and find first enemy in range
-                    float distance = Vector2.Distance(enemy.GetComponent<JTransformComponent>().Position, tower.GetComponent<JTransformComponent>().Position);
-                    if(distance <= tower.Range)
+                {
+                    JBaseEnemy closestEnemy = null;
+                    float closestDistance = float.MaxValue;
+                    foreach(var entity in gameScene.GetEntitiesByTag("Enemy"))
+                    {
+                        if(entity is JBaseEnemy enemy)
+                        {
+                            float distance = Vector2.Distance(enemy.GetComponent<JTransformComponent>().Position, tower.GetComponent<JTransformComponent>().Position);
+                            if (distance < closestDistance)
+                            {
+                                closestDistance = distance;
+                                closestEnemy = enemy;
+                            }
+                        }
+                    }
+
+                    if(closestDistance <= tower.Range)
                     {
                         FireRate = tower.FireRate;
-                        OnTarget?.Invoke(enemy);
-
+                        if (closestEnemy is not null)
+                            OnTarget?.Invoke(closestEnemy);
                     }
 
                     

@@ -10,7 +10,7 @@ namespace Jamageddon2.Entities.Enemies
     {
         public JTomatoEnemy() : base("Content/Animation/tomato.json")
         {
-            MaxHealth = 50f;
+            MaxHealth = 3f;
             MoveSpeed = 75f;
             Name = "Tomato Enemy";
             Scale = new Vector2(1f, 1f);

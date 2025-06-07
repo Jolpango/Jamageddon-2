@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS.Components;
 
@@ -9,15 +10,15 @@ namespace MonoGame.Jolpango.ECS
     {
         public override void Update(GameTime gameTime)
         {
-            for (int i = 0; i < colliders.Count; i++)
+            List<JColliderComponent> enemies = colliders.Where(collider => collider.Parent.Tags.Contains("Enemy")).ToList();
+            List<JColliderComponent> projectiles = colliders.Where(collider => collider.Parent.Tags.Contains("Projectile")).ToList();
+            foreach (var projectile in projectiles)
             {
-                var a = colliders[i];
-                for (int j = i + 1; j < colliders.Count; j++)
+                foreach (var enemy in enemies)
                 {
-                    var b = colliders[j];
-                    if (CheckCollision(a, b))
+                    if (CheckCollision(enemy, projectile))
                     {
-                        HandleCollision(a, b);
+                        HandleCollision(enemy, projectile);
                     }
                 }
             }

@@ -43,7 +43,7 @@ namespace Jamageddon2.Entities.Level
         {
             if (levelNumber <= 0 || levelNumber > levelConfigs.Count)
             {
-                throw new System.ArgumentException($"Invalid level number: {levelNumber}");
+                throw new ArgumentException($"Invalid level number: {levelNumber}");
             }
 
             currentLevel = levelConfigs[levelNumber - 1];

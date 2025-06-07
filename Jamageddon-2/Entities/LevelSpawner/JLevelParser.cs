@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.IO;
 using System;
+using System.Linq;
 
 namespace Jamageddon2.Entities.Level
 {
@@ -22,7 +23,7 @@ namespace Jamageddon2.Entities.Level
                 var config = JsonConvert.DeserializeObject<JLevelConfig>(jsonContent);
                 levels.Add(config);
             }
-            return levels;
+            return levels.OrderBy(level => level.LevelNumber).ToList();
         }
 
         public JBaseEnemy CreateEnemy(string enemyType)

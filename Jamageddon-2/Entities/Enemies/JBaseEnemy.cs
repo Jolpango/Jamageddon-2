@@ -36,6 +36,7 @@ namespace Jamageddon2.Entities.Enemies
             AddComponent(new JMovementComponent());
             AddComponent(new JTransformComponent());
             AddComponent(new JPathInputComponent());
+            AddComponent(new JHealthBarComponent());
 
             this.GetComponent<JPathInputComponent>().OnPathComplete += OnPathComplete;
             this.GetComponent<JHealthComponent>().OnDeath += OnDeath;
@@ -75,6 +76,8 @@ namespace Jamageddon2.Entities.Enemies
         protected virtual void OnDeath()
         {
             // TODO: Add death animation
+            this.StopMovement();
+            this.GetComponent<JHealthBarComponent>().Enabled = false;
             this.GetComponent<JSpriteComponent>().PlayAnimation("Default", false, () =>
             {
                 DestroyEntity();

@@ -9,7 +9,7 @@ namespace MonoGame.Jolpango.ECS.Components
 {
     public class JSpriteComponent : JComponent, IJInjectable<ContentManager>
     {
-        private JSprite sprite = new JSprite();
+        public JSprite sprite { get; private set; } = new();
         private string spritePath;
         private ContentManager contentManager;
         public JSpriteComponent(string spritePath)

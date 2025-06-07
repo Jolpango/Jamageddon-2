@@ -1,4 +1,6 @@
+using Jamageddon2.Scenes;
 using Microsoft.Xna.Framework;
+using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Input;
@@ -7,17 +9,27 @@ using System.Collections.Generic;
 
 namespace Jamageddon2.Entities.Components
 {
-    public class JPathInputComponent : JInputComponent
+    public class JPathInputComponent : JInputComponent, IJInjectable<Player>, IJInjectable<JSceneManager>
     {
         private List<Vector2> waypoints;
         private int currentWaypointIndex;
         private float waypointReachedDistance = 10f;
         private bool isMoving;
         private JTransformComponent transformComponent;
+        private Player player;
+        private JSceneManager sceneManager;
 
         public event Action OnPathComplete;
         public bool IsMoving => isMoving;
 
+        public void Inject(Player service)
+        {
+            player = service;
+        }
+        public void Inject(JSceneManager service)
+        {
+            sceneManager = service;
+        }
         public JPathInputComponent()
         {
             waypoints = new List<Vector2>();
@@ -68,6 +80,9 @@ namespace Jamageddon2.Entities.Components
                     isMoving = false;
                     MoveIntent = Vector2.Zero;
                     OnPathComplete?.Invoke();
+                    player.TakeDamage(1); // Update with damage?
+                    if (player.LivesLeft <= 0)
+                        sceneManager.PopScene();
                     return;
                 }
                 targetWaypoint = waypoints[currentWaypointIndex];
@@ -77,5 +92,6 @@ namespace Jamageddon2.Entities.Components
             direction.Normalize();
             MoveIntent = direction;
         }
+
     }
 }

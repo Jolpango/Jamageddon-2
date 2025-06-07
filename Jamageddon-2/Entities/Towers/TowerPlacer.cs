@@ -14,6 +14,7 @@ namespace Jamageddon2.Entities.Towers
         private readonly JLeftMouseClickComponent leftMouseClickComponent;
         private readonly JPlaceTowerComponent placeTowerComponent;
         private readonly JParticleEffectComponent particleEffectComponent;
+        private readonly JColliderComponent colliderComponent;
         public TowerDefinition TowerDefinition { get; set; }
 
         public TowerPlacer(string spritePath)
@@ -23,6 +24,7 @@ namespace Jamageddon2.Entities.Towers
             mouseFollowerComponent = new JMouseFollowerComponent();
             leftMouseClickComponent = new JLeftMouseClickComponent();
             placeTowerComponent = new JPlaceTowerComponent();
+            colliderComponent = new JColliderComponent() { Size = new Vector2(32, 32), IsSolid = false };
             particleEffectComponent = new JParticleEffectComponent("Content/Emitters/random.json");
 
             AddComponent(spriteComponent);
@@ -31,6 +33,7 @@ namespace Jamageddon2.Entities.Towers
             AddComponent(leftMouseClickComponent);
             AddComponent(placeTowerComponent);
             AddComponent(particleEffectComponent);
+            AddComponent(colliderComponent);
         }
     }
 }

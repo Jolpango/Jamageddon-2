@@ -27,7 +27,7 @@ namespace Jamageddon2.Entities.Components
                 Vector2 direction = (obj.GetComponent<JTransformComponent>().Position - Parent.GetComponent<JTransformComponent>().Position);
                 direction.Normalize();
 
-                var bullet = new JProjectile(tower.AttackSpritePath, Parent.GetComponent<JTransformComponent>().Position, direction, 100.5f, tower.Damage);
+                var bullet = new JProjectile(tower.AttackSpritePath, Parent.GetComponent<JTransformComponent>().Position, direction, 200, tower.Damage);
                 scene.AddEntity(bullet);
                 
             }

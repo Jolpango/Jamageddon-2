@@ -1,7 +1,9 @@
 ﻿using Jamageddon2.Entities.Components;
+using Jamageddon2.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
+using System.Collections.Generic;
 
 
 namespace Jamageddon2.Entities.Towers
@@ -13,6 +15,7 @@ namespace Jamageddon2.Entities.Towers
 
         public JProjectile(string attackSpritePath, Vector2 position, Vector2 direction, float speed, float damage)
         {
+            Tags = new HashSet<string>{ "Projectile" };
             AddComponent(new JSpriteComponent(attackSpritePath));
             AddComponent(new JTransformComponent() { Position = position });
             AddComponent(new JMovementComponent() { Speed = speed });
@@ -30,9 +33,11 @@ namespace Jamageddon2.Entities.Towers
         //TODO fix enemies take damage and remove bullet from list when hit
         private void OnCollisionProjectile(JColliderComponent self, JColliderComponent other)
         {
-            if (other.Parent.Name == "Player")
+            if (other.Parent.Tags.Contains("Enemy"))
             {
                 self.Parent.DestroyEntity();
+                if (other.Parent is JBaseEnemy enemy)
+                    enemy.TakeDamage(Damage);
             }
         }
     }

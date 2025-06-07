@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Jolpango.Core;
+using MonoGame.Jolpango.ECS.Components;
 
-namespace MonoGame.Jolpango.ECS.Components
+namespace Jamageddon2.Entities.Components
 {
-    public class JHealthComponent : JComponent
+    public class JHealthComponent : JComponent, IJInjectable<Player>
     {
         public float MaxHealth { get; set; }
         public float CurrentHealth { get; set; }
@@ -11,6 +13,13 @@ namespace MonoGame.Jolpango.ECS.Components
 
         public event System.Action<float> OnHealthChanged;
         public event System.Action OnDeath;
+
+        private Player player;
+
+        public void Inject(Player service)
+        {
+            player = service;
+        }
 
         public override void LoadContent()
         {
@@ -30,6 +39,7 @@ namespace MonoGame.Jolpango.ECS.Components
 
             if (!IsAlive)
             {
+                player.AddGold(1);
                 OnDeath?.Invoke();
             }
         }

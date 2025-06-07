@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace MonoGame.Jolpango.Tiled
@@ -10,14 +10,26 @@ namespace MonoGame.Jolpango.Tiled
         public List<int> Data { get; set; }
         public int Height { get; set; }
         public double Opacity { get; set; }
+        public List<LayerProperty> Properties { get; set; }
         public string Type { get; set; }
         public bool Visible { get; set; }
         public int Width { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 
+        private Vector2 tileSize { get; set; }
+        public bool IsPlaceable { get; set; }
+
+        public void ResolveProperties()
+        {
+            foreach (LayerProperty prop in Properties)
+                if (prop.Name == "isPlaceable")
+                    IsPlaceable = prop.Value;
+        }
+
         public void LoadTiles(Vector2 tileSize)
         {
+            this.tileSize = tileSize;
             tiles = new List<List<MapTile>>(Height);
             int i = 0;
             for (int y = 0; y < Height; y++)
@@ -34,6 +46,16 @@ namespace MonoGame.Jolpango.Tiled
                 }
                 tiles.Add(row);
             }
+        }
+
+        public MapTile getTileAt(Vector2 position)
+        {
+            int x = (int)(position.X / tileSize.X);
+            int y = (int)(position.Y / tileSize.Y);
+            if (x >= Width || y >= Height || x < 0 || y < 0)
+                return null;
+
+            return tiles[y][x];
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Jamageddon2.Scenes
         }
         public override void LoadContent()
         {
-            defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
+            defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
             TextElement sceneText = new TextElement()
             {
                 Font = defaultFont,
