@@ -26,6 +26,7 @@ namespace MonoGame.Jolpango.Core
                 throw new ArgumentNullException(nameof(entities));
             foreach (var entity in entities)
             {
+                Inject(entity);
                 foreach (var component in entity.ComponentsList)
                 {
                     Inject(component);
@@ -36,6 +37,7 @@ namespace MonoGame.Jolpango.Core
         {
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
+            Inject(entity);
             foreach (var component in entity.ComponentsList)
             {
                 Inject(component);

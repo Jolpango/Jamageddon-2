@@ -1,9 +1,12 @@
 ﻿using Jamageddon2.Entities.Components;
 using Jamageddon2.Entities.Enemies;
+using Jamageddon2.Scenes;
 using Microsoft.Xna.Framework;
+using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.Entities.Towers
@@ -43,7 +46,7 @@ namespace Jamageddon2.Entities.Towers
     }
 
 
-    public abstract class JBaseTower : JEntity
+    public abstract class JBaseTower : JEntity, IJInjectable<PlayScene>
     {
         public float Damage { get; protected set; }
         public float Range { get; protected set; }
@@ -53,7 +56,14 @@ namespace Jamageddon2.Entities.Towers
         protected int currentWaypointIndex = 0;
         protected float waypointReachedDistance = 5f;
 
-        protected JBaseTower(string spritePath,string attackSpritePath, float damage, float range, float fireRate) 
+        protected PlayScene scene;
+
+        public void Inject(PlayScene service)
+        {
+            scene = service;
+        }
+
+        protected JBaseTower(string spritePath, string attackSpritePath, float damage, float range, float fireRate) 
         {
             Damage = damage;
             Range = range;
@@ -67,6 +77,14 @@ namespace Jamageddon2.Entities.Towers
             AddComponent(new JColliderComponent() { Size = new Vector2(DEFAULT_ENTITY_SIZE, DEFAULT_ENTITY_SIZE), IsSolid = false });
             AddComponent(new JTargetEnemyComponent(){ FireRate = fireRate });
             AddComponent(new JShootComponent());
+            AddComponent(new JColliderLeftClickComponent());
+
+            GetComponent<JColliderLeftClickComponent>().OnClick += JBaseTower_OnClick;
+        }
+
+        private void JBaseTower_OnClick(JEntity obj)
+        {
+            scene.SelectExistingTower(this);
         }
 
         public override void Update(GameTime gameTime)

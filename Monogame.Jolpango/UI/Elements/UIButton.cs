@@ -15,21 +15,10 @@ namespace MonoGame.Jolpango.UI.Elements
     public class UIButton : UIElement
     {
         private Texture2D texture;
-        public event Action<UIButton> OnClick;
         public Color Color { get; set; } = Color.White;
         public UIButton(Texture2D texture = null)
         {
             this.texture = texture ?? JTextureCache.White;
-        }
-
-        public override void Update(GameTime gameTime, JMouseInput mouseInput, JKeyboardInput keyboardInput)
-        {
-            //Debug.WriteLine($"mouse: {mouseInput.Position.X}, {mouseInput.Position.Y}");
-            //Debug.WriteLine($"rec: {BoundingBox.X}, {BoundingBox.Y}, {BoundingBox.Width}, {BoundingBox.Height}");
-            if (IsMouseOver(mouseInput.Position) && mouseInput.IsLeftButtonClicked())
-            {
-                OnClick?.Invoke(this);
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

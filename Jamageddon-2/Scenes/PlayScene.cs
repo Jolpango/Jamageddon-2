@@ -7,6 +7,9 @@ using MonoGame.Jolpango.UI.Elements;
 using Jamageddon2.Entities.Components;
 using Jamageddon2.Entities.Level;
 using MonoGame.Jolpango.UI.Elements.Containers;
+using Jamageddon2.Entities.Towers;
+using System;
+using System.Diagnostics;
 
 namespace Jamageddon2.Scenes
 {
@@ -24,6 +27,7 @@ namespace Jamageddon2.Scenes
         private UIStackPanel playerStatsPanel;
         private TextElement livesLeftText;
         private TextElement goldText;
+        private JBaseTower selectedTower;
 
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
@@ -44,6 +48,7 @@ namespace Jamageddon2.Scenes
             levelSpawner = new JLevelSpawner(game, this, path);
             RegisterService(player);
             RegisterService(defaultFont);
+            RegisterService(this);
         }
 
         public override void Update(GameTime gameTime)
@@ -102,13 +107,13 @@ namespace Jamageddon2.Scenes
             base.InjectAllServices();
         }
 
-        private void EndButton_OnClick(UIButton obj)
+        private void EndButton_OnClick(UIElement obj)
         {
             endButton.OnClick -= EndButton_OnClick;
             Parent.PopScene();
         }
 
-        private void StartLevel_OnClick(UIButton obj)
+        private void StartLevel_OnClick(UIElement obj)
         {
             if (!levelSpawner.IsLastLevel)
             {
@@ -119,6 +124,12 @@ namespace Jamageddon2.Scenes
                 EndButton_OnClick(endButton);
             }
             
+        }
+
+        public void SelectExistingTower(JBaseTower jBaseTower)
+        {
+            selectedTower = jBaseTower;
+            Debug.WriteLine("Selected tower " + selectedTower.ToString());
         }
     }
 }

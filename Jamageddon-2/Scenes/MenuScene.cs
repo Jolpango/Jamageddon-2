@@ -30,7 +30,7 @@ namespace Jamageddon2.Scenes
             base.LoadContent();
         }
 
-        private void StartButton_OnClick(UIButton obj)
+        private void StartButton_OnClick(UIElement obj)
         {
             Parent.AddScene(new PlayScene(game, "Content/map-1.json") { Parent = Parent});
         }

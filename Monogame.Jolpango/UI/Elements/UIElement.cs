@@ -17,6 +17,8 @@ namespace MonoGame.Jolpango.UI.Elements
         public bool IsVisible { get; set; } = true;
         public bool IsEnabled { get; set; } = true;
         public UIElement Parent { get; set; } = null;
+        public event Action<UIElement> OnClick;
+
         public Vector2 GlobalPosition
         {
             get
@@ -29,11 +31,16 @@ namespace MonoGame.Jolpango.UI.Elements
 
         public virtual bool IsMouseOver(Vector2 mousePosition)
         {
-            //Debug.WriteLine("Mouse over element " + this.ToString());
             return BoundingBox.Contains(mousePosition);
         }
         public virtual void LoadContent() { }
-        public virtual void Update(GameTime gameTime, JMouseInput mouseInput, JKeyboardInput keyboardInput) { }
+        public virtual void Update(GameTime gameTime, JMouseInput mouseInput, JKeyboardInput keyboardInput)
+        {
+            if (IsMouseOver(mouseInput.Position) && mouseInput.IsLeftButtonClicked())
+            {
+                OnClick?.Invoke(this);
+            }
+        }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
         }

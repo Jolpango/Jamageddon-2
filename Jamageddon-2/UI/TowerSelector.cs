@@ -87,7 +87,7 @@ namespace Jamageddon2.UI
             }
         }
 
-        private void OnSelectTower(UIButton obj)
+        private void OnSelectTower(UIElement obj)
         {
             if (selectedTower is not null)
                 return;
