@@ -3,36 +3,58 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
+using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.Scenes
 {
     public class MenuScene : JGameScene
     {
-        public JSceneManager Parent {  get; set; }
+        public JSceneManager Parent { get; set; }
         private SpriteFont defaultFont;
         public MenuScene(Game game, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
         }
+
         public override void LoadContent()
         {
             defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
-            TextElement sceneText = new TextElement()
+
+            // Create title text
+            TextElement titleText = new TextElement()
             {
                 Font = defaultFont,
-                Text = "MenuScene",
-                Position = new Vector2(600, 10),
+                Text = "JAMAGEDDON II",
+                Position = new Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3),
                 Color = Color.White,
             };
-            UIButton startButton = new UIButton() { Size = new Vector2(256, 64), Position = new Vector2(200, 200), BackgroundColor = Color.Turquoise };
+            titleText.LoadContent(); // Load content to get text size
+            titleText.Position = new Vector2(
+                (SCREEN_WIDTH - titleText.Size.X) / 2,
+                SCREEN_HEIGHT / 3
+            );
+
+            // Create play button
+            UIButton startButton = new UIButton()
+            {
+                Size = new Vector2(256, 64),
+                Position = new Vector2(
+                    (SCREEN_WIDTH - 256) / 2,
+                    titleText.Position.Y + titleText.Size.Y + 50
+                ),
+                Text = "PLAY",
+                Font = defaultFont,
+                TextColor = Color.DarkSlateGray
+            };
             startButton.OnClick += StartButton_OnClick;
+
+            AddUIElement(titleText);
             AddUIElement(startButton);
-            AddUIElement(sceneText);
             base.LoadContent();
         }
 
         private void StartButton_OnClick(UIElement obj)
         {
-            Parent.AddScene(new PlayScene(game, "Content/map-1.json") { Parent = Parent});
+            Parent.AddScene(new PlayScene(game, "Content/map-1.json") { Parent = Parent });
         }
     }
 }

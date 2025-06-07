@@ -10,6 +10,7 @@ using MonoGame.Jolpango.UI.Elements;
 using MonoGame.Jolpango.UI.Elements.Containers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.UI
 {
