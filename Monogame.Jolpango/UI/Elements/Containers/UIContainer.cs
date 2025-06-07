@@ -12,6 +12,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
 
         public override bool IsMouseOver(Vector2 mousePosition)
         {
+            if (!IsVisible || !IsEnabled) return false;
             foreach (var child in Children)
             {
                 if (child.IsMouseOver(mousePosition)) return true;

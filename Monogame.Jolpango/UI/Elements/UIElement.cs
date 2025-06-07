@@ -40,6 +40,7 @@ namespace MonoGame.Jolpango.UI.Elements
 
         public virtual bool IsMouseOver(Vector2 mousePosition)
         {
+            if (!IsVisible || !IsEnabled) return false;
             return BoundingBox.Contains(mousePosition);
         }
         public virtual void LoadContent() { }
