@@ -6,6 +6,8 @@ using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Input;
 using System;
+using static Jamageddon2.JGameConstants;
+
 namespace Jamageddon2.Entities.Components
 {
     public class JPlaceTowerComponent : JComponent, IJInjectable<JGameScene>, IJInjectable<JMouseInput>, IJInjectable<Player>
@@ -30,12 +32,12 @@ namespace Jamageddon2.Entities.Components
         public override void LoadContent()
         {
             Parent.GetComponent<JLeftMouseClickComponent>().OnClick += JPlaceTowerComponent_OnClick;
-            base.LoadContent();          
+            base.LoadContent();
         }
 
         private void JPlaceTowerComponent_OnClick(JLeftMouseClickComponent obj)
         {
-            if (scene.entityWorld.tileManager.TileIsFree(mouseInput.Position))
+            if (TowerCanBePlaced())
             {
                 string className = "Jamageddon2.Entities.Towers." + Parent.Name;
                 Type type = Type.GetType(className);
@@ -48,7 +50,7 @@ namespace Jamageddon2.Entities.Components
                         {
                             PlaceTower(tower, placer);
                         }
-                    }    
+                    }
                 }
                 else
                 {
@@ -60,8 +62,11 @@ namespace Jamageddon2.Entities.Components
         private void PlaceTower(JBaseTower tower, TowerPlacer placer)
         {
             player.Gold = player.Gold - placer.TowerDefinition.Cost;
-            var size = tower.GetComponent<JColliderComponent>().Size;
-            tower.GetComponent<JTransformComponent>().Position = mouseInput.Position - (size / 2);
+
+            var colliderComponent = tower.GetComponent<JColliderComponent>();
+            colliderComponent.Size = placer.TowerDefinition.Footprint.Size;
+            colliderComponent.Offset = placer.TowerDefinition.Footprint.Offset;
+            tower.GetComponent<JTransformComponent>().Position = mouseInput.Position - (new Vector2(DEFAULT_ENTITY_SIZE, DEFAULT_ENTITY_SIZE) / 2);
             scene.AddEntity(tower);
             Parent.GetComponent<JLeftMouseClickComponent>().OnClick -= JPlaceTowerComponent_OnClick;
             Parent.DestroyEntity();
@@ -70,15 +75,26 @@ namespace Jamageddon2.Entities.Components
 
         public override void Update(GameTime gameTime)
         {
-            Parent.GetComponent<JSpriteComponent>().sprite.Color = scene.entityWorld.tileManager.TileIsFree(mouseInput.Position)
+            Parent.GetComponent<JSpriteComponent>().sprite.Color = TowerCanBePlaced()
                 ? Color.White
                 : Color.Red;
 
 
             Color green = new Color(0, 50, 0, 80);
             Color red = new Color(50, 0, 0, 80);
-            Parent.GetComponent<JRangeIndicatorComponent>().Color= scene.entityWorld.tileManager.TileIsFree(mouseInput.Position)
+            Parent.GetComponent<JRangeIndicatorComponent>().Color = TowerCanBePlaced()
                 ? green
-                : red;}
+                : red;
+        }
+
+        private bool TowerCanBePlaced()
+        {
+            if (scene.entityWorld.tileManager.TileIsFree(Parent.GetComponent<JColliderComponent>()))
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

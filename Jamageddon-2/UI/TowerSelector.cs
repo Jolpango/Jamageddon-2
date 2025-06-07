@@ -106,7 +106,12 @@ namespace Jamageddon2.UI
                     Description = description,
                     Cost = cost,
                     SpritePath = spritePath,
-                    TowerToCreate = towerToCreate
+                    TowerToCreate = towerToCreate,
+                    Footprint = new Footprint()
+                    {
+                        Size = new Vector2(SMALL_TOWER_SIZE, SMALL_TOWER_SIZE),
+                        Offset = new Vector2(SMALL_TOWER_SIZE / 2, SMALL_TOWER_SIZE)
+                    }
                 }
             };
             button.BackgroundColor = Color.White;
@@ -117,7 +122,7 @@ namespace Jamageddon2.UI
 
         public void Update()
         {
-            foreach(TowerButton button in buttons)
+            foreach (TowerButton button in buttons)
             {
                 button.BackgroundColor = Color.White;
                 if (button.TowerDefinition.Cost > player.Gold)
@@ -138,15 +143,13 @@ namespace Jamageddon2.UI
                     return;
                 selectedTower = towerButton.TowerDefinition;
 
-                TowerPlacer towerPlacer = new TowerPlacer(selectedTower.SpritePath);
+                TowerPlacer towerPlacer = new TowerPlacer(selectedTower.SpritePath, selectedTower);
                 towerPlacer.AddComponent(new JRangeIndicatorComponent()
                 {
                     Color = new Color(0, 50, 0, 80),
                     Range = towerButton.TowerDefinition.TowerToCreate.Range
                 });
-                towerPlacer.TowerDefinition = selectedTower;
                 towerPlacer.Name = towerButton.TowerDefinition.Name;
-                towerPlacer.TowerDefinition = towerButton.TowerDefinition;
                 towerPlacer.OnDestroy += TowerPlacer_OnDestroy;
                 gameScene.AddEntity(towerPlacer);
             }

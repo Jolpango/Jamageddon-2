@@ -52,19 +52,28 @@ namespace MonoGame.Jolpango.Tiled
             spriteSheet = new JSpriteSheet(content.Load<Texture2D>(tilesetPath), tileset.TileWidth, tileset.TileHeight);
         }
 
-        public bool TileIsFree(Vector2 position)
+        public bool TileIsFree(JColliderComponent colliderComponent)
         {
+            Rectangle boundingBox = colliderComponent.BoundingBox;
             foreach (TileLayer layer in map.TileLayers)
             {
                 if (layer.IsPlaceable)
                 {
-                    MapTile tile = layer.getTileAt(position);
-                    if (tile != null && !tile.isEmpty)
-                        return true;
+                    MapTile topLeftTile = layer.getTileAt(new Vector2(boundingBox.Left, boundingBox.Top));
+                    MapTile topRightTile = layer.getTileAt(new Vector2(boundingBox.Right, boundingBox.Top));
+                    MapTile bottomLeftTile = layer.getTileAt(new Vector2(boundingBox.Left, boundingBox.Bottom));
+                    MapTile bottomRightTile = layer.getTileAt(new Vector2(boundingBox.Right, boundingBox.Bottom));
+
+                    if (topLeftTile == null || topLeftTile.isEmpty ||
+                        topRightTile == null || topRightTile.isEmpty ||
+                        bottomLeftTile == null || bottomLeftTile.isEmpty ||
+                        bottomRightTile == null || bottomRightTile.isEmpty) 
+                    {
+                        return false;
+                    }
                 }
             }
-
-            return false;
+            return true;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

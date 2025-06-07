@@ -3,6 +3,7 @@ using Jamageddon2.UI;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
+using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.Entities.Towers
 {
@@ -17,15 +18,22 @@ namespace Jamageddon2.Entities.Towers
         private readonly JColliderComponent colliderComponent;
         public TowerDefinition TowerDefinition { get; set; }
 
-        public TowerPlacer(string spritePath)
+        public TowerPlacer(string spritePath, TowerDefinition towerDefinition)
         {
             spriteComponent = new JSpriteComponent(spritePath);
             transformComponent = new JTransformComponent();
             mouseFollowerComponent = new JMouseFollowerComponent();
             leftMouseClickComponent = new JLeftMouseClickComponent();
             placeTowerComponent = new JPlaceTowerComponent();
-            colliderComponent = new JColliderComponent() { Size = new Vector2(32, 32), IsSolid = false };
+            colliderComponent = new JColliderComponent()
+            {
+                Size = towerDefinition.Footprint.Size,
+                IsSolid = false,
+                Offset = towerDefinition.Footprint.Offset
+            };
             particleEffectComponent = new JParticleEffectComponent("Content/Emitters/random.json");
+
+            TowerDefinition = towerDefinition;
 
             AddComponent(spriteComponent);
             AddComponent(transformComponent);

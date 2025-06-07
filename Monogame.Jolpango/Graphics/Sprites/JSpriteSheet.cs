@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace MonoGame.Jolpango.Graphics.Sprites
 {
@@ -13,6 +14,7 @@ namespace MonoGame.Jolpango.Graphics.Sprites
         private JTextureRegion[] jTextureRegions;
         public int RegionWidth { get; set; }
         public int RegionHeight { get; set; }
+        public Vector2 RegionSize { get => new Vector2(RegionWidth, RegionHeight); }
         public JSpriteSheet(Texture2D texture, int regionWidth, int regionHeight)
         {
             Texture = texture;
