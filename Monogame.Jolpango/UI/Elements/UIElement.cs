@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.Input;
+using MonoGame.Jolpango.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,9 +15,11 @@ namespace MonoGame.Jolpango.UI.Elements
     {
         public Vector2 Position { get; set; }
         public Vector2 Size { get; set; }
+        public Color BackgroundColor { get; set; } = Color.Transparent;
         public bool IsVisible { get; set; } = true;
         public bool IsEnabled { get; set; } = true;
         public UIElement Parent { get; set; } = null;
+
         public event Action<UIElement> OnClick;
 
         public Vector2 GlobalPosition
@@ -43,6 +46,7 @@ namespace MonoGame.Jolpango.UI.Elements
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(JTextureCache.White, BoundingBox, BackgroundColor);
         }
     }
 }

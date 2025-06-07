@@ -41,6 +41,8 @@ namespace MonoGame.Jolpango.UI.Elements
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            //spriteBatch.Draw(texture, BoundingBox, Color);
+            base.Draw(spriteBatch);
             // Draw button background
             spriteBatch.Draw(texture, BoundingBox, Color);
 

@@ -86,14 +86,25 @@ namespace Jamageddon2.Scenes
             AddUIElement(startButton);
 
             // Player stats
-            playerStatsPanel = new UIStackPanel() { Gap = 20, Orientation = Orientation.Vertical, Position = new Vector2(1000, 10) };
+            playerStatsPanel = new UIStackPanel()
+            {
+                Gap = 20,
+                Orientation = Orientation.Vertical,
+                BackgroundColor = Color.CornflowerBlue,
+                Padding = new Vector2(10),
+            };
             livesLeftText = new TextElement() { Text = "Lives left: " + player.LivesLeft, Color = Color.Red, Font = defaultFont };
             goldText = new TextElement() { Text = "Gold: " + player.Gold, Color = Color.Gold, Font = defaultFont };
             playerStatsPanel.AddChild(goldText);
             playerStatsPanel.AddChild(livesLeftText);
-
-            AddUIElement(playerStatsPanel);
-            AddUIElement(towerSelector.RootElement);
+            UIStackPanel rightSideUIPanel = new UIStackPanel()
+            {
+                Position = new Vector2(1020, 10),
+                Orientation = Orientation.Horizontal,
+            };
+            rightSideUIPanel.AddChild(playerStatsPanel);
+            rightSideUIPanel.AddChild(towerSelector.RootElement);
+            AddUIElement(rightSideUIPanel);
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);

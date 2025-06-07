@@ -59,11 +59,11 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
                     max = Vector2.Max(max, bottomRight);
                 }
 
-                Size = (max - min) + Padding;
+                Size = (max - min) + Padding * 2;
             }
             else
             {
-                Size = Padding;
+                Size = Padding * 2;
             }
         }
 
@@ -82,6 +82,8 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
             {
                 child.Update(gameTime, mouseInput, keyboardInput);
             }
+            RecalculateSize();
+            RecalculateLayout();
             base.Update(gameTime, mouseInput, keyboardInput);
         }
 
@@ -89,6 +91,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
         {
             if(IsVisible)
             {
+                base.Draw(spriteBatch);
                 foreach(var child in Children)
                 {
                     child.Draw(spriteBatch);
