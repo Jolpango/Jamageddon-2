@@ -6,6 +6,7 @@ using MonoGame.Jolpango.Input;
 using MonoGame.Jolpango.UI.Elements;
 using Jamageddon2.Entities.Components;
 using Jamageddon2.Entities.Level;
+using MonoGame.Jolpango.UI.Elements.Containers;
 
 namespace Jamageddon2.Scenes
 {
@@ -20,7 +21,9 @@ namespace Jamageddon2.Scenes
         private JLevelSpawner levelSpawner;
         private JPathComponent path;
         private Player player;
+        private UIStackPanel playerStatsPanel;
         private TextElement livesLeftText;
+        private TextElement goldText;
 
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
@@ -47,7 +50,9 @@ namespace Jamageddon2.Scenes
         {
             base.Update(gameTime);
             levelSpawner.Update(gameTime);
+            towerSelector.Update();
             livesLeftText.Text = "Lives left: " + player.LivesLeft;
+            goldText.Text = "Gold: " + player.Gold;
         }
 
         public override void LoadContent()
@@ -75,8 +80,14 @@ namespace Jamageddon2.Scenes
             startButton.OnClick += StartLevel_OnClick;
             AddUIElement(startButton);
 
-            livesLeftText = new TextElement() { Text = "Lives left: " + player.LivesLeft, Color = Color.Red, Font = defaultFont, Position = new Vector2(1180, 10) };
-            AddUIElement(livesLeftText);
+            // Player stats
+            playerStatsPanel = new UIStackPanel() { Gap = 20, Orientation = Orientation.Vertical, Position = new Vector2(1000, 10) };
+            livesLeftText = new TextElement() { Text = "Lives left: " + player.LivesLeft, Color = Color.Red, Font = defaultFont };
+            goldText = new TextElement() { Text = "Gold: " + player.Gold, Color = Color.Gold, Font = defaultFont };
+            playerStatsPanel.AddChild(goldText);
+            playerStatsPanel.AddChild(livesLeftText);
+
+            AddUIElement(playerStatsPanel);
             AddUIElement(towerSelector.RootElement);
 
             base.LoadContent();

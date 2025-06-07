@@ -7,12 +7,12 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
 {
     public class UIContainer : UIElement
     {
-        protected List<UIElement> children;
+        public List<UIElement> Children { get; protected set; }
         public Vector2 Padding { get; set; } = Vector2.Zero;
 
         public override bool IsMouseOver(Vector2 mousePosition)
         {
-            foreach (var child in children)
+            foreach (var child in Children)
             {
                 if (child.IsMouseOver(mousePosition)) return true;
             }
@@ -21,20 +21,20 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
 
         public UIContainer()
         {
-            children = new List<UIElement>();
+            Children = new List<UIElement>();
         }
 
         public void AddChild(UIElement child)
         {
             child.Parent = this;
-            children.Add(child);
+            Children.Add(child);
             RecalculateLayout();
         }
 
         public void RemoveChild(UIElement child)
         {
             child.Parent = null;
-            children.Remove(child);
+            Children.Remove(child);
             RecalculateLayout();
         }
 
@@ -45,12 +45,12 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
 
         public virtual void RecalculateSize()
         {
-            if (children.Count > 0)
+            if (Children.Count > 0)
             {
-                Vector2 min = children[0].Position;
-                Vector2 max = children[0].Position + children[0].Size;
+                Vector2 min = Children[0].Position;
+                Vector2 max = Children[0].Position + Children[0].Size;
 
-                foreach (var child in children)
+                foreach (var child in Children)
                 {
                     var topLeft = child.Position;
                     var bottomRight = child.Position + child.Size;
@@ -69,7 +69,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
 
         public override void LoadContent()
         {
-            foreach(UIElement child in children)
+            foreach(UIElement child in Children)
             {
                 child.LoadContent();
             }
@@ -78,7 +78,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
 
         public override void Update(GameTime gameTime, JMouseInput mouseInput, JKeyboardInput keyboardInput)
         {
-            foreach(UIElement child in children)
+            foreach(UIElement child in Children)
             {
                 child.Update(gameTime, mouseInput, keyboardInput);
             }
@@ -89,7 +89,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
         {
             if(IsVisible)
             {
-                foreach(var child in children)
+                foreach(var child in Children)
                 {
                     child.Draw(spriteBatch);
                 }

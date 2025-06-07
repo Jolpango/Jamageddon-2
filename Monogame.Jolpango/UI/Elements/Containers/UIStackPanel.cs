@@ -16,7 +16,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
         {
             var offset = Padding;
 
-            foreach (var child in children)
+            foreach (var child in Children)
             {
                 child.Position = offset; // Keep position relative to parent
 

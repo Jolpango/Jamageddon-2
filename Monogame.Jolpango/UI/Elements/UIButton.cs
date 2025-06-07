@@ -16,6 +16,7 @@ namespace MonoGame.Jolpango.UI.Elements
     {
         private Texture2D texture;
         public event Action<UIButton> OnClick;
+        public Color Color { get; set; } = Color.White;
         public UIButton(Texture2D texture = null)
         {
             this.texture = texture ?? JTextureCache.White;
@@ -33,7 +34,7 @@ namespace MonoGame.Jolpango.UI.Elements
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, BoundingBox, Color.White);
+            spriteBatch.Draw(texture, BoundingBox, Color);
         }
     }
 }
