@@ -22,6 +22,11 @@ namespace MonoGame.Jolpango.Graphics.Sprites
         private JAnimationSettings animationSettings;
         public JSpriteSheet spriteSheet;
 
+        public Vector2 Center
+        {
+            get => new Vector2(spriteSheet.RegionWidth / 2, spriteSheet.RegionHeight / 2) + Position;
+        }
+
         public JSprite()
         {
         }

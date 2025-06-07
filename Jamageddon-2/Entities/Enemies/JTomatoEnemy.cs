@@ -8,7 +8,7 @@ namespace Jamageddon2.Entities.Enemies
 {
     public class JTomatoEnemy : JBaseEnemy
     {
-        public JTomatoEnemy() : base("Content/Animation/tomato.json")
+        public JTomatoEnemy() : base("Content/Animation/tomato.json", "Content/Emitters/ketchup.json")
         {
             MaxHealth = 2f;
             MoveSpeed = 75f;
