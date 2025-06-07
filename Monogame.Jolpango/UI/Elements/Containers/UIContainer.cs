@@ -16,7 +16,7 @@ namespace MonoGame.Jolpango.UI.Elements.Containers
             {
                 if (child.IsMouseOver(mousePosition)) return true;
             }
-            return false;
+            return base.IsMouseOver(mousePosition);
         }
 
         public UIContainer()
