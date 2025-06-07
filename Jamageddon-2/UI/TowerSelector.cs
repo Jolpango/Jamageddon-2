@@ -10,6 +10,7 @@ using MonoGame.Jolpango.UI.Elements;
 using MonoGame.Jolpango.UI.Elements.Containers;
 using System.Collections.Generic;
 using System.Diagnostics;
+using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.UI
 {
@@ -46,7 +47,7 @@ namespace Jamageddon2.UI
             RootElement = new UIStackPanel()
             {
                 Orientation = Orientation.Vertical,
-                Position = new Vector2(1280 - 64 - 20, 30)
+                Position = new Vector2(SCREEN_WIDTH - 64 - 20, 30)
             };
             var text = new TextElement()
             {

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Utilities;
+using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2
 {
@@ -26,8 +27,8 @@ namespace Jamageddon2
             base.Initialize();
             IsMouseVisible = true;
             _graphics.SynchronizeWithVerticalRetrace = false;
-            _graphics.PreferredBackBufferWidth = 1280;
-            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            _graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             _graphics.ApplyChanges();
         }
 
