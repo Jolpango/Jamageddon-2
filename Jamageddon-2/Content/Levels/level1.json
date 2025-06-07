@@ -4,7 +4,7 @@
     {
       "enemyType": "JTomatoEnemy",
       "spawnSpeed": 0.1,
-      "amount": 5000,
+      "amount": 50,
       "spawnDelay": 0.0
     },
     {

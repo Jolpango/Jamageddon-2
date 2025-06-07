@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Core;
+using MonoGame.Jolpango.Utilities;
 
 namespace Jamageddon2.Entities.Components
 {
@@ -27,11 +28,8 @@ namespace Jamageddon2.Entities.Components
             healthComponent = Parent.GetComponent<JHealthComponent>();
             transformComponent = Parent.GetComponent<JTransformComponent>();
             // Create textures for the health bar
-            healthBarTexture = new Texture2D(game.GraphicsDevice, 1, 1);
-            healthBarTexture.SetData(new[] { Color.White });
-
-            healthBarBackgroundTexture = new Texture2D(game.GraphicsDevice, 1, 1);
-            healthBarBackgroundTexture.SetData(new[] { Color.DarkGray });
+            healthBarTexture = JTextureCache.White;
+            healthBarBackgroundTexture = JTextureCache.White;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

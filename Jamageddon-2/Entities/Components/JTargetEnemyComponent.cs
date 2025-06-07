@@ -49,13 +49,23 @@ namespace Jamageddon2.Entities.Components
                     {
                         FireRate = tower.FireRate;
                         if (closestEnemy is not null)
-                            OnTarget?.Invoke(closestEnemy);
+                            ShootEnemy(closestEnemy);
                     }
 
                     
                 }
             }
             base.Update(gameTime);
+        }
+
+        private void ShootEnemy(JBaseEnemy closestEnemy)
+        {
+            Parent.GetComponent<JSpriteComponent>().PlayAnimation("AttackWindUp", false, () =>
+            {
+                OnTarget?.Invoke(closestEnemy);
+                Parent.GetComponent<JSpriteComponent>().PlayAnimation("AttackWindDown", false);
+            });
+            
         }
     }
 }
