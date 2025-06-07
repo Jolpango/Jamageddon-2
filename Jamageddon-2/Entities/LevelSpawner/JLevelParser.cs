@@ -12,7 +12,7 @@ namespace Jamageddon2.Entities.Level
     public class JLevelParser
     {
 
-        public List<JLevelConfig> LoadLevelConfigs()
+        public static List<JLevelConfig> LoadLevelConfigs()
         {
             // read all files in the Content/Levels folder
             var levelFiles = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Content", "Levels"), "*.json");
@@ -26,7 +26,7 @@ namespace Jamageddon2.Entities.Level
             return levels.OrderBy(level => level.LevelNumber).ToList();
         }
 
-        public JBaseEnemy CreateEnemy(string enemyType)
+        public static JBaseEnemy CreateEnemy(string enemyType)
         {
             string namespaceName = "Jamageddon2.Entities.Enemies."; // TODO: Add to some constant
             Type type = Type.GetType($"{namespaceName}{enemyType}"); // can this throw an exception?

@@ -3,24 +3,26 @@ using Microsoft.Xna.Framework;
 
 namespace MonoGame.Jolpango.Tiled
 {
-    public class MapLayer
+    public class LayerProperty
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public bool Value { get; set; }
+    }
+
+    public class TileLayer : BaseLayer
     {
         public List<List<MapTile>> tiles;
-
-        public List<int> Data { get; set; }
-        public int Height { get; set; }
-        public double Opacity { get; set; }
-        public List<LayerProperty> Properties { get; set; }
-        public string Type { get; set; }
-        public bool Visible { get; set; }
-        public int Width { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-
         private Vector2 tileSize { get; set; }
         public bool IsPlaceable { get; set; }
 
-        public void ResolveProperties()
+        public List<int> Data { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public List<LayerProperty> Properties { get; set; }
+
+
+        public void ResolveCustomProperties()
         {
             foreach (LayerProperty prop in Properties)
                 if (prop.Name == "isPlaceable")

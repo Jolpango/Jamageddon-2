@@ -6,7 +6,9 @@ using Microsoft.Xna.Framework.Content;
 using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Graphics.Sprites;
-using MonoGame.Jolpango.Utilities;
+using System.IO;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace MonoGame.Jolpango.Tiled
 {
@@ -15,8 +17,7 @@ namespace MonoGame.Jolpango.Tiled
         private MapData map;
         ContentManager content;
         private JSpriteSheet spriteSheet;
-
-        public JTileManager() { }
+        public List<Vector2> path { get; private set; }
 
         public void Inject(ContentManager service)
         {
@@ -25,13 +26,25 @@ namespace MonoGame.Jolpango.Tiled
             content = service;
         }
 
-        public void LoadMap(string path)
+        public void LoadMap(string mapPath)
         {
-            map = JJsonLoader.LoadTiledMap(path);
-            TileSet tileset = map.TileSets[0]; // assume a single tileset
-            foreach (MapLayer layer in map.Layers)
+            string json = File.ReadAllText(mapPath);
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new LayerConverter());
+            map = JsonConvert.DeserializeObject<MapData>(json, settings);
+
+            map.TileLayers = map.Layers.OfType<TileLayer>().ToList();
+            map.ObjectLayers = map.Layers.OfType<ObjectLayer>().ToList();
+
+            List<MapObject> lineObjects = map.ObjectLayers[0].Objects; // assume one object layer
+            path = new List<Vector2>(lineObjects.Count);
+            foreach (MapObject obj in lineObjects)
+                path.Add(new Vector2((float)obj.X, (float)obj.Y));
+
+            TileSet tileset = map.TileSets[0]; // assume one tileset
+            foreach (TileLayer layer in map.TileLayers)
             {
-                layer.ResolveProperties();
+                layer.ResolveCustomProperties();
                 layer.LoadTiles(new Vector2(tileset.TileHeight, tileset.TileHeight));
             }
 
@@ -41,12 +54,12 @@ namespace MonoGame.Jolpango.Tiled
 
         public bool TileIsFree(Vector2 position)
         {
-            foreach (MapLayer layer in map.Layers)
+            foreach (TileLayer layer in map.TileLayers)
             {
                 if (layer.IsPlaceable)
                 {
                     MapTile tile = layer.getTileAt(position);
-                    if (tile != null && tile.TileIndex != MapTile.Empty)
+                    if (tile != null && !tile.isEmpty)
                         return true;
                 }
             }
@@ -56,20 +69,23 @@ namespace MonoGame.Jolpango.Tiled
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (map != null)
-            {
-                foreach (MapLayer layer in map.Layers)
-                    foreach (List<MapTile> col in layer.tiles)
-                        foreach (MapTile tile in col)
-                        {
-                            spriteBatch.Draw(
-                                spriteSheet.Texture,
-                                tile.Position,
-                                spriteSheet.GetRegion(tile.TileIndex).Region,
-                                Color.White
-                            );
-                        }
-            }
+            if (map is null)
+                return;
+
+            foreach (TileLayer layer in map.TileLayers)
+                foreach (List<MapTile> col in layer.tiles)
+                    foreach (MapTile tile in col)
+                    {
+                        if (tile.isEmpty)
+                            continue;
+
+                        spriteBatch.Draw(
+                            spriteSheet.Texture,
+                            tile.Position,
+                            spriteSheet.GetRegion(tile.TileIndex).Region,
+                            Color.White
+                        );
+                    }
         }
     }
 }

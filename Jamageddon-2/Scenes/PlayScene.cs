@@ -8,9 +8,8 @@ using Jamageddon2.Entities.Components;
 using Jamageddon2.Entities.Level;
 using MonoGame.Jolpango.UI.Elements.Containers;
 using Jamageddon2.Entities.Towers;
-using System;
-using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace Jamageddon2.Scenes
 {
@@ -23,7 +22,6 @@ namespace Jamageddon2.Scenes
         private UIButton startButton;
         private string mapPath;
         private JLevelSpawner levelSpawner;
-        private JPathComponent path;
         private Player player;
         private UIStackPanel playerStatsPanel;
         private TextElement livesLeftText;
@@ -40,17 +38,6 @@ namespace Jamageddon2.Scenes
             player = new Player();
             defaultFont = game.Content.Load<SpriteFont>("Fonts/default");
 
-            // Create path
-            path = new JPathComponent();
-            path.SetSpawnPoint(new Vector2(260, 0));
-            path.AddWaypoint(new Vector2(260, 140));
-            path.AddWaypoint(new Vector2(0, 140));
-            path.AddWaypoint(new Vector2(0, 400));
-            path.AddWaypoint(new Vector2(400, 400));
-            path.AddWaypoint(new Vector2(400, 0));
-            path.AddWaypoint(new Vector2(500, 0));
-
-            levelSpawner = new JLevelSpawner(game, this, path);
             RegisterService(player);
             RegisterService(defaultFont);
             RegisterService(this);
@@ -64,7 +51,6 @@ namespace Jamageddon2.Scenes
                 // Deselect tower
                 SelectExistingTower(null);
             }
-            levelSpawner.Update(gameTime);
             towerSelector.Update();
             livesLeftText.Text = "Lives left: " + player.LivesLeft;
             goldText.Text = "Gold: " + player.Gold;
@@ -141,6 +127,14 @@ namespace Jamageddon2.Scenes
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
+
+            JPathComponent path = new JPathComponent()
+            {
+                SpawnPoint = entityWorld.tileManager.path[0],
+                Waypoints = entityWorld.tileManager.path.Skip(1).ToList()
+            };
+            levelSpawner = new JLevelSpawner(game, this, path);
+
             RegisterService(Parent);
 
         }

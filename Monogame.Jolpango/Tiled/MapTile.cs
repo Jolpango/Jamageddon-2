@@ -10,6 +10,7 @@ namespace MonoGame.Jolpango.Tiled
         public Vector2 Position { get; set; }
         public float LayerDepth { get; set; } = 1.0f;
 
-        public MapTile() {}
+        public bool isEmpty => TileIndex == Empty;
+
     }
 }

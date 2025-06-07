@@ -1,13 +1,11 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.Utilities;
-using Jamageddon2.Entities.Enemies;
 using Jamageddon2.Entities.Components;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using System.IO;
 using System;
-using System.Linq;
+using Jamageddon2.Scenes;
+using MonoGame.Jolpango.Core;
 
 namespace Jamageddon2.Entities.Level
 {
@@ -15,39 +13,27 @@ namespace Jamageddon2.Entities.Level
     {
         private JLevelConfig currentLevel;
         private JPathComponent path;
-        private JGameScene parentScene;
+        private PlayScene scene;
         private List<JLevelConfig> levelConfigs;
         private JTimerHandler spawnTimer;
-        private JLevelParser levelParser;
-        private int enemiesSpawned;
-        public JLevelSpawner(Game game, JGameScene parentScene, JPathComponent path)
+        public JLevelSpawner(Game game, PlayScene scene, JPathComponent path)
         {
-            this.parentScene = parentScene;
             this.path = path;
-            this.spawnTimer = new JTimerHandler(game);
-            this.levelParser = new JLevelParser();
-            LoadLevelConfigs();
-        }
+            this.scene = scene;
 
-        public void Update(GameTime gameTime)
-        {
-            spawnTimer?.Update(gameTime);
-        }
+            spawnTimer = new JTimerHandler(game);
+            game.Components.Add(spawnTimer);
 
-        private void LoadLevelConfigs()
-        {
-            levelConfigs = levelParser.LoadLevelConfigs();
+            levelConfigs = JLevelParser.LoadLevelConfigs();
+            currentLevel = levelConfigs[0];
         }
 
         public void StartLevel(int levelNumber)
         {
-            if (levelNumber <= 0 || levelNumber > levelConfigs.Count)
-            {
+            if (levelNumber < 0 || levelNumber >= levelConfigs.Count)
                 throw new ArgumentException($"Invalid level number: {levelNumber}");
-            }
 
-            currentLevel = levelConfigs[levelNumber - 1];
-            enemiesSpawned = 0;
+            currentLevel = levelConfigs[levelNumber];
             SpawnEnemies();
         }
 
@@ -59,33 +45,19 @@ namespace Jamageddon2.Entities.Level
                 for (int i = 0; i < cluster.Amount; i++)
                 {
                     spawnTime += cluster.SpawnSpeed;
-                    StartSpawnTimer(spawnTime, cluster.EnemyType);
+                    spawnTimer.AddTimer(new JTimer(spawnTime, () =>
+                    {
+                        var enemy = JLevelParser.CreateEnemy(cluster.EnemyType);
+                        enemy.SetPath(path);
+                        scene.AddEntity(enemy);
+                        enemy.StartMovement();
+                    }));
                 }
             });
         }
 
-        private void StartSpawnTimer(float spawnTime, string enemyType)
-        {
-            spawnTimer.AddTimer(new JTimer(spawnTime, ()=> {
-                SpawnEnemy(enemyType);
-            }));
-        }
-
-        private void SpawnEnemy(string enemyType) 
-        {
-            var enemy = levelParser.CreateEnemy(enemyType);
-            enemy.SetPath(path);
-            parentScene.AddEntity(enemy);
-            enemy.StartMovement();
-            enemiesSpawned++;
-        }
-
-        public bool IsAllEnemiesSpawned => enemiesSpawned >= currentLevel.EnemyClusters.Sum(cluster => cluster.Amount);
-        public bool IsAllEnemiesDestroyed => parentScene.GetEntitiesByTag("Enemy").Count == 0;
-        public int CurrentLevel => currentLevel == null ? 0 : currentLevel.LevelNumber;
-
-        public int NextLevel => CurrentLevel + 1;
-
-        public bool IsLastLevel => CurrentLevel == levelConfigs.Count;
+        public bool IsAllEnemiesDestroyed => scene.GetEntitiesByTag("Enemy").Count == 0;
+        public bool IsLastLevel => currentLevel.LevelNumber == levelConfigs.Count;
+        public int NextLevel => currentLevel.LevelNumber;
     }
 }
