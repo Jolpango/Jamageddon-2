@@ -28,12 +28,16 @@ namespace Jamageddon2.Entities.Components
 
         private void JPlaceTowerComponent_OnClick(JLeftMouseClickComponent obj)
         {
-            JDishWasherTower tower = new JDishWasherTower();
-            tower.GetComponent<JTransformComponent>().Position = mouseInput.Position;
-            scene.AddEntity(tower);
-            Parent.GetComponent<JLeftMouseClickComponent>().OnClick -= JPlaceTowerComponent_OnClick;
-            Parent.DestroyEntity();
-            Parent.GetComponent<JParticleEffectComponent>().Emit(mouseInput.Position, 10);
+            if (scene.entityWorld.tileManager.TileIsFree(mouseInput.Position))
+            {
+                JDishWasherTower tower = new JDishWasherTower();
+                var size = tower.GetComponent<JColliderComponent>().Size;
+                tower.GetComponent<JTransformComponent>().Position = mouseInput.Position - (size / 2);
+                scene.AddEntity(tower);
+                Parent.GetComponent<JLeftMouseClickComponent>().OnClick -= JPlaceTowerComponent_OnClick;
+                Parent.DestroyEntity();
+                Parent.GetComponent<JParticleEffectComponent>().Emit(mouseInput.Position, 10);
+            }
         }
 
         public override void Update(GameTime gameTime)

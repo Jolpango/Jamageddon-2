@@ -35,7 +35,7 @@ namespace Jamageddon2.Entities.Towers
             {
                 self.Parent.DestroyEntity();
                 if (other.Parent is JBaseEnemy enemy)
-                    enemy.TakeDamage(1);
+                    enemy.TakeDamage(Damage);
             }
         }
     }
