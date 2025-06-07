@@ -20,7 +20,7 @@ namespace MonoGame.Jolpango.Graphics.Sprites
         public Vector2 Origin { get => Vector2.Zero; }
         private JAnimation currentAnimation;
         private JAnimationSettings animationSettings;
-        private JSpriteSheet spriteSheet;
+        public JSpriteSheet spriteSheet;
 
         public JSprite()
         {

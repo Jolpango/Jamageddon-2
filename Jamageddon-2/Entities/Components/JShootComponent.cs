@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jamageddon2.Entities.Projectiles;
 
 namespace Jamageddon2.Entities.Components
 {
@@ -27,13 +28,14 @@ namespace Jamageddon2.Entities.Components
                 Vector2 direction = (obj.GetComponent<JTransformComponent>().Position - Parent.GetComponent<JTransformComponent>().Position);
                 direction.Normalize();
 
-                var bullet = new JProjectile(tower.AttackSpritePath, Parent.GetComponent<JTransformComponent>().Position, direction, 200, tower.Damage);
-                scene.AddEntity(bullet);
-                
+                var projectile = tower.GetProjectile();
+                projectile.Position = Parent.GetComponent<JTransformComponent>().Position;
+                projectile.Direction = direction;
+                scene.AddEntity(projectile);
             }
         }
 
- 
+
         public void Inject(JGameScene service)
         {
             scene = service;

@@ -14,11 +14,12 @@ namespace Jamageddon2.Entities.Enemies
 {
     public abstract class JBaseEnemy : JEntity
     {
+
+        private float DEFAULT_ENEMY_COLLIDER_SIZE = DEFAULT_ENTITY_SIZE / 2;
         public float Health { get; set; }
         public float MaxHealth { get; set; }
         public float MoveSpeed { get; set; }
         public new string Name { get; set; }
-        public string SpritePath { get; set; }
         public Vector2 Scale { get; set; }
         public bool IsAlive => Health > 0;
         public bool IsMoving => this.GetComponent<JPathInputComponent>() != null && this.GetComponent<JPathInputComponent>().IsMoving;
@@ -32,8 +33,9 @@ namespace Jamageddon2.Entities.Enemies
             AddComponent(new JSpriteComponent(spritePath));
             AddComponent(new JColliderComponent()
             {
-                Size = new Vector2(DEFAULT_ENTITY_SIZE, DEFAULT_ENTITY_SIZE),
+                Size = new Vector2(DEFAULT_ENEMY_COLLIDER_SIZE, DEFAULT_ENEMY_COLLIDER_SIZE),
                 IsSolid = false,
+                Centered = true
             });
             AddComponent(new JMovementComponent());
             AddComponent(new JTransformComponent());
