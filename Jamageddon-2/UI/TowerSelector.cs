@@ -46,7 +46,9 @@ namespace Jamageddon2.UI
             RootElement = new UIStackPanel()
             {
                 Orientation = Orientation.Vertical,
-                Position = new Vector2(1280 - 64 - 20, 30)
+                Position = new Vector2(1280 - 64 - 60, 30),
+                Padding = new Vector2(10),
+                BackgroundColor = Color.Chartreuse
             };
             var text = new TextElement()
             {
@@ -55,7 +57,7 @@ namespace Jamageddon2.UI
                 Font = font
             };
             RootElement.AddChild(text);
-            UIStackPanel outerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Horizontal };
+            UIStackPanel outerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Horizontal, BackgroundColor = Color.Violet };
             for(int i = 0; i < 2; i++)
             {
                 UIStackPanel innerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Vertical };
@@ -65,6 +67,7 @@ namespace Jamageddon2.UI
                         Size = new Vector2(32, 32),
                         TowerDefinition = new TowerDefinition() { Name = "JDishWasherTower", Description = "Freaking interns man", Cost = 30 }
                     };
+                    button.BackgroundColor = Color.White;
                     buttons.Add(button);
                     button.OnClick += OnSelectTower;
                     innerTowerContainer.AddChild(button);
@@ -79,10 +82,10 @@ namespace Jamageddon2.UI
         {
             foreach(TowerButton button in buttons)
             {
-                button.Color = Color.White;
+                button.BackgroundColor = Color.White;
                 if (button.TowerDefinition.Cost > player.Gold)
                 {
-                    button.Color = Color.Red;
+                    button.BackgroundColor = Color.Red;
                 }
             }
         }

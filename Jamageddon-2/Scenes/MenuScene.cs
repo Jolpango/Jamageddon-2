@@ -23,7 +23,7 @@ namespace Jamageddon2.Scenes
                 Position = new Vector2(600, 10),
                 Color = Color.White,
             };
-            UIButton startButton = new UIButton() { Size = new Vector2(256, 64), Position = new Vector2(200, 200) };
+            UIButton startButton = new UIButton() { Size = new Vector2(256, 64), Position = new Vector2(200, 200), BackgroundColor = Color.Turquoise };
             startButton.OnClick += StartButton_OnClick;
             AddUIElement(startButton);
             AddUIElement(sceneText);
