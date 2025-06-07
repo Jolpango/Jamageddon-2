@@ -39,7 +39,7 @@ namespace Jamageddon2.UI
             RootElement = new UIStackPanel()
             {
                 Orientation = Orientation.Vertical,
-                Position = new Vector2(1280 - 64 - 20, 10)
+                Position = new Vector2(1280 - 64 - 20, 30)
             };
             var text = new TextElement()
             {

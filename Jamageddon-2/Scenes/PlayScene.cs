@@ -19,11 +19,14 @@ namespace Jamageddon2.Scenes
         private string mapPath;
         private JLevelSpawner levelSpawner;
         private JPathComponent path;
+        private Player player;
+        private TextElement livesLeftText;
+
         public PlayScene(Game game, string mapPath, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null) : base(game, mouseInput, keyboardInput)
         {
             this.mapPath = mapPath;
             defaultFont = game.Content.Load<SpriteFont>("Fonts/DefaultFont");
-
+            player = new Player();
             // Create path
             path = new JPathComponent();
             path.SetSpawnPoint(new Vector2(130, 0));
@@ -35,6 +38,7 @@ namespace Jamageddon2.Scenes
             path.AddWaypoint(new Vector2(250, 0));
 
             levelSpawner = new JLevelSpawner(game, this, path);
+            RegisterService(player);
             RegisterService(defaultFont);
         }
 
@@ -42,6 +46,7 @@ namespace Jamageddon2.Scenes
         {
             base.Update(gameTime);
             levelSpawner.Update(gameTime);
+            livesLeftText.Text = "Lives left: " + player.LivesLeft;
         }
 
         public override void LoadContent()
@@ -69,10 +74,14 @@ namespace Jamageddon2.Scenes
             startButton.OnClick += StartLevel_OnClick;
             AddUIElement(startButton);
 
+            livesLeftText = new TextElement() { Text = "Lives left: " + player.LivesLeft, Color = Color.Red, Font = defaultFont, Position = new Vector2(1180, 10) };
+            AddUIElement(livesLeftText);
             AddUIElement(towerSelector.RootElement);
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
+            RegisterService(Parent);
+
         }
 
         protected override void InjectAllServices()
