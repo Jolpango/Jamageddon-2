@@ -72,7 +72,7 @@ namespace Jamageddon2.UI
             if (obj is TowerButton towerButton)
             {
                 selectedTower = towerButton.TowerDefinition;
-                TowerPlacer towerPlacer = new TowerPlacer("Content/Animation/axe.json");
+                TowerPlacer towerPlacer = new TowerPlacer("Content/Animation/busboy.json");
                 towerPlacer.TowerDefinition = selectedTower;
                 gameScene.AddEntity(towerPlacer);
             }

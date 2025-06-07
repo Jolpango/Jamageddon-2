@@ -6,11 +6,11 @@ namespace Jamageddon2.Entities.Towers
     {
         public JDishWasherTower() :
             base(
-                spritePath: "Content/Animation/axe.json", //TODO change to dishwasher json 
+                spritePath: "Content/Animation/busboy.json", //TODO change to dishwasher json 
                 attackSpritePath: "Content/Animation/axe.json", //TODO change to dishwasher attack json 
-                damage: 1f,
-                range: 1000f,
-                fireRate: 1f)
+                damage: 25f,
+                range: 100f,
+                fireRate: 0.5f)
         {
             Name = "DishWasherTower";
         }
