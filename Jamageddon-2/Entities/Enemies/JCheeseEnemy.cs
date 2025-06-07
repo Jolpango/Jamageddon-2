@@ -6,13 +6,13 @@ using System;
 
 namespace Jamageddon2.Entities.Enemies
 {
-    public class JTomatoEnemy : JBaseEnemy
+    public class JCheeseEnemy : JBaseEnemy
     {
-        public JTomatoEnemy() : base("Content/Animation/tomato.json")
+        public JCheeseEnemy() : base("Content/Animation/cheese.json")
         {
-            MaxHealth = 2f;
-            MoveSpeed = 75f;
-            Name = "Tomato Enemy";
+            MaxHealth = 5f;
+            MoveSpeed = 50f;
+            Name = "Cheese Enemy";
             Scale = new Vector2(1f, 1f);
         }
 

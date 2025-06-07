@@ -19,6 +19,7 @@ namespace MonoGame.Jolpango.ECS
                     if (CheckCollision(enemy, projectile))
                     {
                         HandleCollision(enemy, projectile);
+                        break;
                     }
                 }
             }

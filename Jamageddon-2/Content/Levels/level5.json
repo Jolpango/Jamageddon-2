@@ -2,40 +2,40 @@
   "levelNumber": 5,
   "enemyClusters": [
     {
-      "enemyType": "JTomatoEnemy",
-      "spawnSpeed": 0.5,
-      "amount": 12,
+      "enemyType": "JCheeseEnemy",
+      "spawnSpeed": 0.15,
+      "amount": 20,
       "spawnDelay": 0.0
     },
     {
       "enemyType": "JTomatoEnemy",
-      "spawnSpeed": 0.3,
-      "amount": 12,
+      "spawnSpeed": 0.1,
+      "amount": 25,
+      "spawnDelay": 0.2
+    },
+    {
+      "enemyType": "JCheeseEnemy",
+      "spawnSpeed": 0.2,
+      "amount": 15,
       "spawnDelay": 0.4
     },
     {
-      "enemyType": "JTomatoEnemy",
-      "spawnSpeed": 0.2,
-      "amount": 10,
-      "spawnDelay": 0.8
-    },
-    {
-      "enemyType": "JTomatoEnemy",
+      "enemyType": "JCheeseEnemy",
       "spawnSpeed": 0.15,
-      "amount": 8,
-      "spawnDelay": 1.2
+      "amount": 12,
+      "spawnDelay": 0.6
     },
     {
       "enemyType": "JTomatoEnemy",
       "spawnSpeed": 0.1,
-      "amount": 6,
-      "spawnDelay": 1.6
+      "amount": 20,
+      "spawnDelay": 0.8
     },
     {
-      "enemyType": "JTomatoEnemy",
+      "enemyType": "JCheeseEnemy",
       "spawnSpeed": 0.2,
-      "amount": 4,
-      "spawnDelay": 1
+      "amount": 10,
+      "spawnDelay": 1.0
     }
   ]
 }
