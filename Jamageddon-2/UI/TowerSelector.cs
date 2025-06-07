@@ -51,7 +51,7 @@ namespace Jamageddon2.UI
                 Orientation = Orientation.Vertical,
                 Position = new Vector2(1280 - 64 - 60, 30),
                 Padding = new Vector2(10),
-                BackgroundColor = Color.Chartreuse,
+                BackgroundColor = Color.DarkGray,
                 AlignItems = ItemAlignment.Center,
             };
             var text = new TextElement()
@@ -65,7 +65,7 @@ namespace Jamageddon2.UI
             {
                 Gap = 10,
                 Orientation = Orientation.Horizontal,
-                BackgroundColor = Color.Violet,
+                BackgroundColor = Color.Gray,
                 Padding = new Vector2(5),
                 MinSize = new Vector2(0, 500)
             };
