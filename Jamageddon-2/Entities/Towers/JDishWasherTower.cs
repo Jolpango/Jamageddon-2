@@ -8,7 +8,7 @@ namespace Jamageddon2.Entities.Towers
             base(
                 spritePath: "Content/Animation/busboy.json", //TODO change to dishwasher json 
                 attackSpritePath: "Content/Animation/axe.json", //TODO change to dishwasher attack json 
-                damage: 25f,
+                damage: 1f,
                 range: 100f,
                 fireRate: 0.5f)
         {

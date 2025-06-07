@@ -4,6 +4,7 @@ using MonoGame.Jolpango.ECS.Components;
 using MonoGame.Jolpango.Tiled;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MonoGame.Jolpango.ECS
 {
@@ -91,7 +92,7 @@ namespace MonoGame.Jolpango.ECS
         public void Draw(SpriteBatch spriteBatch)
         {
             tileManager.Draw(spriteBatch);
-            foreach (var e in entities) e.Draw(spriteBatch);
+            foreach (var e in entities.Reverse<JEntity>()) e.Draw(spriteBatch);
         }
     }
 }

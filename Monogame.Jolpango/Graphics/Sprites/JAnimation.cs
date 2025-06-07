@@ -27,7 +27,6 @@ namespace MonoGame.Jolpango.Graphics.Sprites
         public int CurrentFrame { get => KeyFrames[CurrentFrameIndex]; }
         public int CurrentFrameIndex { get => (int)(CurrentTime / timePerFrame) % KeyFrames.Length; }
         public bool IsActive { get; set; } = false;
-        private bool isCompleted = false;
         public bool IsLooping { get; set; } = false;
         public bool IsCompleted { get; protected set; } = false;
         private Action onCompleteAction;
