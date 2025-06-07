@@ -49,12 +49,16 @@ namespace MonoGame.Jolpango.Utilities
             JAnimationSettings animationSettings = JsonConvert.DeserializeObject<JAnimationSettings>(json);
             return animationSettings;
         }
-        public static ParticleEmitter ReadParticleEmitterFromFile(string path, Game game = null)
+        public static ParticleEmitter ReadParticleEmitterFromFile(string path, Game game)
         {
+            if (game is null)
+            {
+                throw new ArgumentNullException(nameof(game));
+            }
             JObject o = JObject.Parse(File.ReadAllText(path));
-            string? texturePath = (string)o.Root["texture"] ?? null;
+            string texturePath = (string)o.Root["texture"] ?? null;
             Texture2D texture;
-            if (game is not null && texturePath is not null)
+            if (texturePath is not null)
             {
                 texture = game.Content.Load<Texture2D>(texturePath);
             }

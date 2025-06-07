@@ -12,7 +12,6 @@ namespace MonoGame.Jolpango.Graphics.Effects
     {
         private float size;
         private ParticleEmitter redEmitter;
-        private ParticleEmitter yellowEmitter;
         private ParticleEmitter orangeEmitter;
         private ParticleEmitter smokeEmitter;
         private ParticleEmitter whiteCenterEmitter;
@@ -36,7 +35,6 @@ namespace MonoGame.Jolpango.Graphics.Effects
                 smokeEmitter.LayerDepth = value + 0.01f;
                 redEmitter.LayerDepth = value + 0.02f;
                 orangeEmitter.LayerDepth = value + 0.03f;
-                //yellowEmitter.LayerDepth = value + 0.04f;
                 whiteCenterEmitter.LayerDepth = value + 0.05f;
                 layerDepth = value;
             }
@@ -70,7 +68,6 @@ namespace MonoGame.Jolpango.Graphics.Effects
         public void Update(GameTime gameTime)
         {
             redEmitter.Update(gameTime);
-            //yellowEmitter.Update(gameTime);
             orangeEmitter.Update(gameTime);
             whiteCenterEmitter.Update(gameTime);
             smokeEmitter.Update(gameTime);
@@ -79,7 +76,6 @@ namespace MonoGame.Jolpango.Graphics.Effects
         {
             smokeEmitter.Draw(spriteBatch);
             redEmitter.Draw(spriteBatch);
-            //yellowEmitter.Draw(spriteBatch);
             orangeEmitter.Draw(spriteBatch);
             whiteCenterEmitter.Draw(spriteBatch);
         }
