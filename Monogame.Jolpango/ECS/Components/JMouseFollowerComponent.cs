@@ -24,7 +24,8 @@ namespace MonoGame.Jolpango.ECS.Components
 
         private void MouseInput_MouseMoved(Vector2 mousePosition)
         {
-            var size = Parent.GetComponent<JColliderComponent>().Size;
+            var sprite = Parent.GetComponent<JSpriteComponent>().sprite;
+            var size = new Vector2(sprite.spriteSheet.RegionWidth, sprite.spriteSheet.RegionHeight);
             Parent.GetComponent<JTransformComponent>().Position = mousePosition - (size / 2);
         }
     }

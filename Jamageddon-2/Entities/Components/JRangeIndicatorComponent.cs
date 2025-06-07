@@ -41,8 +41,8 @@ public class JRangeIndicatorComponent : JComponent, IJInjectable<JGameScene>, IJ
     {
         if (transformComponent == null) return;
         Vector2 position = transformComponent.Position;
-        Vector2 size = Parent.GetComponent<JColliderComponent>().Size;
-        
+        var spriteSheet = Parent.GetComponent<JSpriteComponent>().sprite.spriteSheet;
+        var size = new Vector2(spriteSheet.RegionWidth, spriteSheet.RegionHeight);
         Vector2 offset = new Vector2(Range , Range);
         offset -= size*0.5f;
 

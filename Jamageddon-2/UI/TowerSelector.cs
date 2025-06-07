@@ -66,15 +66,25 @@ namespace Jamageddon2.UI
                 BackgroundColor = Color.Violet,
                 Padding = new Vector2(5)
             };
-            for(int i = 0; i < 2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 UIStackPanel innerTowerContainer = new UIStackPanel() { Gap = 10, Orientation = Orientation.Vertical, Padding = new Vector2(0) };
-                for(int j = 0; j < 10; j++)
+                for (int j = 0; j < 10; j++)
                 {
                     TowerButton button = new TowerButton()
                     {
                         Size = new Vector2(32, 32),
-                        TowerDefinition = new TowerDefinition() { Name = "JDishWasherTower", Description = "Freaking interns man", Cost = 30 }
+                        TowerDefinition = new TowerDefinition()
+                        {
+                            Name = "JDishWasherTower",
+                            Description = "Freaking interns man",
+                            Cost = 30,
+                            Footprint = new Footprint()
+                            {
+                                Size = new Vector2(SMALL_TOWER_SIZE, SMALL_TOWER_SIZE),
+                                Offset = new Vector2(SMALL_TOWER_SIZE/2, SMALL_TOWER_SIZE)
+                            }
+                        }
                     };
                     button.BackgroundColor = Color.White;
                     buttons.Add(button);
@@ -89,7 +99,7 @@ namespace Jamageddon2.UI
 
         public void Update()
         {
-            foreach(TowerButton button in buttons)
+            foreach (TowerButton button in buttons)
             {
                 button.BackgroundColor = Color.White;
                 if (button.TowerDefinition.Cost > player.Gold)
@@ -109,11 +119,9 @@ namespace Jamageddon2.UI
                 if (towerButton.TowerDefinition.Cost > player.Gold)
                     return;
                 selectedTower = towerButton.TowerDefinition;
-                TowerPlacer towerPlacer = new TowerPlacer("Content/Animation/busboy.json");
-                towerPlacer.TowerDefinition = selectedTower;
-                towerPlacer.AddComponent(new JRangeIndicatorComponent() { Color = new Color(0, 50, 0,80), Range = 100.0f });
+                TowerPlacer towerPlacer = new TowerPlacer("Content/Animation/busboy.json", selectedTower);
+                towerPlacer.AddComponent(new JRangeIndicatorComponent() { Color = new Color(0, 50, 0, 80), Range = 100.0f });
                 towerPlacer.Name = towerButton.TowerDefinition.Name;
-                towerPlacer.TowerDefinition = towerButton.TowerDefinition;
                 towerPlacer.OnDestroy += TowerPlacer_OnDestroy;
                 gameScene.AddEntity(towerPlacer);
             }

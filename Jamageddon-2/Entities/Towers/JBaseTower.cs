@@ -35,7 +35,11 @@ namespace Jamageddon2.Entities.Towers
             AddComponent(new JSpriteComponent(spritePath));
             AddComponent(new JTransformComponent());
             AddComponent(new JTopDownPlayerInputComponent());
-            AddComponent(new JColliderComponent() { Size = new Vector2(DEFAULT_ENTITY_SIZE, DEFAULT_ENTITY_SIZE), IsSolid = false });
+            AddComponent(new JColliderComponent()
+            {
+                Size = Vector2.One,
+                IsSolid = false
+            });
             AddComponent(new JTargetEnemyComponent() { FireRate = fireRate });
             AddComponent(new JShootComponent());
             AddComponent(new JColliderLeftClickComponent());

@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.Xna.Framework;
 using System;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Jolpango.Utilities;
 
 namespace MonoGame.Jolpango.ECS.Components
 {
@@ -30,7 +32,6 @@ namespace MonoGame.Jolpango.ECS.Components
                         (sprite.spriteSheet.RegionWidth - Size.X) / 2 * transform.Scale.X,
                         (sprite.spriteSheet.RegionHeight - Size.Y) / 2 * transform.Scale.Y);
                 }
-
                 return transform.Position + Offset;
 
             }
