@@ -130,9 +130,9 @@ namespace Jamageddon2.Entities.Components
 
         private void ShootEnemy(JBaseEnemy closestEnemy)
         {
+            OnTarget?.Invoke(closestEnemy);
             Parent.GetComponent<JSpriteComponent>().PlayAnimation("AttackWindUp", false, () =>
             {
-                OnTarget?.Invoke(closestEnemy);
                 Parent.GetComponent<JSpriteComponent>().PlayAnimation("AttackWindDown", false);
             });
             

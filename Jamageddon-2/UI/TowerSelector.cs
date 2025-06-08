@@ -81,13 +81,12 @@ namespace Jamageddon2.UI
             };
 
             column1.AddChild(CreateTowerButton("JDishWasherTower", "Freaking interns man", 30, "Content/Animation/busboy.json", new JDishWasherTower()));
-            column2.AddChild(CreateTowerButton(
-                "JButcherChefTower",
-                "The only thing rarer than his steaks are survivors.",
-                40,
-                "Content/Animation/butcherchef.json",
-                new JButcherChefTower()
-            ));
+            column1.AddChild(CreateTowerButton("JFastThrowingTower", "Fast as fuck boi", 30, "Content/Animation/busboy.json", new JFastThrowingTower()));
+            column1.AddChild(CreateTowerButton("JAxeThrowerTower", "Fast as fuck boi", 30, "Content/Animation/busboy.json", new JFastThrowingTower()));
+            column1.AddChild(CreateTowerButton("JFireSpitterTower", "Fast as fuck boi", 30, "Content/Animation/busboy.json", new JFastThrowingTower()));
+            column2.AddChild(CreateTowerButton("JSpatulaSniperTower", "Fast as fuck boi", 30, "Content/Animation/busboy.json", new JFastThrowingTower()));
+            column2.AddChild(CreateTowerButton("JButcherChefTower", "The only thing rarer than his steaks are survivors.", 40, "Content/Animation/butcherchef.json", new JButcherChefTower()));
+            column2.AddChild(CreateTowerButton("JTomatoLauncherTower", "Fast as fuck boi", 30, "Content/Animation/busboy.json", new JFastThrowingTower()));
 
             outerTowerContainer.AddChild(column1);
             outerTowerContainer.AddChild(column2);
@@ -113,6 +112,16 @@ namespace Jamageddon2.UI
                         Offset = new Vector2(SMALL_TOWER_SIZE / 2, SMALL_TOWER_SIZE)
                     }
                 }
+            };
+            button.OnMouseEnter += (UIElement e) =>
+            {
+                button.BorderColor = Color.Green;
+                button.BorderThickness = 2f;
+            };
+            button.OnMouseLeave += (UIElement e) =>
+            {
+                button.BorderColor = Color.Transparent;
+                button.BorderThickness = 0f;
             };
             button.BackgroundColor = Color.White;
             buttons.Add(button);

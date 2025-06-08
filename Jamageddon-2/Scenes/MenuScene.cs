@@ -43,9 +43,22 @@ namespace Jamageddon2.Scenes
                 ),
                 Text = "PLAY",
                 Font = defaultFont,
-                TextColor = Color.DarkSlateGray
+                TextColor = Color.DarkSlateGray,
+                BackgroundTexture = game.Content.Load<Texture2D>("Textures/buttonbackground"),
             };
             startButton.OnClick += StartButton_OnClick;
+            startButton.OnMouseEnter += (UIElement e) =>
+            {
+                startButton.BorderColor = Color.Green;
+                startButton.Text = "WAWAWEEWAA";
+                startButton.BorderThickness = 2f;
+            };
+            startButton.OnMouseLeave += (UIElement e) =>
+            {
+                startButton.BorderColor = Color.Transparent;
+                startButton.Text = "PLAY";
+                startButton.BorderThickness = 0f;
+            };
 
             AddUIElement(titleText);
             AddUIElement(startButton);

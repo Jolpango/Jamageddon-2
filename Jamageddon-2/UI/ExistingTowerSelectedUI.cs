@@ -80,8 +80,18 @@ namespace Jamageddon2.UI
                 Font = defaultFont
             };
             closestButton.OnClick += (UIElement e) => SetTargetMode(TargetingMode.Closest);
+            closestButton.OnMouseEnter += OnMouseEnter;
+            closestButton.OnMouseLeave += OnMouseLeave;
+
+
             furthestButton.OnClick += (UIElement e) => SetTargetMode(TargetingMode.Farthest);
+            furthestButton.OnMouseEnter += OnMouseEnter;
+            furthestButton.OnMouseLeave += OnMouseLeave;
+
             toughestButton.OnClick += (UIElement e) => SetTargetMode(TargetingMode.Toughest);
+            toughestButton.OnMouseEnter += OnMouseEnter;
+            toughestButton.OnMouseLeave += OnMouseLeave;
+
             selectedTowerContainer.AddChild(selectedTowerText);
 
             targetModeContainer.AddChild(closestButton);
@@ -91,6 +101,18 @@ namespace Jamageddon2.UI
             targetModeButtons.Add(furthestButton);
             targetModeButtons.Add(toughestButton);
             selectedTowerContainer.AddChild(targetModeContainer);
+        }
+
+        private void OnMouseEnter(UIElement e)
+        {
+            e.BorderColor = Color.Black;
+            e.BorderThickness = 1f;
+        }
+
+        private void OnMouseLeave(UIElement e)
+        {
+            e.BorderColor = Color.Transparent;
+            e.BorderThickness = 0f;
         }
 
         private void SetTargetMode(TargetingMode targetingMode)
@@ -111,15 +133,15 @@ namespace Jamageddon2.UI
                 {
                     if (button.Text == "Closest")
                     {
-                        button.Color = selectedTower?.GetComponent<JTargetEnemyComponent>().TargetingMode == TargetingMode.Closest ? Color.Green : Color.White;
+                        button.BackgroundColor = selectedTower?.GetComponent<JTargetEnemyComponent>().TargetingMode == TargetingMode.Closest ? Color.Green : Color.White;
                     }
                     else if (button.Text == "Furthest")
                     {
-                        button.Color = selectedTower?.GetComponent<JTargetEnemyComponent>().TargetingMode == TargetingMode.Farthest ? Color.Green : Color.White;
+                        button.BackgroundColor = selectedTower?.GetComponent<JTargetEnemyComponent>().TargetingMode == TargetingMode.Farthest ? Color.Green : Color.White;
                     }
                     else if (button.Text == "Toughest")
                     {
-                        button.Color = selectedTower?.GetComponent<JTargetEnemyComponent>().TargetingMode == TargetingMode.Toughest ? Color.Green : Color.White;
+                        button.BackgroundColor = selectedTower?.GetComponent<JTargetEnemyComponent>().TargetingMode == TargetingMode.Toughest ? Color.Green : Color.White;
                     }
                 }
             }

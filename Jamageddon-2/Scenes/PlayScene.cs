@@ -92,12 +92,46 @@ namespace Jamageddon2.Scenes
             };
             AddUIElement(rightPanel);
 
-            endButton = new UIButton() { Size = new Vector2(32, 32), Position = new Vector2(10, 10), Text = "X", Font = defaultFont };
+            // End button
+            endButton = new UIButton()
+            {
+                Size = new Vector2(32, 32),
+                Position = new Vector2(10, 10),
+                Text = "X", Font = defaultFont,
+                BackgroundColor = Color.Tomato
+            };
             endButton.OnClick += EndButton_OnClick;
+            endButton.OnMouseEnter += (UIElement e) =>
+            {
+                endButton.BorderColor = Color.Red;
+                endButton.BorderThickness = 2f;
+            };
+            endButton.OnMouseLeave += (UIElement e) =>
+            {
+                endButton.BorderColor = Color.Transparent;
+                endButton.BorderThickness = 0f;
+            };
             topPanel.AddChild(endButton);
 
             // Start button
-            startButton = new UIButton() { Size = new Vector2(120, 32), Position = new Vector2(50, 10), Text = "Start >", Font = defaultFont, Color = Color.Green };
+            startButton = new UIButton()
+            {
+                Size = new Vector2(120, 32),
+                Position = new Vector2(50, 10),
+                Text = "Start",
+                Font = defaultFont,
+                BackgroundColor = Color.LightGreen
+            };
+            startButton.OnMouseEnter += (UIElement e) =>
+            {
+                startButton.BorderColor = Color.Green;
+                startButton.BorderThickness = 2f;
+            };
+            startButton.OnMouseLeave += (UIElement e) =>
+            {
+                startButton.BorderColor = Color.Transparent;
+                startButton.BorderThickness = 0f;
+            };
             startButton.OnClick += StartLevel_OnClick;
 
             livesLeftText = new TextElement() { Text = "Lives left: " + player.LivesLeft, Color = Color.Red, Font = defaultFont };
