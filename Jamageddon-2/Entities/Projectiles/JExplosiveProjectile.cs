@@ -9,10 +9,16 @@ namespace Jamageddon2.Entities.Projectiles
 
         public JExplosiveProjectile() : base("Content/Animation/plate.json")
         {
-            AddComponent(new JExplodesOnDeathComponent
-            {
-                Prefab = new JExplosionPrefab("Content/Animation/axe.json") { Radius = Radius, Damage = Damage }
-            });
+            AddComponent(new JOnCollisionExplodeComponent());
+        }
+
+        public override void LoadContent()
+        {
+            var prefab = GetComponent<JOnCollisionExplodeComponent>().Prefab;
+            prefab.Radius = Radius;
+            prefab.Damage = Damage;
+
+            base.LoadContent();
         }
     }
 }

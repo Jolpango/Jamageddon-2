@@ -44,6 +44,11 @@ namespace MonoGame.Jolpango.ECS
             return null;
         }
 
+        public IEnumerable<T> GetComponentsOf<T>() where T : JComponent
+        {
+            return components.Values.Where(c => c is T).Cast<T>();
+        }
+
         public bool HasComponent<T>() where T : JComponent
         {
             if (components.ContainsKey(typeof(T)))

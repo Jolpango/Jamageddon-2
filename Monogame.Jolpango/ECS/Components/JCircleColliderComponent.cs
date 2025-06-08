@@ -12,7 +12,7 @@ namespace MonoGame.Jolpango.ECS.Components
         private bool containsWithinRadius(Vector2 point, float radius) => Vector2.DistanceSquared(Center, point) <= radius * radius;
 
         public override bool Contains(Vector2 point) => containsWithinRadius(point, Radius);
-        public override bool Intersects(JColliderComponent other) => other.Intersects(this);
+        public override bool Intersects(JColliderComponent other) => other.IntersectsWith(this);
         public override bool IntersectsWith(JBoxColliderComponent box) => box.IntersectsWith(this);
         public override bool IntersectsWith(JCircleColliderComponent circle) => containsWithinRadius(circle.Center, Radius + circle.Radius);
 

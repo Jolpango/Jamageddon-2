@@ -13,8 +13,8 @@ namespace Jamageddon2.Entities.Projectiles
         {
             Size = new Vector2(PLATE_SIZE, PLATE_SIZE);
 
-            AddComponent(new JDamageOnHitComponent() { Damage = PLATE_DAMAGE });
-            AddComponent(new JFirstHitDestroyComponent());
+            AddComponent(new JOnCollisionDamageComponent() { Damage = PLATE_DAMAGE });
+            AddComponent(new JOnCollisionDestroyComponent());
         }
     }
 }

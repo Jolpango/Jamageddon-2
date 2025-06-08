@@ -9,16 +9,17 @@ namespace Jamageddon2.Entities.Projectiles
         public float Damage { get; set; }
         public float Radius { get; set; }
 
-        public JExplosionPrefab(string spritePath, string particleEffectPath = "Content/Emitters/random.json") : base(spritePath)
+        public JExplosionPrefab(string spritePath = "Content/Animation/axe.json", string particleEffectPath = "Content/Emitters/random.json") : base(spritePath)
         {
             AddComponent(new JParticleEffectComponent(particleEffectPath));
-            AddComponent(new JFirstFrameHitDestroyComponent());
         }
 
         public override void LoadContent()
         {
             AddComponent(new JCircleColliderComponent() { Radius = Radius });
-            AddComponent(new JDamageOnHitComponent() { Damage = Damage });
+            AddComponent(new JOnCollisionDamageComponent() { Damage = Damage });
+
+            AddComponent(new JOnCollisionDestroyEndOfFrameComponent());
 
             base.LoadContent();
         }

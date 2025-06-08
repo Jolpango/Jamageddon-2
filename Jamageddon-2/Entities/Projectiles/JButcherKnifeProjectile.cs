@@ -1,8 +1,6 @@
 using Jamageddon2.Entities.Components;
-using Jamageddon2.Entities.Enemies;
 using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.ECS.Components;
-using System.Collections.Generic;
 
 namespace Jamageddon2.Entities.Projectiles
 {
@@ -22,8 +20,8 @@ namespace Jamageddon2.Entities.Projectiles
 
         public override void LoadContent()
         {
-            AddComponent(new JDamageOnHitComponent() { Damage = KNIFE_DAMAGE });
-            AddComponent(new JPiercingComponent() { PiercesRemaining = 3 });
+            AddComponent(new JOnCollisionDamageComponent() { Damage = KNIFE_DAMAGE });
+            AddComponent(new JOnCollisionPierceComponent() { PiercesRemaining = 3 });
 
             base.LoadContent();
             GetComponent<JTransformComponent>().Scale = new Vector2(0.5f, 0.5f);

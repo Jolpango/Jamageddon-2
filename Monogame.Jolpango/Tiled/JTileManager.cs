@@ -54,7 +54,7 @@ namespace MonoGame.Jolpango.Tiled
 
         public bool TileIsFree(JColliderComponent colliderComponent)
         {
-            // TODO(anton): make this work regardloss of collider
+            // TODO(anton): make this work regardless of collider
             if (colliderComponent is not JBoxColliderComponent boxCollider)
                 return false;
 
