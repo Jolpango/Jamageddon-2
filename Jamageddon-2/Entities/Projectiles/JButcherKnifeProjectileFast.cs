@@ -18,7 +18,8 @@ namespace Jamageddon2.Entities.Projectiles
         {
             Size = new Vector2(KNIFE_SIZE, KNIFE_SIZE);
             Speed = ATTACK_ANIMATION_SPEED;
-
+            AddComponent(new JOnCollisionDamageComponent() { Damage = 1});
+            AddComponent(new JOnCollisionDestroyComponent());
         }
 
         public override void LoadContent()

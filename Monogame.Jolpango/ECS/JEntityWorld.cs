@@ -30,6 +30,14 @@ namespace MonoGame.Jolpango.ECS
             tileManager.LoadMap(mapPath);
         }
 
+        public void Initialize()
+        {
+            foreach (JEntity entity in Entities)
+            {
+                entity.Initialize();
+            }
+        }
+
         public void LoadContent()
         {
             foreach (JEntity entity in Entities)

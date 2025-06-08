@@ -25,7 +25,7 @@ namespace MonoGame.Jolpango.UI.Elements
             RecalculateSize();
             base.Update(gameTime, mouseInput, keyboardInput);
         }
-        private void RecalculateSize()
+        public void RecalculateSize()
         {
             Size = Font.MeasureString(Text);
         }

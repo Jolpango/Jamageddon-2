@@ -53,7 +53,7 @@ namespace MonoGame.Jolpango.UI.Elements
         public virtual void LoadContent() { }
         public virtual void Update(GameTime gameTime, JMouseInput mouseInput, JKeyboardInput keyboardInput)
         {
-            if(!IsEnabled) return;
+            if(!IsEnabled || mouseInput is null || keyboardInput is null) return;
             if (IsMouseOver(mouseInput.Position) && mouseInput.IsLeftButtonClicked())
             {
                 OnClick?.Invoke(this);

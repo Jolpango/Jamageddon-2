@@ -38,6 +38,7 @@ namespace Jamageddon2
             TimerHandler = new JTimerHandler(this);
             Components.Add(TimerHandler);
             JTextureCache.Initialize(GraphicsDevice);
+            JFontCache.Initialize(Content.Load<SpriteFont>("Fonts/default"));
             sceneManager.AddScene(new MenuScene(this) { Parent = sceneManager });
 
         }

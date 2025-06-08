@@ -7,8 +7,8 @@ namespace Jamageddon2.Entities.Towers
     {
         private const string SPRITE_PATH = "Content/Animation/busboy.json";
         private const float DEFAULT_DAMAGE = 3f;
-        private const float DEFAULT_RANGE = 140f;
-        private const float DEFAULT_FIRE_RATE = 0.8f;
+        private const float DEFAULT_RANGE = 100f;
+        private const float DEFAULT_FIRE_RATE = 5f;
 
         public JTomatoLauncherTower() :
             base(
@@ -22,7 +22,7 @@ namespace Jamageddon2.Entities.Towers
 
         public override JBaseProjectile GetProjectile()
         {
-            return new JPlateProjectile();
+            return new JExplosionPrefab() { Radius = 100, Damage = 5, Speed = 0 };
         }
     }
 }

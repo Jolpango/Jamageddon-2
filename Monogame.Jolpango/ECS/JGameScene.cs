@@ -24,6 +24,7 @@ namespace MonoGame.Jolpango.ECS
         protected Game game;
         public bool IsLoaded { get; private set; } = false;
         public bool IsInjected { get; private set; } = false;
+        public bool IsInitialized { get; private set; } = false;
         public JGameScene(Game game, JMouseInput mouseInput = null, JKeyboardInput keyboardInput = null)
         {
             entityWorld = new JEntityWorld();
@@ -53,11 +54,13 @@ namespace MonoGame.Jolpango.ECS
         }
         public virtual void AddEntity(JEntity entity)
         {
+            if (IsInitialized)
+                entity.Initialize();
             if (IsInjected)
                 serviceInjector.InjectAll(entity);
             if (IsLoaded)
                 entity.LoadContent();
-            if(IsInjected && IsLoaded)
+            if (IsInjected && IsLoaded && IsInitialized)
                 entitiesToAdd.Enqueue(entity);
             else
                 entityWorld.AddEntity(entity);
@@ -69,6 +72,8 @@ namespace MonoGame.Jolpango.ECS
         }
         public virtual void LoadContent()
         {
+            IsInitialized = true;
+            entityWorld.Initialize();
             IsLoaded = true;
             InjectAllServices();
             entityWorld.LoadContent();

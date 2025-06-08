@@ -87,6 +87,11 @@ namespace MonoGame.Jolpango.ECS
             OnDestroy?.Invoke(this);
         }
 
+        public virtual void Initialize()
+        {
+            
+        }
+
         public virtual void LoadContent()
         {
             foreach (var comp in components.Values)
