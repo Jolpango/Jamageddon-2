@@ -23,7 +23,7 @@ namespace MonoGame.Jolpango.ECS.Components
             var collider = Parent.GetComponent<JColliderComponent>();
             if (collider is not null)
             {
-                if(mouseInput.IsLeftButtonClicked() && collider.BoundingBox.Contains(mouseInput.Position))
+                if(mouseInput.IsLeftButtonClicked() && collider.Contains(mouseInput.Position))
                 {
                     OnClick?.Invoke(Parent);
                 }

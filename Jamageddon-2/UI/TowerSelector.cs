@@ -85,7 +85,7 @@ namespace Jamageddon2.UI
                 "JButcherChefTower",
                 "The only thing rarer than his steaks are survivors.",
                 40,
-                "Content/Animation/butcherChef.json",
+                "Content/Animation/butcherchef.json",
                 new JButcherChefTower()
             ));
 

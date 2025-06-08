@@ -44,6 +44,44 @@ namespace MonoGame.Jolpango.ECS
             return null;
         }
 
+        public IEnumerable<T> GetComponentsOf<T>() where T : JComponent
+        {
+            return components.Values.Where(c => c is T).Cast<T>();
+        }
+
+        public bool HasComponent<T>() where T : JComponent
+        {
+            if (components.ContainsKey(typeof(T)))
+                return true;
+
+            foreach (var comp in components.Values)
+                if (comp is T)
+                    return true;
+
+            return false;
+        }
+
+        public bool TryGetComponent<T>(out T component) where T : JComponent
+        {
+            if (components.TryGetValue(typeof(T), out var compObj) && compObj is T comp)
+            {
+                component = comp;
+                return true;
+            }
+
+            foreach (var c in components.Values)
+            {
+                if (c is T tComp)
+                {
+                    component = tComp;
+                    return true;
+                }
+            }
+
+            component = null;
+            return false;
+        }
+
         public virtual void DestroyEntity()
         {
             OnDestroy?.Invoke(this);

@@ -3,11 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.Graphics.Particles;
 using MonoGame.Jolpango.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonoGame.Jolpango.ECS.Components
 {

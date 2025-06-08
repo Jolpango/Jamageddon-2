@@ -54,7 +54,11 @@ namespace MonoGame.Jolpango.Tiled
 
         public bool TileIsFree(JColliderComponent colliderComponent)
         {
-            Rectangle boundingBox = colliderComponent.BoundingBox;
+            // TODO(anton): make this work regardless of collider
+            if (colliderComponent is not JBoxColliderComponent boxCollider)
+                return false;
+
+            Rectangle boundingBox = boxCollider.BoundingBox;
             foreach (TileLayer layer in map.TileLayers)
             {
                 if (layer.IsPlaceable)
@@ -67,7 +71,7 @@ namespace MonoGame.Jolpango.Tiled
                     if (topLeftTile == null || topLeftTile.isEmpty ||
                         topRightTile == null || topRightTile.isEmpty ||
                         bottomLeftTile == null || bottomLeftTile.isEmpty ||
-                        bottomRightTile == null || bottomRightTile.isEmpty) 
+                        bottomRightTile == null || bottomRightTile.isEmpty)
                     {
                         return false;
                     }

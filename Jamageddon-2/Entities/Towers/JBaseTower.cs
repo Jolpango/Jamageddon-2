@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
-using System;
 using static Jamageddon2.JGameConstants;
 
 namespace Jamageddon2.Entities.Towers
@@ -36,11 +35,7 @@ namespace Jamageddon2.Entities.Towers
             AddComponent(new JSpriteComponent(spritePath));
             AddComponent(new JTransformComponent());
             AddComponent(new JTopDownPlayerInputComponent());
-            AddComponent(new JColliderComponent()
-            {
-                Size = Vector2.One,
-                IsSolid = false
-            });
+            AddComponent(new JBoxColliderComponent() { Size = Vector2.One, IsSolid = false });
             AddComponent(new JTargetEnemyComponent() { FireRate = fireRate });
             AddComponent(new JShootComponent());
             AddComponent(new JColliderLeftClickComponent());
