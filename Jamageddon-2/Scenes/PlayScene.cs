@@ -143,6 +143,7 @@ namespace Jamageddon2.Scenes
             rightPanel.AddChild(startButton);
             //Selected tower container
             AddUIElement(selectedTowerContainer.RootElement);
+            AddUIElement(selectedTowerContainer.RootElementStats);
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);

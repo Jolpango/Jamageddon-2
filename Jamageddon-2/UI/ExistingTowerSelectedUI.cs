@@ -23,9 +23,16 @@ namespace Jamageddon2.UI
         private TextElement selectedTowerText;
         private List<UIButton> targetModeButtons = new List<UIButton>();
 
+        private UIStackPanel selectedTowerStatsContainer;
+        private TextElement selectedTowerStatsTextRange;
+        private TextElement selectedTowerStatsTextDamage;
+        private TextElement selectedTowerStatsTextFireRate;
+        private List<TextElement> targetModeStatsText = new List<TextElement>();
+
         private JMouseInput mouseInput;
         private SpriteFont defaultFont;
         public UIElement RootElement { get => selectedTowerContainer; }
+        public UIElement RootElementStats { get => selectedTowerStatsContainer; }
         public void Inject(JMouseInput service)
         {
             mouseInput = service;
@@ -79,6 +86,47 @@ namespace Jamageddon2.UI
                 Text = "Toughest",
                 Font = defaultFont
             };
+
+            selectedTowerStatsContainer = new UIStackPanel()
+            {
+                Orientation = Orientation.Vertical,
+                Size = new Vector2(400, 100),
+                MinSize = new Vector2(400, 100),
+                Position = new Vector2(1280 / 2 - 400, 800 - 200 - 10),
+                Padding = new Vector2(10),
+                BackgroundColor = Color.Gray,
+                AlignItems = ItemAlignment.Left,
+                IsEnabled = false,
+                IsVisible = false
+            };
+            selectedTowerStatsTextRange = new TextElement()
+            {
+                Text = "TOWER RANGE",
+                Color = Color.White,
+                Font = defaultFont
+            };
+            selectedTowerStatsTextDamage = new TextElement()
+            {
+                Text = "TOWER DAMAGE",
+                Color = Color.White,
+                Font = defaultFont
+            };
+            selectedTowerStatsTextFireRate = new TextElement()
+            {
+                Text = "TOWER FireRate",
+                Color = Color.White,
+                Font = defaultFont
+            };
+
+
+            targetModeStatsText.Add(selectedTowerStatsTextDamage);
+            targetModeStatsText.Add(selectedTowerStatsTextRange);
+            targetModeStatsText.Add(selectedTowerStatsTextFireRate);
+            selectedTowerStatsContainer.AddChild(selectedTowerStatsTextDamage);
+            selectedTowerStatsContainer.AddChild(selectedTowerStatsTextRange);
+            selectedTowerStatsContainer.AddChild(selectedTowerStatsTextFireRate);
+
+
             closestButton.OnClick += (UIElement e) => SetTargetMode(TargetingMode.Closest);
             closestButton.OnMouseEnter += OnMouseEnter;
             closestButton.OnMouseLeave += OnMouseLeave;
@@ -155,6 +203,9 @@ namespace Jamageddon2.UI
                 selectedTower = null;
                 selectedTowerContainer.IsEnabled = false;
                 selectedTowerContainer.IsVisible = false;
+
+                selectedTowerStatsContainer.IsEnabled = false;
+                selectedTowerStatsContainer.IsVisible = false;
                 return;
             }
             towerSelectedThisFrame = true;
@@ -162,6 +213,13 @@ namespace Jamageddon2.UI
             selectedTowerContainer.IsEnabled = true;
             selectedTowerContainer.IsVisible = true;
             selectedTowerText.Text = jBaseTower.Name;
+        
+
+            selectedTowerStatsContainer.IsEnabled = true;
+            selectedTowerStatsContainer.IsVisible = true;
+            selectedTowerStatsTextDamage.Text = $"Damage: {jBaseTower.Damage}";
+            selectedTowerStatsTextRange.Text = $"Range: {jBaseTower.Range}";
+            selectedTowerStatsTextFireRate.Text = $"FireRate: {1/jBaseTower.FireRate} /s";
         }
     }
 }
