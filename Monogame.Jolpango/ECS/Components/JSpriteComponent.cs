@@ -10,11 +10,11 @@ namespace MonoGame.Jolpango.ECS.Components
     public class JSpriteComponent : JComponent, IJInjectable<ContentManager>
     {
         public JSprite sprite { get; private set; } = new();
-        private string spritePath;
+        public string SpritePath { get; set; }
         private ContentManager contentManager;
-        public JSpriteComponent(string spritePath)
+        public JSpriteComponent(string spritePath = null)
         {
-            this.spritePath = spritePath;
+            SpritePath = spritePath;
         }
 
         public void Inject(ContentManager service)
@@ -25,7 +25,7 @@ namespace MonoGame.Jolpango.ECS.Components
         }
         public override void LoadContent()
         {
-            sprite.LoadContent(contentManager, spritePath);
+            sprite.LoadContent(contentManager, SpritePath);
             UpdateTransform();
         }
 
