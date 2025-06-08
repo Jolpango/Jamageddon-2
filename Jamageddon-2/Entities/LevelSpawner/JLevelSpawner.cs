@@ -25,22 +25,22 @@ namespace Jamageddon2.Entities.Level
             game.Components.Add(spawnTimer);
 
             levelConfigs = JLevelParser.LoadLevelConfigs();
-            currentLevel = levelConfigs[0];
         }
 
         public void StartLevel(int levelNumber)
         {
-            if (levelNumber < 0 || levelNumber >= levelConfigs.Count)
+            if (levelNumber <= 0 || levelNumber > levelConfigs.Count)
                 throw new ArgumentException($"Invalid level number: {levelNumber}");
 
-            currentLevel = levelConfigs[levelNumber];
+            currentLevel = levelConfigs[levelNumber - 1];
             SpawnEnemies();
         }
 
         public void SpawnEnemies()
         {
             var spawnTime = 0f;
-            currentLevel.EnemyClusters.ForEach(cluster => {
+            currentLevel.EnemyClusters.ForEach(cluster =>
+            {
                 spawnTime += cluster.SpawnDelay;
                 for (int i = 0; i < cluster.Amount; i++)
                 {
@@ -57,7 +57,8 @@ namespace Jamageddon2.Entities.Level
         }
 
         public bool IsAllEnemiesDestroyed => scene.GetEntitiesByTag("Enemy").Count == 0;
-        public bool IsLastLevel => currentLevel.LevelNumber == levelConfigs.Count;
-        public int NextLevel => currentLevel.LevelNumber;
+        public int CurrentLevel => currentLevel == null ? 0 : currentLevel.LevelNumber;
+        public bool IsLastLevel => CurrentLevel == levelConfigs.Count;
+        public int NextLevel => CurrentLevel + 1;
     }
 }

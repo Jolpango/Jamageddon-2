@@ -25,7 +25,7 @@ namespace Jamageddon2.Entities.Towers
             mouseFollowerComponent = new JMouseFollowerComponent();
             leftMouseClickComponent = new JLeftMouseClickComponent();
             placeTowerComponent = new JPlaceTowerComponent();
-            colliderComponent = new JColliderComponent()
+            colliderComponent = new JBoxColliderComponent()
             {
                 Size = towerDefinition.Footprint.Size,
                 IsSolid = false,

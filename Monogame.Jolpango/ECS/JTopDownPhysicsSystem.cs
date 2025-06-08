@@ -15,32 +15,31 @@ namespace MonoGame.Jolpango.ECS
             foreach (var projectile in projectiles)
                 foreach (var enemy in enemies)
                     if (CheckCollision(enemy, projectile))
+                    {
                         HandleCollision(enemy, projectile);
+                        if (projectile.Parent.Tags.Contains("MarkedForDeletion"))
+                            break;
+                    }
         }
 
-        protected override bool CheckCollision(JColliderComponent a,  JColliderComponent b)
-        {
-            if (a.Type == ColliderType.Box && b.Type == ColliderType.Box)
-            {
-                return (a.BoundingBox.Intersects(b.BoundingBox));
-            }
-            return false;
-        }
+        protected override bool CheckCollision(JColliderComponent a, JColliderComponent b) => a.Intersects(b);
+
         protected override void HandleCollision(JColliderComponent a, JColliderComponent b)
         {
             if (a.IsSolid && b.IsSolid)
-            {
                 ResolveCollision(a, b);
-            }
+
             base.HandleCollision(a, b);
         }
 
         private void ResolveCollision(JColliderComponent a, JColliderComponent b)
         {
-            var ta = a.Parent.GetComponent<JTransformComponent>();
-            var tb = b.Parent.GetComponent<JTransformComponent>();
+            if (a is not JBoxColliderComponent boxA || b is not JBoxColliderComponent boxB)
+                return; // Only resolve box-box collisions
 
-            var overlap = GetIntersectionDepth(a.BoundingBox, b.BoundingBox);
+            var ta = a.Parent.GetComponent<JTransformComponent>();
+
+            var overlap = GetIntersectionDepth(boxA.BoundingBox, boxB.BoundingBox);
 
             if (Math.Abs(overlap.X) < Math.Abs(overlap.Y))
                 ta.Position += new Vector2(overlap.X, 0);
@@ -61,9 +60,7 @@ namespace MonoGame.Jolpango.ECS
             float overlapY = halfHeightSum - Math.Abs(dy);
 
             if (overlapX > 0 && overlapY > 0)
-            {
                 return new Vector2(dx < 0 ? -overlapX : overlapX, dy < 0 ? -overlapY : overlapY);
-            }
 
             return Vector2.Zero;
         }

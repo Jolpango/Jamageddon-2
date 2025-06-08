@@ -31,7 +31,7 @@ namespace Jamageddon2.Entities.Enemies
             // Add required components
             AddComponent(new JHealthComponent());
             AddComponent(new JSpriteComponent(spritePath));
-            AddComponent(new JColliderComponent()
+            AddComponent(new JBoxColliderComponent()
             {
                 Size = new Vector2(DEFAULT_ENEMY_COLLIDER_SIZE, DEFAULT_ENEMY_COLLIDER_SIZE),
                 IsSolid = false,

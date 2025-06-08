@@ -1,6 +1,7 @@
 using Jamageddon2.Entities.Components;
 using Jamageddon2.Entities.Enemies;
 using Microsoft.Xna.Framework;
+using MonoGame.Jolpango.Core;
 using MonoGame.Jolpango.ECS;
 using MonoGame.Jolpango.ECS.Components;
 using System;
@@ -8,17 +9,15 @@ using System.Collections.Generic;
 
 namespace Jamageddon2.Entities.Projectiles
 {
-    public abstract class JBaseProjectile : JEntity
+    public class JBaseProjectile : JEntity, IJInjectable<JGameScene>
     {
         private const float DEFAULT_PROJECTILE_SPEED = 200f;
-        private const float DEFAULT_PROJECTILE_DAMAGE = 1f;
         private const float DEFAULT_PROJECTILE_SIZE = 5f;
 
+        public JGameScene Scene { get; set; }
         public Vector2 Position { get; set; }
         public Vector2 Direction { get; set; }
         public float Speed { get; set; } = DEFAULT_PROJECTILE_SPEED;
-        public float Damage { get; set; } = DEFAULT_PROJECTILE_DAMAGE;
-        public int Pierces { get; set; } = 1;
         public Vector2 Size { get; set; } = new Vector2(DEFAULT_PROJECTILE_SIZE, DEFAULT_PROJECTILE_SIZE);
 
         private List<JEntity> entitiesHit = new();
@@ -27,16 +26,23 @@ namespace Jamageddon2.Entities.Projectiles
         {
             Tags = new HashSet<string> { "Projectile" };
             AddComponent(new JSpriteComponent(spritePath));
+            AddComponent(new JProjectileInputPath());
+        }
+
+        public void Inject(JGameScene service)
+        {
+            Scene = service;
         }
 
         public override void LoadContent()
         {
-            AddComponent(new JTransformComponent() { Position = Position });
-            AddComponent(new JMovementComponent() { Speed = Speed });
-            AddComponent(new JColliderComponent() { Size = Size, IsSolid = false, Centered = true });
+            if (!HasComponent<JColliderComponent>())
+                AddComponent(new JBoxColliderComponent() { Size = Size, IsSolid = false, Centered = true });
             GetComponent<JColliderComponent>().OnCollision += OnCollisionProjectile;
 
-            AddComponent(new JProjectileInputPath());
+            AddComponent(new JTransformComponent() { Position = Position });
+            AddComponent(new JMovementComponent() { Speed = Speed });
+
             GetComponent<JProjectileInputPath>().MoveIntent = Direction;
             base.LoadContent();
 
@@ -46,16 +52,47 @@ namespace Jamageddon2.Entities.Projectiles
 
         protected virtual void OnCollisionProjectile(JColliderComponent self, JColliderComponent other)
         {
-            if (!other.Parent.Tags.Contains("Enemy") || entitiesHit.Contains(other.Parent) || Pierces <= 0)
+            var entity = self.Parent;
+
+            if (!other.Parent.Tags.Contains("Enemy"))
                 return;
 
-            Pierces--;
-            if (Pierces == 0)
-                self.Parent.DestroyEntity();
+            if (entitiesHit.Contains(other.Parent))
+                return;
+
+            if (entity.TryGetComponent<JDamageOnHitComponent>(out var damageOnHit))
+                if (other.Parent is JBaseEnemy enemy)
+                    enemy.TakeDamage(damageOnHit.Damage);
 
             entitiesHit.Add(other.Parent);
-            if (other.Parent is JBaseEnemy enemy)
-                enemy.TakeDamage(Damage);
+
+            if (entity.TryGetComponent<JPiercingComponent>(out var pierce))
+            {
+                if (--pierce.PiercesRemaining <= 0)
+                {
+                    entity.DestroyEntity();
+                    entity.Tags.Add("MarkedForDeletion");
+                }
+            }
+            else if (entity.HasComponent<JFirstFrameHitDestroyComponent>())
+                entity.DestroyEntity();
+            else if (entity.HasComponent<JFirstHitDestroyComponent>())
+            {
+                entity.DestroyEntity();
+                entity.Tags.Add("MarkedForDeletion");
+            }
+            else if (entity.TryGetComponent<JExplodesOnDeathComponent>(out var explodeOnDeath) && !entity.Tags.Contains("MarkedForDeletion"))
+            {
+                var explosion = explodeOnDeath.Prefab is null ? new JExplosionPrefab("Content/Animation/axe.json") : explodeOnDeath.Prefab;
+
+                var halfRadius = explosion.Radius / 2;
+                explosion.Position = entity.GetComponent<JTransformComponent>().Position - new Vector2(halfRadius, halfRadius);
+
+                Scene.AddEntity(explosion);
+
+                entity.DestroyEntity();
+                entity.Tags.Add("MarkedForDeletion");
+            }
         }
     }
 }
