@@ -92,12 +92,9 @@ namespace Jamageddon2.UI
                 Orientation = Orientation.Vertical,
                 Size = new Vector2(400, 100),
                 MinSize = new Vector2(400, 100),
-                Position = new Vector2(1280 / 2 - 400, 800 - 200 - 10),
                 Padding = new Vector2(10),
                 BackgroundColor = Color.Gray,
                 AlignItems = ItemAlignment.Left,
-                IsEnabled = false,
-                IsVisible = false
             };
             selectedTowerStatsTextRange = new TextElement()
             {
@@ -149,6 +146,7 @@ namespace Jamageddon2.UI
             targetModeButtons.Add(furthestButton);
             targetModeButtons.Add(toughestButton);
             selectedTowerContainer.AddChild(targetModeContainer);
+            selectedTowerContainer.AddChild(selectedTowerStatsContainer);
         }
 
         private void OnMouseEnter(UIElement e)
@@ -204,8 +202,6 @@ namespace Jamageddon2.UI
                 selectedTowerContainer.IsEnabled = false;
                 selectedTowerContainer.IsVisible = false;
 
-                selectedTowerStatsContainer.IsEnabled = false;
-                selectedTowerStatsContainer.IsVisible = false;
                 return;
             }
             towerSelectedThisFrame = true;
@@ -214,9 +210,6 @@ namespace Jamageddon2.UI
             selectedTowerContainer.IsVisible = true;
             selectedTowerText.Text = jBaseTower.Name;
         
-
-            selectedTowerStatsContainer.IsEnabled = true;
-            selectedTowerStatsContainer.IsVisible = true;
             selectedTowerStatsTextDamage.Text = $"Damage: {jBaseTower.Damage}";
             selectedTowerStatsTextRange.Text = $"Range: {jBaseTower.Range}";
             selectedTowerStatsTextFireRate.Text = $"FireRate: {1/jBaseTower.FireRate} /s";

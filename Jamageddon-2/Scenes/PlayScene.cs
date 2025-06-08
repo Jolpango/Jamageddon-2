@@ -139,11 +139,14 @@ namespace Jamageddon2.Scenes
             topPanel.AddChild(goldText);
             topPanel.AddChild(livesLeftText);
 
+            rightPanel.BackgroundTexture = game.Content.Load<Texture2D>("Textures/wood");
+            topPanel.BackgroundTexture = game.Content.Load<Texture2D>("Textures/wood");
+            topPanel.BackgroundColor = Color.Brown * 0.3f;
+            rightPanel.BackgroundColor = Color.Brown * 0.3f;
             rightPanel.AddChild(towerSelector.RootElement);
             rightPanel.AddChild(startButton);
             //Selected tower container
             AddUIElement(selectedTowerContainer.RootElement);
-            AddUIElement(selectedTowerContainer.RootElementStats);
 
             base.LoadContent();
             entityWorld.LoadMap(mapPath);
