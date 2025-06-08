@@ -60,6 +60,23 @@ namespace Jamageddon2.Entities.Components
             transformComponent = Parent.GetComponent<JTransformComponent>();
         }
 
+        public float DistanceLeftToEnd
+        {
+            get
+            {
+                if (waypoints.Count == 0 || currentWaypointIndex >= waypoints.Count)
+                    return 0f;
+                Vector2 currentPosition = transformComponent.Position;
+                Vector2 targetWaypoint = waypoints[currentWaypointIndex];
+                float distanceLeft = Vector2.Distance(currentPosition, targetWaypoint);
+                for(int i = currentWaypointIndex + 1; i < waypoints.Count; i++)
+                {
+                    distanceLeft += Vector2.Distance(waypoints[i - 1], waypoints[i]);
+                }
+                return distanceLeft;
+            }
+        }
+
         public override void UpdateIntent(GameTime gameTime)
         {
             if (!isMoving || waypoints.Count == 0 || currentWaypointIndex >= waypoints.Count)

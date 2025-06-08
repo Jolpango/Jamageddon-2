@@ -77,12 +77,55 @@ namespace Jamageddon2.Entities.Components
 
         private void TargetFarthest(JBaseTower tower)
         {
-            //throw new NotImplementedException("Farthest targeting mode is not implemented yet.");
+            JBaseEnemy farthestEnemy = null;
+            float leastDistanceLeft = float.MaxValue;
+            foreach (var entity in gameScene.GetEntitiesByTag("Enemy"))
+            {
+                if (entity is JBaseEnemy enemy)
+                {
+                    float distance = Vector2.Distance(enemy.GetComponent<JTransformComponent>().Position, tower.GetComponent<JTransformComponent>().Position);
+                    if (distance < tower.Range)
+                    {
+                        var pathComponent = enemy.GetComponent<JPathInputComponent>();
+                        var distanceLeft = pathComponent?.DistanceLeftToEnd ?? float.MaxValue;
+                        if (distanceLeft < leastDistanceLeft)
+                        {
+                            leastDistanceLeft = distanceLeft;
+                            farthestEnemy = enemy;
+                        }
+                    }
+                }
+            }
+            if (farthestEnemy is not null)
+            {
+                FireRate = tower.FireRate;
+                ShootEnemy(farthestEnemy);
+            }
         }
 
         private void TargetToughest(JBaseTower tower)
         {
-            //throw new NotImplementedException("Toughest targeting mode is not implemented yet.");
+            JBaseEnemy toughestEnemy = null;
+            foreach (var entity in gameScene.GetEntitiesByTag("Enemy"))
+            {
+                if (entity is JBaseEnemy enemy)
+                {
+                    float distance = Vector2.Distance(enemy.GetComponent<JTransformComponent>().Position, tower.GetComponent<JTransformComponent>().Position);
+                    if (distance < tower.Range)
+                    {
+                        var maxHealth = enemy.GetComponent<JHealthComponent>()?.MaxHealth ?? 0;
+                        if ((toughestEnemy?.GetComponent<JHealthComponent>()?.MaxHealth ?? 0) < maxHealth)
+                        {
+                            toughestEnemy = enemy;
+                        }
+                    }
+                }
+            }
+            if (toughestEnemy is not null)
+            {
+                FireRate = tower.FireRate;
+                ShootEnemy(toughestEnemy);
+            }
         }
 
         private void ShootEnemy(JBaseEnemy closestEnemy)
